@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap');
+:root {
+  font-size: 16px;
+  --primary-color: #00295D;
+  --input-bg: #F4F9FF;
+  --success: #01ae13;
+  --failure: #f04438;
+  --default: #888f9b;
+  --ongoing: #ec7100;
+  --placeholder-color: #0000004d;
+  --input-bg-color: #F4F9FF;
+}
+/* General CSS */
+
+* {
+  font-family: 'Mulish', sans-serif;
+  font-size: 14px;
+  /* line-height: 18px; */
+  font-weight: 400;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: #000000;
+}
+
+body {
+  background: #ffffff;
+}
+
+button {
+  font-weight: 600 !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+textarea {
+  resize: none;
+}
+
+.trans_btn {
+  border: 1px solid #00295D;
+  color: #00295D;
+  background-color: transparent;
+  border-radius: 8px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.bg_btn {
+  border: none;
+  color: #fff;
+  background-color: #00295D;
+  border-radius: 8px;
+  height: 50px;
+  cursor: pointer;
+}
+
+/* INPUT CSS START */
+
+.label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 7px;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  width: 100%;
+  padding: 0 20px;
+  outline: none;
+}
+
+.new_input {
+  height: 50px;
+  display: flex;
+  background-color: var(--input-bg-color);
+  border-radius: 5px;
+  align-items: center;
+  padding-right: 20px;
+}
+
+.new_input svg {
+  margin-left: 20px;
+}
+
+::placeholder {
+  color: var(--placeholder-color);
+}
+
+/* INPUT CSS END */

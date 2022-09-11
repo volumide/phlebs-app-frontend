@@ -13,7 +13,7 @@ export default {
 <style>
 html {
   font-size: 16px;
-  color: #3F3F3F;
+  color: #000000;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
