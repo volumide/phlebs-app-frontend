@@ -104,6 +104,28 @@ input {
   }
 }
 
+/* VUE PINCODE INPUT */
+
+input.vue-pincode-input {
+  margin-top: 20px;
+  padding: 0.75rem 0.5rem;
+  max-width: 50px;
+	color: #151C31;
+  background: #F4F9FF;
+  border: 1px solid #d2d7df35;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-weight: 500;
+  box-shadow: none;
+  height: 50px;
+}
+
+input.vue-pincode-input:focus-within {
+  outline: none;
+  background: #edf5ff;
+  box-shadow: none;
+}
+
 /* INPUT CSS END */
 
 
