@@ -10,7 +10,7 @@
   --placeholder-color: #0000004d;
   --input-bg-color: #F4F9FF;
 }
-/* General CSSss */
+/* General CSS */
 
 * {
   font-family: 'Mulish', sans-serif;
@@ -36,6 +36,10 @@ a {
 
 textarea {
   resize: none;
+}
+
+.no_show {
+  display: none;
 }
 
 .trans_btn {
@@ -88,6 +92,16 @@ input {
 
 ::placeholder {
   color: var(--placeholder-color);
+}
+
+@media only screen and (max-width: 500px) {
+  .label {
+    font-size: 14px;
+  }
+
+  ::placeholder {
+    font-size: 14px;
+  }
 }
 
 /* INPUT CSS END */
