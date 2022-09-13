@@ -1,42 +1,99 @@
 <template>
-  <div class="ctn">
+  <div class="ctn come-up">
     <div class="inner_ctn">
       <p class="head">
-        Your Password has been changed successfully!
+        {{ heading }}
       </p>
       <p class="sub_head">
-        Just to be sure, you have to login to your account with your new password.
+        {{ subHeading }}
       </p>
       <div class="ctn_img">
-        <svg width="119" height="116" viewBox="0 0 119 116" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_13_282)">
-            <path d="M56.6011 83.0441C54.0284 83.2553 51.4775 82.4343 49.5112 80.7621L27.0848 61.7302C24.6716 59.6808 24.3761 56.0634 26.4247 53.6495C28.4741 51.2363 32.0916 50.9408 34.5055 52.9894L55.6095 70.9059L103.009 15.0735C105.058 12.6603 108.676 12.3647 111.09 14.4134C113.503 16.4627 113.798 20.0802 111.75 22.4941L63.2266 79.6417C61.5577 81.6109 59.1739 82.835 56.6011 83.0441Z" fill="#00B78F" />
-          </g>
-          <path d="M87.6838 21.6369C89.3833 19.5949 89.1164 16.5426 86.9346 15.0268C79.7794 10.0556 71.5313 6.83028 62.8544 5.64331C52.5843 4.23842 42.1261 5.74555 32.6706 9.9931C23.2152 14.2406 15.1424 21.0579 9.37148 29.6686C3.60059 38.2794 0.363517 48.3375 0.0288557 58.6978C-0.305805 69.0581 2.27539 79.3042 7.47854 88.2694C12.6817 97.2346 20.2977 104.559 29.4593 109.408C38.621 114.257 48.9601 116.435 59.2994 115.696C68.0349 115.072 76.474 112.385 83.9351 107.886C86.2101 106.515 86.6734 103.486 85.1093 101.338C83.5452 99.191 80.547 98.7428 78.2473 100.073C72.2624 103.534 65.551 105.604 58.6134 106.1C50.0711 106.711 41.529 104.911 33.9597 100.904C26.3904 96.8983 20.0982 90.8472 15.7994 83.4403C11.5006 76.0333 9.36799 67.568 9.64448 59.0084C9.92097 50.4488 12.5954 42.1388 17.3633 35.0247C22.1311 27.9106 28.8008 22.2782 36.6129 18.7689C44.4249 15.2597 53.0654 14.0145 61.5504 15.1752C68.4416 16.1179 75.0054 18.6167 80.7544 22.457C82.9636 23.9327 85.9844 23.6789 87.6838 21.6369Z" fill="#00B78F" />
-          <path d="M94.9286 91.9207C97.0089 93.5731 100.054 93.2365 101.52 91.0207C105.755 84.6172 108.622 77.3869 109.918 69.784C111.214 62.1811 110.903 54.4094 109.028 46.9644C108.379 44.3882 105.617 43.0619 103.107 43.932C100.597 44.8021 99.2938 47.5393 99.8956 50.1269C101.268 56.0295 101.457 62.1624 100.434 68.1677C99.4106 74.1731 97.2006 79.8971 93.9504 85.0118C92.5256 87.2541 92.8483 90.2683 94.9286 91.9207Z" fill="#00B78F" />
-          <defs>
-            <clipPath id="clip0_13_282">
-              <rect width="90.9359" height="90.9359" fill="white" transform="translate(20.9629 7.40381) rotate(-4.67008)" />
-            </clipPath>
-          </defs>
-        </svg>
+        <img src="~assets/images/96673-success.gif" alt="">
       </div>
-      <button class="bg_btn">
-        Login to your account
-      </button>
+      <div class="btn">
+        <button class="bg_btn" @click="$emit('btnAction')">
+          {{ btnText }}
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    heading: {
+      type: String,
+      default: () => ''
+    },
+    subHeading: {
+      type: String,
+      default: () => ''
+    },
+    btnText: {
+      type: String,
+      default: () => ''
+    }
+  }
 
 }
 </script>
 
 <style scoped>
+.inner_ctn {
+  width: 100%;
+}
+.btn {
+  display: flex;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  justify-content: center;
+}
 .bg_btn {
   width: 80%;
-  margin: auto;
+}
+
+.head {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.sub_head {
+  text-align: center;
+  color: black;
+  margin-top: 3vh;
+}
+
+.ctn_img {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+}
+
+.ctn_img img {
+  width: 30%;
+}
+
+@media only screen and (max-width: 500px) {
+  .inner_ctn {
+    margin-top: 12vh;
+  }
+
+  .head {
+    font-size: 18px;
+    margin-top: 1.5rem;
+  }
+
+  .sub_head {
+    font-size: 13px;
+  }
+  .btn {
+    margin-top: 10vh;
+  }
+  .bg_btn {
+    width: 100%;
+  }
 }
 </style>

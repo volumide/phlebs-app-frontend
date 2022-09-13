@@ -13,7 +13,15 @@
             Log and Monitor your daily test order on your customised dashboard
           </p>
         </div>
-        <div class="mobile inner_ come-up no_show">
+        <div v-if="successPage" class="mobile inner_ no_show">
+          <ModalsSuccess
+            :heading="'Your account has been created and verified successfully'"
+            :sub-heading="'Just a few steps to go.'"
+            :btn-text="'Continue Registration'"
+            @btnAction="btnAction"
+          />
+        </div>
+        <div v-else class="mobile inner_ come-up no_show">
           <p class="title">
             Signup as a Phlebotomist Below
           </p>
@@ -100,16 +108,7 @@
                 </svg>
               </div>
             </div>
-            <!-- <div class="check_forgot">
-              <label class="check-container">Stay Signed in
-                <input class="check-input" type="checkbox" :checked="checked" @click="toogleCheck">
-                <span class="checkmark" />
-              </label>
-              <p class="forgot" @click="resetPassword = true">
-                Forgot Password?
-              </p>
-            </div> -->
-            <button class="bg_btn" @click="$router.push('/')">
+            <button class="bg_btn" @click="successPage = true">
               Create Account
             </button>
             <p class="create" @click="$router.push('/auth/login')">
@@ -125,7 +124,15 @@
               Login
             </button>
           </div>
-          <div class="inner_">
+          <div v-if="successPage" class="inner_">
+            <ModalsSuccess
+              :heading="'Your account has been created and verified successfully'"
+              :sub-heading="'Just a few steps to go.'"
+              :btn-text="'Continue Registration'"
+              @btnAction="btnAction"
+            />
+          </div>
+          <div v-else class="inner_">
             <p class="title">
               Signup as a Phlebotomist Below
             </p>
@@ -221,7 +228,7 @@
                   Forgot Password?
                 </p> -->
               </div>
-              <button class="bg_btn" @click="$router.push('/')">
+              <button class="bg_btn" @click="successPage = true">
                 Create Account
               </button>
             </div>
@@ -229,9 +236,6 @@
         </div>
       </div>
     </div>
-    <ModalsResetPassword v-if="resetPassword" @sentInst="sentInst" @close-modal="resetPassword = false" />
-    <ModalsLinkSent v-if="linkSent" @set-password="setPassword" />
-    <ModalsCreatePassword v-if="createPassword" />
   </div>
 </template>
 
@@ -242,11 +246,10 @@ export default {
       checked: false,
       error: false,
       email: '',
+      phone: '',
       password: '',
       type: 'password',
-      resetPassword: false,
-      createPassword: false,
-      linkSent: false
+      successPage: false
     }
   },
   methods: {
@@ -256,6 +259,9 @@ export default {
       } else if (this.type === 'text') {
         this.type = 'password'
       }
+    },
+    btnAction () {
+      this.$router.push('/auth/register/details')
     },
     toogleCheck () {
       this.checked = !this.checked

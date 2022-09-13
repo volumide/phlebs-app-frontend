@@ -221,10 +221,7 @@ export default {
       error: false,
       email: '',
       password: '',
-      type: 'password',
-      resetPassword: false,
-      createPassword: false,
-      linkSent: false
+      type: 'password'
     }
   },
   methods: {
