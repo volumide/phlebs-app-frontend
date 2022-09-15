@@ -6,14 +6,15 @@
       </div>
       <div class="progress_bars">
         <hr class="progress_1 active_bar">
-        <hr :class="`progress_1 ${nextOfKin ? 'active_bar' : ''}`">
-        <hr :class="`progress_1 ${bar_active_3 ? 'active_bar' : ''}`">
-        <hr :class="`progress_1 ${bar_active_4 ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${nextOfKin || personalQualification ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${personalQualification ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${identification ? 'active_bar' : ''}`">
       </div>
       <div class="form_ctn">
         <RegistrationPersonalInformation v-if="personalInformation" @back="back" @proceed="personalInformation = false; nextOfKin = true" />
         <RegistrationNextOfKin v-if="nextOfKin" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
-        <RegistrationPersonalQualification v-if="personalQualification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; successPage = true" />
+        <RegistrationPersonalQualification v-if="personalQualification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true" />
+        <RegistrationIdentification v-if="identification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true" />
       </div>
     </div>
   </div>
@@ -25,7 +26,9 @@ export default {
     return {
       personalInformation: false,
       nextOfKin: false,
-      personalQualification: true,
+      personalQualification: false,
+      identification: true,
+      successPage: false,
       bar_active_2: false,
       bar_active_3: false,
       bar_active_4: false
@@ -40,7 +43,7 @@ export default {
 }
 
 .inner {
-  max-width: 40%;
+  width: 40%;
   margin: auto;
 }
 

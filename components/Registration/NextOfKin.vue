@@ -162,5 +162,9 @@ export default {
   .sub_title {
     font-size: 13px;
   }
+
+  .input-box {
+    margin-bottom: 5vh;
+  }
 }
 </style>

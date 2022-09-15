@@ -178,6 +178,15 @@ input {
   ::placeholder {
     font-size: 14px;
   }
+
+  .upload-btn {
+    width: 35vw;
+    gap: 10px;
+  }
+
+  .upload-btn p {
+    font-size: 12px;
+  }
 }
 
 /* VUE PINCODE INPUT */
