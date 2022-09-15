@@ -12,7 +12,8 @@
       </div>
       <div class="form_ctn">
         <RegistrationPersonalInformation v-if="personalInformation" @back="back" @proceed="personalInformation = false; nextOfKin = true" />
-        <RegistrationNextOfKin v-if="nextOfKin" @back="back" @proceed="proceed" />
+        <RegistrationNextOfKin v-if="nextOfKin" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
+        <RegistrationPersonalQualification v-if="personalQualification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; successPage = true" />
       </div>
     </div>
   </div>
@@ -23,7 +24,8 @@ export default {
   data () {
     return {
       personalInformation: false,
-      nextOfKin: true,
+      nextOfKin: false,
+      personalQualification: true,
       bar_active_2: false,
       bar_active_3: false,
       bar_active_4: false

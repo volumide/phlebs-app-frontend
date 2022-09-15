@@ -124,6 +124,52 @@ input {
   left: 90%;
 }
 
+/* -- UPLOAD INPUT --  */
+#image-upload {
+  display: none;
+}
+
+.selected-file {
+  border: none;
+  outline: none;
+  width: 100%;
+  color: var(--primary-color);
+  font-size: 14px;
+  padding: 2px;
+}
+.upload-container {
+  /* border: 1px solid #c4c4c4; */
+  background-color: var(--input-bg-color);
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3px;
+  border-radius: 5px;
+}
+.upload-name {
+  padding-left: 15px;
+}
+.upload-title {
+  color: rgba(0, 0, 0, 0.302);
+}
+.upload-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5vw;
+  width: 9vw;
+  font-weight: 700;
+  height: 50px;
+  background-color: #DCEAFB;
+  border-radius: 8px;
+}
+
+.upload-btn p {
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
 @media only screen and (max-width: 500px) {
   .label {
     font-size: 14px;

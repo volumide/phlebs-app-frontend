@@ -1,0 +1,1500 @@
+<template>
+  <div class="register-candidate">
+    <div class="section-1">
+      <img src="@/assets/images/logo-white.svg" alt="logo">
+    </div>
+    <div class="section-2">
+      <div class="content">
+        <img class="section-2-logo" src="@/assets/images/logo.svg" alt="logo">
+        <p class="head-text">
+          Register as a Candidate
+        </p>
+        <p class="head-subtext">
+          Join Our Team of Professionals
+        </p>
+        <div v-if="page === 1" class="form fade-in">
+          <div class="select-container">
+            <div class="input">
+              <p class="title">
+                First Name
+              </p>
+              <input v-model="firstName" class="name-box" type="text" required>
+            </div>
+            <div class="input">
+              <p class="title">
+                Surname
+              </p>
+              <input v-model="surname" class="name-box" type="text" required>
+            </div>
+          </div>
+          <p class="title">
+            Email Address
+          </p>
+          <input v-model="email" class="email-box" type="email" name="email" required>
+          <div>
+            <p class="title">
+              Mobile Number
+            </p>
+            <div class="number email-box">
+              <div class="flag">
+                <img src="~/assets/images/flag.svg" alt="flag">
+                <p class="flag-label">
+                  +234
+                </p>
+              </div>
+              <input v-model="phoneNumber" type="number" class="input-box" required>
+            </div>
+          </div>
+          <div>
+            <p class="title">
+              Mobile Number (Alternative)
+            </p>
+            <div class="number email-box">
+              <div class="flag">
+                <img src="~/assets/images/flag.svg" alt="flag">
+                <p class="flag-label">
+                  +234
+                </p>
+              </div>
+              <input v-model="phoneNumberAlternative" type="number" class="input-box" required>
+            </div>
+          </div>
+          <div>
+            <div class="form-select residence">
+              <label class="title"> Service Category</label>
+              <select v-model="selectedCategory">
+                <option value="null">
+                  Please Select
+                </option>
+                <option
+                  v-for="category in categoriesCopy"
+                  :key="category.category._id"
+                  :value="category.category._id"
+                >
+                  {{ category.category.singular_name }}
+                </option>
+              </select>
+              <div class="small-text">
+                Select categories that match your description
+              </div>
+              <div class="chip-group">
+                <div
+                  v-for="category in categories"
+                  :key="category"
+                  class="chip come-down"
+                >
+                  <div class="text">
+                    {{ getCategory(category).category.singular_name }}
+                  </div>
+                  <button
+                    class="close-btn clear-btn"
+                    @click="removeCategory(category)"
+                  >
+                    <div class="material-icons">
+                      close
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <p class="title">
+            Residence
+          </p>
+          <input
+            v-model="residence"
+            class="email-box"
+            type="text"
+            name="residence"
+            required
+          >
+          <div class="form-select residence">
+            <label class="title"> Tribe</label>
+            <select v-model="tribe" required>
+              <option value="">
+                Please Select
+              </option>
+              <option value="Annang">
+                Annang
+              </option>
+              <option value="Bekwarra">
+                Bekwarra
+              </option>
+              <option value="Berom">
+                Berom
+              </option>
+              <option value="Boki">
+                Boki
+              </option>
+              <option value="Delta-Igbo">
+                Delta-Igbo
+              </option>
+              <option value="Ebira">
+                Ebira
+              </option>
+              <option value="Efik">
+                Efik
+              </option>
+              <option value="Eregbe">
+                Eregbe
+              </option>
+              <option value="Esan">
+                Esan
+              </option>
+              <option value="Hausa">
+                Hausa
+              </option>
+              <option value="Ibibio">
+                Ibibio
+              </option>
+              <option value="Idoma">
+                Idoma
+              </option>
+              <option value="Igala">
+                Igala
+              </option>
+              <option value="Igebe">
+                Igebe
+              </option>
+              <option value="Igidi">
+                Igidi
+              </option>
+              <option value="Igbo">
+                Igbo
+              </option>
+              <option value="Ijaw">
+                Ijaw
+              </option>
+              <option value="Ika / Auchi">
+                Ika / Auchi
+              </option>
+              <option value="Isobo">
+                Isobo
+              </option>
+              <option value="Itsekiri">
+                Itsekiri
+              </option>
+              <option value="Minsen">
+                Minsen
+              </option>
+              <option value="Obanliku">
+                Obanliku
+              </option>
+              <option value="Ogoja">
+                Ogoja
+              </option>
+              <option value="Oron">
+                Oron
+              </option>
+              <option value="Tiv">
+                Tiv
+              </option>
+              <option value="Ugep">
+                Ugep
+              </option>
+              <option value="Ukwuani">
+                Ukwuani
+              </option>
+              <option value="Urhobo">
+                Urhobo
+              </option>
+              <option value="Yoruba">
+                Yoruba
+              </option>
+              <option value="Other">
+                Other
+              </option>
+              <option value="Foreigner">
+                Foreigner
+              </option>
+            </select>
+            <img src="@/assets/images/chevron-down.svg" alt="img">
+          </div>
+          <div class="select-container">
+            <div>
+              <div class="form-select">
+                <label class="title">Age</label>
+                <input id="age-box" v-model="age" type="number" required>
+                <!-- <img src="@/assets/images/chevron-down.svg" alt="img" /> -->
+              </div>
+            </div>
+            <div>
+              <div class="form-select">
+                <label class="title"> Gender </label>
+                <select v-model="gender" required>
+                  <option value="">
+                    Please Select
+                  </option>
+                  <option value="male">
+                    Male
+                  </option>
+                  <option value="female">
+                    Female
+                  </option>
+                </select>
+                <img src="@/assets/images/chevron-down.svg" alt="img">
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="form-select residence">
+              <label class="title"> Religion</label>
+              <select v-model="religion" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="buddhism">
+                  Buddhism
+                </option>
+                <option value="anglican">
+                  Christainity - Anglican
+                </option>
+                <option value="catholic">
+                  Christainity - Catholic
+                </option>
+                <option value="protestant">
+                  Christainity - Protestant
+                </option>
+                <option value="hinduism">
+                  Hinduism
+                </option>
+                <option value="islam">
+                  Islam
+                </option>
+                <option value="judaism">
+                  Judaism
+                </option>
+                <option value="none">
+                  None
+                </option>
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <div class="select-container">
+            <div>
+              <!-- <div class="form-select">
+                <label class="title"> Origin </label>
+                <select v-model="origin" required>
+                  <option selected value="">
+                    Please Select
+                  </option>
+                  <option value="Abia">
+                    Abia
+                  </option>
+                  <option value="Adamawa">
+                    Adamawa
+                  </option>
+                  <option value="Akwa Ibom">
+                    Akwa Ibom
+                  </option>
+                  <option value="Anambra">
+                    Anambra
+                  </option>
+                  <option value="Bauchi">
+                    Bauchi
+                  </option>
+                  <option value="Bayelsa">
+                    Bayelsa
+                  </option>
+                  <option value="Benue">
+                    Benue
+                  </option>
+                  <option value="Borno">
+                    Borno
+                  </option>
+                  <option value="Cross Rive">
+                    Cross River
+                  </option>
+                  <option value="Delta">
+                    Delta
+                  </option>
+                  <option value="Ebonyi">
+                    Ebonyi
+                  </option>
+                  <option value="Edo">
+                    Edo
+                  </option>
+                  <option value="Ekiti">
+                    Ekiti
+                  </option>
+                  <option value="Enugu">
+                    Enugu
+                  </option>
+                  <option value="FCT">
+                    Federal Capital Territory
+                  </option>
+                  <option value="Gombe">
+                    Gombe
+                  </option>
+                  <option value="Imo">
+                    Imo
+                  </option>
+                  <option value="Jigawa">
+                    Jigawa
+                  </option>
+                  <option value="Kaduna">
+                    Kaduna
+                  </option>
+                  <option value="Kano">
+                    Kano
+                  </option>
+                  <option value="Katsina">
+                    Katsina
+                  </option>
+                  <option value="Kebbi">
+                    Kebbi
+                  </option>
+                  <option value="Kogi">
+                    Kogi
+                  </option>
+                  <option value="Kwara">
+                    Kwara
+                  </option>
+                  <option value="Lagos">
+                    Lagos
+                  </option>
+                  <option value="Nasarawa">
+                    Nasarawa
+                  </option>
+                  <option value="Niger">
+                    Niger
+                  </option>
+                  <option value="Ogun">
+                    Ogun
+                  </option>
+                  <option value="Ondo">
+                    Ondo
+                  </option>
+                  <option value="Osun">
+                    Osun
+                  </option>
+                  <option value="Oyo">
+                    Oyo
+                  </option>
+                  <option value="Plateau">
+                    Plateau
+                  </option>
+                  <option value="Rivers">
+                    Rivers
+                  </option>
+                  <option value="Sokoto">
+                    Sokoto
+                  </option>
+                  <option value="Taraba">
+                    Taraba
+                  </option>
+                  <option value="Yobe">
+                    Yobe
+                  </option>
+                  <option value="Zamfara">
+                    Zamfara
+                  </option>
+                </select>
+                <img src="@/assets/images/chevron-down.svg" alt="img">
+              </div> -->
+            </div>
+          </div>
+          <div>
+            <div class="form-select residence">
+              <label class="title"> Experience</label>
+              <select v-model="experience" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="1">
+                  0 Year - 2 Years
+                </option>
+                <option value="3">
+                  3 Years - 5 Years
+                </option>
+                <option value="6">
+                  6 Years - 9 Years
+                </option>
+                <!-- <option value="4">
+                  4 Years
+                </option>
+                <option value="5">
+                  5 Years
+                </option>
+                <option value="6">
+                  6 Years
+                </option>
+                <option value="7">
+                  7 Years
+                </option>
+                <option value="8">
+                  8 Years
+                </option>
+                <option value="9">
+                  9 Years
+                </option> -->
+                <option value="10">
+                  10 years and Above
+                </option>
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <div class="register-btn">
+            <button
+              class="register-btn-inner"
+              :disabled="!firstFieldsValid"
+              @click="page = 2"
+            >
+              Continue
+            </button>
+          </div>
+        </div>
+        <div v-if="page === 2" class="form fade-in">
+          <Backbtn type="modal" @go-back="page = 1" />
+          <div>
+            <div class="form-select skills">
+              <label class="title"> Unique Skill(s) </label>
+              <textarea
+                id=""
+                v-model="skills"
+                placeholder="Sewing,"
+                class="email-box"
+                rows="2"
+                name=""
+                required
+              />
+              <div class="small-text">
+                Seperate with "," if you have more than 1
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="form-select residence">
+              <label class="title"> Educational Level</label>
+              <select v-model="educationalLevel" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="BA/BSC">
+                  BA / BSC
+                </option>
+                <option value="DIPLOMA / NCE">
+                  DIPLOMA / NCE
+                </option>
+                <option value="MBA / MSC">
+                  MBA / MSC
+                </option>
+                <option value="WASSCE / NECO">
+                  WASSCE / NECO
+                </option>
+                <option value="OND / HND">
+                  OND / HND
+                </option>
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <p class="title">
+            Availability
+          </p>
+          <div class="radio-section">
+            <div class="radio-container-1">
+              <label
+                for="fulltime"
+              ><input
+                 id="fulltime"
+                 v-model="availability"
+                 type="radio"
+                 name="fulltime"
+                 value="Live In"
+                 required
+               >
+                <span>Live In</span></label>
+              <label
+                for="weekends"
+              ><input
+                 id="weekends"
+                 v-model="availability"
+                 type="radio"
+                 name="weekends"
+                 value="Custom"
+                 required
+               >
+                <span>Live Out</span></label>
+            </div>
+            <div
+              v-show="availability === 'Custom'"
+              class="small-text come-down"
+            >
+              Select days you are available
+            </div>
+            <div v-show="availability === 'Custom'" class="days come-down">
+              <button
+                :class="['clear-btn', days.sunday ? 'active' : '']"
+                @click="days.sunday = !days.sunday"
+              >
+                Sun
+              </button>
+              <button
+                :class="['clear-btn', days.monday ? 'active' : '']"
+                @click="days.monday = !days.monday"
+              >
+                Mon
+              </button>
+              <button
+                :class="['clear-btn', days.tuesday ? 'active' : '']"
+                @click="days.tuesday = !days.tuesday"
+              >
+                Tue
+              </button>
+              <button
+                :class="['clear-btn', days.wednesday ? 'active' : '']"
+                @click="days.wednesday = !days.wednesday"
+              >
+                Wed
+              </button>
+              <button
+                :class="['clear-btn', days.thursday ? 'active' : '']"
+                @click="days.thursday = !days.thursday"
+              >
+                Thu
+              </button>
+              <button
+                :class="['clear-btn', days.friday ? 'active' : '']"
+                @click="days.friday = !days.friday"
+              >
+                Fri
+              </button>
+              <button
+                :class="['clear-btn', days.saturday ? 'active' : '']"
+                @click="days.saturday = !days.friday"
+              >
+                Sat
+              </button>
+            </div>
+          </div>
+          <div class="select-container">
+            <div class="form-select">
+              <label class="title"> Area of Service </label>
+              <select v-model="serviceArea" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="Lagos Island">
+                  Lagos Island
+                </option>
+                <option value="Lagos Mainland">
+                  Lagos Mainland
+                </option>
+                <!-- <option value="Any of the above">
+                  Any of the Above
+                </option> -->
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+            <div class="form-select">
+              <label class="title"> Best Time to Call </label>
+              <select v-model="bestTimeToCall" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="Weekday Mornings">
+                  Weekday Mornings (9:00am - 11:59am)
+                </option>
+                <option value="Weekday Afternoons">
+                  Weekday Afternoons (12:00pm - 2:59pm)
+                </option>
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <!-- <div>
+            <div class="form-select skills">
+              <label class="title"> Language(s) </label>
+              <textarea
+                id=""
+                v-model="language"
+                placeholder="Yoruba, English"
+                class="email-box"
+                rows="2"
+                name=""
+                required
+              />
+              <div class="small-text">
+                Seperate with "," if you have more than 1
+              </div>
+            </div>
+          </div> -->
+          <div>
+            <div class="form-select residence">
+              <label class="title"> Language</label>
+              <select v-model="language" required>
+                <option value="">
+                  Please Select
+                </option>
+                <option value="arabic">
+                  Arabic
+                </option>
+                <option value="english">
+                  English
+                </option>
+                <option value="francais">
+                  Francais
+                </option>
+                <option value="hausa">
+                  Hausa
+                </option>
+                <option value="hindi">
+                  Hindi
+                </option>
+                <option value="igbo">
+                  Igbo
+                </option>
+                <option value="italiano">
+                  Italiano
+                </option>
+                <option value="mandarin">
+                  Mandarin
+                </option>
+                <option value="yoruba">
+                  Yoruba
+                </option>
+                <option value="native-dialect">
+                  Native Dialect
+                </option>
+                <option value="other">
+                  Other
+                </option>
+              </select>
+              <img src="@/assets/images/chevron-down.svg" alt="img">
+            </div>
+          </div>
+          <p class="title">
+            Name of Previous Employer
+          </p>
+          <input
+            v-model="previousEmployer"
+            class="email-box"
+            type="text"
+            name="residence"
+            required
+          >
+          <p class="title">
+            Position with Previous Employer
+          </p>
+          <input
+            v-model="previousEmployerPosition"
+            class="email-box"
+            type="text"
+            name="residence"
+            required
+          >
+          <!-- <div>
+            <div class="form-select skills">
+              <label class="title"> History </label>
+              <textarea
+                id=""
+                v-model="history"
+                placeholder="8 months at Radisson Blue Hotels,"
+                class="email-box"
+                rows="4"
+                name=""
+                required
+              />
+              <div class="small-text">
+                Seperate with "," if you have more than 1
+              </div>
+            </div>
+          </div> -->
+          <div class="line" />
+          <p class="title">
+            Upload Documents
+          </p>
+          <label class="upload-container">
+            <input
+              id="image-upload"
+              type="file"
+              name="file"
+              required
+              accept="image/jpeg, image/png"
+              @change="selectImagefile"
+            >
+            <div class="upload-name">
+              <p class="upload-title">Passport Photograph</p>
+              <input
+                v-if="inputImagefile !== null"
+                v-model="inputImagefile.name"
+                class="selected-file"
+                type="text"
+                readonly
+                required
+              >
+            </div>
+            <div class="upload-btn">Upload</div>
+          </label>
+          <label class="upload-container">
+            <input
+              id="identity-upload"
+              type="file"
+              name="file"
+              required
+              accept="application/pdf, application/msword, image/jpeg, image/png"
+              @change="selectIdentityFile"
+            >
+            <div class="upload-name">
+              <div>
+                <p class="upload-title">Government Identity</p>
+                <p class="upload-subtitle">(Valid Driver’s License or NIN Slip)</p>
+              </div>
+              <input
+                v-if="government_identity !== null"
+                v-model="government_identity.name"
+                class="selected-file"
+                type="text"
+                readonly
+                required
+              >
+            </div>
+            <div class="upload-btn">Upload</div>
+          </label>
+          <label class="upload-container">
+            <input
+              id="residence-upload"
+              type="file"
+              name="file"
+              required
+              accept="application/pdf, application/msword, image/jpeg, image/png"
+              @change="selectResidenceFile"
+            >
+            <div class="upload-name">
+              <div>
+                <p class="upload-title">Current Recent Utility Bill</p>
+                <p class="upload-subtitle">(Eko Electric, Ikeja Electric or LAWMA)</p>
+              </div>
+              <input
+                v-if="utility_bill !== null"
+                v-model="utility_bill.name"
+                class="selected-file"
+                type="text"
+                readonly
+                required
+              >
+            </div>
+            <div class="upload-btn">Upload</div>
+          </label>
+          <!-- <label class="upload-container">
+            <input
+              id="guarantor-upload"
+              type="file"
+              name="file"
+              required
+              accept="application/pdf, application/msword"
+              @change="selectGuarantorFile"
+            >
+            <div class="upload-name">
+              Guarantor Verification
+              <input
+                v-if="inputGuarantorfile !== null"
+                v-model="inputGuarantorfile.name"
+                class="selected-file"
+                type="text"
+                readonly
+                required
+              >
+            </div>
+            <div class="upload-btn">Upload</div>
+          </label>
+          <label class="upload-container">
+            <input
+              id="medical-upload"
+              type="file"
+              name="file"
+              required
+              accept="application/pdf, application/msword"
+              @change="selectMedicalFile"
+            >
+            <div class="upload-name">
+              Medical Examination
+              <input
+                v-if="inputMedicalfile !== null"
+                v-model="inputMedicalfile.name"
+                class="selected-file"
+                type="text"
+                readonly
+                required
+              >
+            </div>
+            <div class="upload-btn">Upload</div>
+            <input id="file-upload" type="file" name="image">
+          </label> -->
+          <div class="terms">
+            <input id="policy" v-model="policy" type="checkbox" name="policy" required>
+            <label
+              for="policy"
+              class="input-label"
+            >I agree to the <a class="termspolicy" href="https://www.householdexecutivesltd.com/privacy-policy/" target="_blank">Terms of Candidate Agreement</a> with Household
+              Executives</label>
+          </div>
+          <div class="register-btn">
+            <button
+              v-show="!isLoading"
+              class="register-btn-inner"
+              :disabled="!secondFieldsValid"
+              @click="regcandidate()"
+            >
+              Register Candidate
+            </button>
+            <button v-show="isLoading" class="register-btn-inner">
+              <ButtonLoader />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ModalsRequestSentModal
+      v-show="modalVisible"
+      @close-modal="modalVisible = false"
+    />
+  </div>
+</template>
+
+<script>
+export default {
+  layout: 'noAuthLayout',
+  data () {
+    return {
+      days: {
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false
+      },
+      modalVisible: false,
+      page: 1,
+      availability: null,
+      firstName: '',
+      surname: '',
+      email: '',
+      tribe: '',
+      selectedCategory: null,
+      categories: [],
+      categoriesCopy: [...this.$store.state.categories],
+      residence: '',
+      phoneNumber: '',
+      phoneNumberAlternative: '',
+      serviceArea: '',
+      previousEmployer: '',
+      previousEmployerPosition: '',
+      bestTimeToCall: '',
+      educationalLevel: '',
+      age: '',
+      gender: '',
+      origin: '',
+      religion: '',
+      experience: '',
+      skills: '',
+      history: '',
+      language: '',
+      isLoading: false,
+      regcandidateFailed: false,
+      inputImagefile: null,
+      government_identity: null,
+      utility_bill: null,
+      // inputGuarantorfile: null,
+      // inputMedicalfile: null,
+      policy: false
+    }
+  },
+  computed: {
+    availabilitySerializable () {
+      return {
+        title: this.availability,
+        sunday: {
+          availability: this.days.sunday,
+          booked: false
+        },
+        monday: {
+          availability: this.days.monday,
+          booked: false
+        },
+        tuesday: {
+          availability: this.days.tuesday,
+          booked: false
+        },
+        wednesday: {
+          availability: this.days.wednesday,
+          booked: false
+        },
+        thursday: {
+          availability: this.days.thursday,
+          booked: false
+        },
+        friday: {
+          availability: this.days.friday,
+          booked: false
+        },
+        saturday: {
+          availability: this.days.saturday,
+          booked: false
+        }
+      }
+    },
+    firstFieldsValid () {
+      const specialChars = "!@#$%^&*()+=-[]\\';,./{}|\":<>?"
+      let testfirst = false
+      let testsecond = false
+      for (let i = 0; i < this.firstName.length; i++) {
+        if (specialChars.includes(this.firstName.charAt(i))) {
+          testfirst = true
+        }
+      }
+      for (let i = 0; i < this.surname.length; i++) {
+        if (specialChars.includes(this.surname.charAt(i))) {
+          testsecond = true
+        }
+      }
+      return (
+        this.firstName.length > 2 &&
+        isNaN(this.firstName) &&
+        testfirst === false &&
+        this.surname.length > 2 &&
+        isNaN(this.surname) &&
+        testsecond === false &&
+        this.email.length > 0 &&
+        this.phoneNumber.length > 5 &&
+        this.residence.length > 0 &&
+        this.age.length > 0 &&
+        this.gender.length > 0 &&
+        // this.origin.length > 0 &&
+        this.religion.length > 0 &&
+        this.experience.length > 0
+      )
+    },
+    secondFieldsValid () {
+      // const speChars = "!@#$%^&*()+=-[]\\';,./{}|\":<>?"
+      // let testskills = false
+      // let testlanguages = false
+      // for (let i = 0; i < this.skills.length; i++) {
+      //   if (speChars.includes(this.skills.charAt(i))) {
+      //     testskills = true
+      //   }
+      // }
+      // for (let i = 0; i < this.language.length; i++) {
+      //   if (speChars.includes(this.language.charAt(i))) {
+      //     testlanguages = true
+      //   }
+      // }
+      return (
+        // this.skills.length > 0 &&
+        this.availability !== null &&
+        this.language.length > 0 &&
+        // this.history.length > 0 &&
+        this.inputImagefile !== null &&
+        this.government_identity !== null &&
+        this.utility_bill !== null &&
+        this.previousEmployer.length > 0 &&
+        this.previousEmployerPosition.length > 0 &&
+        this.policy === true
+        // this.inputGuarantorfile != null &&
+        // this.inputMedicalfile !== null
+      )
+    }
+  },
+  watch: {
+    selectedCategory: {
+      immediate: true,
+      handler (val, _old) {
+        if (val !== null) {
+          // Check if category has been added before adding
+          if (!this.categories.includes(val)) {
+            this.categories.push(val)
+          } else {
+            this.$toasted.error('Category has already been added')
+          }
+          setTimeout(() => {
+            this.categoriesCopy = this.categoriesCopy.filter(
+              c => c._id !== val
+            )
+          }, 0)
+        }
+      }
+    }
+  },
+  created () {
+    this.$store.dispatch('getCategories')
+  },
+  methods: {
+    changed () {
+      this.$toasted.show('firstname was changed')
+    },
+    getCategory (categoryId) {
+      const categories = this.$store.state.categories
+      return categories.filter(categ => categ.category._id === categoryId)[0]
+    },
+    removeCategory (categoryId) {
+      this.categories = this.categories.filter(c => c !== categoryId)
+    },
+    async regcandidate () {
+      this.isLoading = true
+      // APPEND FORM DATA
+      const formdata = new FormData()
+      formdata.append('email', this.email)
+      formdata.append('first_name', this.firstName)
+      formdata.append('last_name', this.surname)
+      formdata.append('age', this.age)
+      formdata.append('phone_number_alternative', this.phoneNumberAlternative)
+      formdata.append('phone_number', this.phoneNumber)
+      formdata.append('origin', this.origin)
+      formdata.append('tribe', this.tribe)
+      formdata.append('gender', this.gender)
+      formdata.append('experience', this.experience)
+      formdata.append('residence', this.residence)
+      formdata.append('religion', this.religion)
+      formdata.append('skill', this.skills)
+      formdata.append('service_area', this.serviceArea)
+      formdata.append('previous_employer', this.previousEmployer)
+      formdata.append('previous_employer_position', this.previousEmployerPosition)
+      formdata.append('best_time_to_call', this.bestTimeToCall)
+      formdata.append('educational_level', this.educationalLevel)
+      formdata.append('history', JSON.stringify(this.history.split(',')))
+      formdata.append('category', JSON.stringify(this.categories))
+      formdata.append('availability', JSON.stringify(this.availabilitySerializable)
+      )
+      formdata.append('profile_image', this.inputImagefile)
+      // formdata.append('medical', this.inputMedicalfile)
+      formdata.append('government_identity', this.government_identity)
+      formdata.append('utility_bill', this.utility_bill)
+      formdata.append('workhistory', this.history)
+      // formdata.append('guarantors', this.inputGuarantorfile)
+      formdata.append('language', this.language)
+      try {
+        const regcandidatePromise = await fetch(
+          this.$store.state.baseUrl + '/candidate/',
+          {
+            method: 'POST',
+            body: formdata
+          }
+        )
+        const regcandidateJson = regcandidatePromise.json()
+        regcandidateJson.then((onfulfilled) => {
+          this.isLoading = false
+          if (!onfulfilled.error) {
+            this.modalVisible = true
+          } else {
+            this.regcandidateFailed = true
+          }
+        })
+      } catch (ex) {
+        this.isLoading = false
+      }
+    },
+    selectImagefile (event) {
+      const ImagefileId = event.target.files[0]
+      this.inputImagefile = ImagefileId
+      // if (ImagefileId.type !== 'image/jpeg' || ImagefileId.type !== 'image/png') {
+      //   this.inputImagefile = []
+      //   this.$toasted.error('Enter a valid file type')
+      // } else {
+      //   this.inputImagefile = ImagefileId
+      // }
+    },
+    selectIdentityFile (event) {
+      const IdentityfileId = event.target.files[0]
+      this.government_identity = IdentityfileId
+      // if (IdentityfileId.type !== 'application/pdf' || IdentityfileId.type !== 'application/msword') {
+      //   this.government_identity = []
+      //   this.$toasted.error('Enter a valid file type')
+      // } else {
+      //   this.government_identity = IdentityfileId
+      // }
+    },
+    selectResidenceFile (event) {
+      const ResidencefileId = event.target.files[0]
+      this.utility_bill = ResidencefileId
+      // if (ResidencefileId.type !== 'application/pdf' || ResidencefileId.type !== 'application/msword') {
+      //   this.utility_bill = []
+      //   this.$toasted.error('Enter a valid file type')
+      // } else {
+      //   this.utility_bill = ResidencefileId
+      // }
+    },
+    selectGuarantorFile (event) {
+      const GuarantorfileId = event.target.files[0]
+      this.inputGuarantorfile = GuarantorfileId
+      // if (GuarantorfileId.type !== 'application/pdf' || GuarantorfileId.type !== 'application/msword') {
+      //   this.inputGuarantorfile = []
+      //   this.$toasted.error('Enter a valid file type')
+      // } else {
+      //   this.inputGuarantorfile = GuarantorfileId
+      // }
+    },
+    selectMedicalFile (event) {
+      const MedicalfileId = event.target.files[0]
+      this.inputMedicalfile = MedicalfileId
+      // if (MedicalfileId.type !== 'application/pdf' || MedicalfileId.type !== 'application/msword') {
+      //   this.inputMedicalfile = []
+      //   this.$toasted.error('Enter a valid file type')
+      // } else {
+      //   this.inputMedicalfile = MedicalfileId
+      // }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.register-candidate {
+  display: flex;
+}
+.section-1 {
+  background-image: url('assets/images/HE Chef 1.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding: 42px 50px;
+  width: 50%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+}
+.section-2 {
+  width: 50%;
+  margin-left: 50%;
+  background-color: white;
+}
+.section-2-logo {
+  display: none;
+}
+.content {
+  padding: 7% 0;
+  width: 428px;
+  margin: auto;
+}
+.head-text {
+  font-size: 26px;
+  font-weight: 600;
+  color: #f7941d;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.head-subtext {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.title {
+  margin-bottom: 10px;
+  color: black;
+}
+.name-box,
+.email-box {
+  height: 50px;
+  width: 100%;
+  margin-bottom: 24px;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  background-color: transparent;
+}
+textarea.email-box {
+  height: auto;
+  padding: 8px;
+  margin-bottom: 4px;
+}
+.small-text {
+  font-size: 14px;
+  opacity: 0.6;
+}
+.form-select {
+  position: relative;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+.form-select label {
+  display: block;
+  margin-bottom: 10px;
+}
+.form-select select {
+  display: block;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 16px;
+  width: 201px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+#age-box {
+  display: block;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  padding: 0 16px;
+  width: 201px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+.form-select img {
+  position: absolute;
+  top: 45px;
+  right: 16px;
+}
+.residence {
+  margin-right: 0;
+}
+.skills {
+  margin-right: 0;
+  margin-top: 24px;
+}
+.radio-section {
+  margin-bottom: 20px;
+}
+.radio-container-1 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 60%;
+}
+.radio-container-1 label {
+  margin-bottom: 10px;
+  display: block;
+}
+.residence select,
+.skills select {
+  width: 100%;
+}
+.experience-select div,
+.skills-select div {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border: 1px solid #c4c4c4;
+  border-radius: 8px;
+  width: 100%;
+  margin-right: 24px;
+  margin-bottom: 24px;
+}
+.select-container {
+  display: flex;
+  justify-content: space-between;
+}
+.select-container > .input {
+  flex-basis: 47%;
+}
+.line {
+  border-top: 1px solid #6f8a9c2f;
+  width: 100%;
+  margin: 32px 0;
+}
+/* .upload-box input {
+  visibility: hidden;
+} */
+#file-upload,
+#image-upload,
+#identity-upload,
+#residence-upload,
+#guarantor-upload,
+#medical-upload {
+  display: none;
+}
+.upload-title {
+  font-weight: 600;
+}
+.upload-subtitle {
+  font-style: italic;
+  font-size: 14px;
+}
+.selected-file {
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #00a69d;
+  font-size: 13px;
+  padding: 2px;
+}
+.upload-container {
+  border: 1px solid #c4c4c4;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.upload-name {
+  padding-left: 15px;
+}
+.upload-btn {
+  padding: 13px 34px;
+  background-color: #00a69d;
+  color: white;
+  border-radius: 8px;
+}
+.terms {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+}
+.input-label {
+  margin-left: 15px;
+}
+.termspolicy {
+  color: #00a69d;
+  /* font-size: 15px; */
+}
+.register-btn-inner {
+  background-color: #00a69d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  padding: 19px 136px;
+  margin-top: 50px;
+}
+.chip-group {
+  display: flex;
+  margin-top: 8px;
+}
+.chip {
+  display: flex;
+  background: #006e69;
+  color: #ffffff;
+  margin-right: 8px;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0px 12px;
+}
+.chip > button {
+  margin-left: 6px;
+}
+.chip .text,
+.chip .material-icons {
+  color: #ffffff;
+}
+/* INHERITED FROM REGISTERSS PAGE */
+.flag {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  left: 2.5vw;
+  flex-basis: 20%;
+  text-align: center;
+  align-items: center;
+}
+.input-box {
+  margin: 0;
+  border: 0;
+  border-left: 1px solid #717f88b6;
+  border-radius: 0px;
+  padding: 0 16px;
+  margin: 0 16px;
+  width: 80%;
+}
+.input-box:focus {
+  outline: none;
+}
+.number {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+.flag img {
+  flex-basis: 48%;
+  height: 15px;
+}
+.flag-label {
+  font-family: Gelion;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: #042538;
+  padding-right: 5px;
+}
+/* INHERITED FROM HIRE TYPE MODAL */
+.days {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #c4c4c4;
+  padding: 20px 12px;
+  margin-top: 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.clear-btn {
+  color: #000000;
+  height: 35px;
+  width: 35px;
+  display: grid;
+  place-items: center;
+}
+.clear-btn:disabled {
+  opacity: 0.4;
+  background: transparent;
+  border: 0px solid;
+}
+.clear-btn.active {
+  background: #00a69e1e;
+  color: #00a69d;
+  font-size: 13px;
+  border-radius: 50%;
+}
+button.primary-btn {
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  color: white;
+  width: 327px;
+  height: 56px;
+  cursor: pointer;
+}
+@media only screen and (max-width: 1024px) {
+  .section-1 {
+    display: none;
+  }
+  .section-2 {
+    width: 100%;
+    margin: 0;
+  }
+  .section-2-logo {
+    display: block;
+    margin: auto;
+    margin-bottom: 30px;
+  }
+  .content {
+    padding: 10vh 0;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .content {
+    width: 90%;
+  }
+  .select-container {
+    flex-direction: column;
+  }
+  .form-select {
+    margin-right: 0;
+  }
+  .form-select select {
+    width: 100%;
+  }
+  /*
+  .residence select,
+  .skills select {
+    width: 90%;
+  } */
+}
+</style>
