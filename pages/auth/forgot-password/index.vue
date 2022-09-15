@@ -213,7 +213,7 @@ export default {
 
 .lhs {
   width: 58%;
-  background-image: url('assets/images/login-bg.jpg');
+  background-image: url('assets/images/login-bg.webp');
   background-size: cover;
   background-position-y: bottom;
   height: 100vh;

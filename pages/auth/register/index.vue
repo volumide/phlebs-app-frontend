@@ -108,7 +108,7 @@
                 </svg>
               </div>
             </div>
-            <button class="bg_btn" @click="successPage = true">
+            <button class="bg_btn" @click="$router.push('/auth/register/verify-number')">
               Create Account
             </button>
             <p class="create" @click="$router.push('/auth/login')">
@@ -228,7 +228,7 @@
                   Forgot Password?
                 </p> -->
               </div>
-              <button class="bg_btn" @click="successPage = true">
+              <button class="bg_btn" @click="$router.push('/auth/register/verify-number')">
                 Create Account
               </button>
             </div>
@@ -319,7 +319,7 @@ export default {
 
 .lhs {
   width: 58%;
-  background-image: url('assets/images/login-bg.jpg');
+  background-image: url('assets/images/login-bg.webp');
   background-size: cover;
   background-position-y: bottom;
   height: 100vh;
