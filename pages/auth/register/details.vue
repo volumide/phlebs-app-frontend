@@ -2,7 +2,16 @@
   <div class="container">
     <div class="inner">
       <div class="logo">
-        <img src="" alt="">
+        <img src="~assets/images/logo Blue .png" alt="">
+      </div>
+      <div class="progress_bars">
+        <hr class="progress_1 active_bar">
+        <hr :class="`progress_1 ${bar_active_2 ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${bar_active_3 ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${bar_active_4 ? 'active_bar' : ''}`">
+      </div>
+      <div class="form_ctn">
+        <RegistrationPersonalInformation v-if="personalInformation" @back="back" @proceed="proceed" />
       </div>
     </div>
   </div>
@@ -10,10 +19,64 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      personalInformation: true,
+      bar_active_2: false,
+      bar_active_3: false,
+      bar_active_4: false
+    }
+  }
 }
 </script>
 
-<style>
+<style scoped>
+.container {
+  padding: 3rem;
+}
 
+.inner {
+  width: 40%;
+  margin: auto;
+}
+
+.logo {
+  text-align: center;
+}
+
+.logo img {
+  width: 25%;
+}
+
+.progress_bars {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5vh;
+}
+
+.progress_1 {
+  width: 24%;
+  border: none;
+  border-top: 6px solid rgba(15, 178, 243, 0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.active_bar {
+  border-top: 6px solid #0FB2F3;
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  .inner {
+    width: 100%;
+  }
+
+  .logo img {
+    width: 35%;
+  }
+}
 </style>

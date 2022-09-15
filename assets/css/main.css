@@ -94,6 +94,36 @@ input {
   color: var(--placeholder-color);
 }
 
+/* -- SELECT INPUT --  */
+
+.form-select {
+  position: relative;
+}
+.form-select select {
+  display: block;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  color: #3F3F3F;
+  padding: 0 16px;
+  width: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  outline: none;
+  font-size: 14px;
+  background-color: var(--input-bg-color);
+}
+.form-select svg {
+  position: absolute;
+  top: 15px;
+  left: 90%;
+}
+
 @media only screen and (max-width: 500px) {
   .label {
     font-size: 14px;
