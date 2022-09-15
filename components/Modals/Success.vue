@@ -7,7 +7,10 @@
       <p class="sub_head">
         {{ subHeading }}
       </p>
-      <div class="ctn_img">
+      <div v-if="whatsappStatus" class="ctn_img">
+        <img src="~assets/images/94110-whatsapp-transparent.gif" alt="">
+      </div>
+      <div v-else class="ctn_img">
         <img src="~assets/images/96673-success.gif" alt="">
       </div>
       <div class="btn">
@@ -33,6 +36,10 @@ export default {
     btnText: {
       type: String,
       default: () => ''
+    },
+    whatsappStatus: {
+      type: Boolean,
+      default: () => false
     }
   }
 

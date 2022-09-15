@@ -4,17 +4,24 @@
       <div class="logo">
         <img src="~assets/images/logo Blue .png" alt="">
       </div>
-      <div class="progress_bars">
+      <div v-show="!successPage" class="progress_bars">
         <hr class="progress_1 active_bar">
-        <hr :class="`progress_1 ${nextOfKin || personalQualification ? 'active_bar' : ''}`">
-        <hr :class="`progress_1 ${personalQualification ? 'active_bar' : ''}`">
-        <hr :class="`progress_1 ${identification ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${bar_active_2 ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${bar_active_3 ? 'active_bar' : ''}`">
+        <hr :class="`progress_1 ${bar_active_4 ? 'active_bar' : ''}`">
       </div>
       <div class="form_ctn">
-        <RegistrationPersonalInformation v-if="personalInformation" @back="back" @proceed="personalInformation = false; nextOfKin = true" />
-        <RegistrationNextOfKin v-if="nextOfKin" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
-        <RegistrationPersonalQualification v-if="personalQualification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true" />
-        <RegistrationIdentification v-if="identification" @back="back" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true" />
+        <RegistrationPersonalInformation v-if="personalInformation" @back="back()" @proceed="personalInformation = false; nextOfKin = true" />
+        <RegistrationNextOfKin v-if="nextOfKin" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
+        <RegistrationPersonalQualification v-if="personalQualification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true" />
+        <RegistrationIdentification v-if="identification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true" />
+        <ModalsSuccess
+          v-if="successPage"
+          class="success_page"
+          :heading="'Your registration has been completed successfully but pending'"
+          :sub-heading="'We’ve kept your account pending for verifcation by the admin. You will be able o login to your dashboard once your account verified. '"
+          :btn-text="'Proceed to Dashboard'"
+        />
       </div>
     </div>
   </div>
@@ -24,14 +31,25 @@
 export default {
   data () {
     return {
-      personalInformation: false,
+      personalInformation: true,
       nextOfKin: false,
       personalQualification: false,
-      identification: true,
-      successPage: false,
-      bar_active_2: false,
-      bar_active_3: false,
-      bar_active_4: false
+      identification: false,
+      successPage: false
+      // bar_active_2: false,
+      // bar_active_3: false,
+      // bar_active_4: false
+    }
+  },
+  computed: {
+    bar_active_2 () {
+      return this.nextOfKin === true || this.personalQualification === true || this.identification === true
+    },
+    bar_active_3 () {
+      return this.personalQualification === true || this.identification === true
+    },
+    bar_active_4 () {
+      return this.identification === true
     }
   }
 }
@@ -88,6 +106,10 @@ export default {
 .form_ctn {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.success_page {
+  margin-top: 12vh;
 }
 
 @media only screen and (max-width: 500px) {
