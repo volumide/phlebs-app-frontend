@@ -203,6 +203,16 @@ input {
   .upload-btn p {
     font-size: 12px;
   }
+
+  .page_title {
+    font-size: 20px;
+    font-weight: 800;
+  }
+
+  .greeting {
+    color: rgba(0, 0, 0, 0.431);
+    font-weight: 600;
+  }
 }
 
 /* VUE PINCODE INPUT */

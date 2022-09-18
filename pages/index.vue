@@ -407,4 +407,10 @@ export default {
   font-size: 26px;
   font-weight: 700;
 }
+
+ @media only screen and (max-width: 500px) {
+  .top_side {
+    flex-direction: column;
+  }
+ }
 </style>
