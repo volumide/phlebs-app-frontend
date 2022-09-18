@@ -213,6 +213,12 @@ input {
     color: rgba(0, 0, 0, 0.431);
     font-weight: 600;
   }
+  .no_show {
+    display: block;
+  }
+  .mobile_no_show {
+    display: none;
+  }
 }
 
 /* VUE PINCODE INPUT */
