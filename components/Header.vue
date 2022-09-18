@@ -165,16 +165,17 @@ export default {
 <style scoped>
 .main_container {
   padding: 0 3vw;
+  padding-top: 3vh;
   z-index: 5;
   position: fixed;
-  height: 11vh;
+  /* height: 11vh; */
   width: 81vw;
+  background-color: #fff;
 }
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
 }
 
 .left-side {
@@ -250,6 +251,10 @@ export default {
   display: none;
 }
 
+.mobile_show {
+  display: none;
+}
+
 /* RESPONSIVENESS */
 
 .bar {
@@ -263,9 +268,8 @@ export default {
 @media only screen and (max-width: 500px) {
 .main_container {
   height: fit-content;
-  margin-top: 3vh;
   width: 100vw;
-  padding: 15px;
+  padding: 3vh 15px;
 }
 
 .page_name_ctn {
