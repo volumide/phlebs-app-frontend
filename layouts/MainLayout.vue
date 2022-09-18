@@ -1,37 +1,33 @@
 <template>
   <div class="main">
-    <!-- <vue-internet-checker
-      @status="status"
-      @event="event"
-    /> -->
     <div class="sidemenu">
-      <!-- <SideMenu /> -->
+      <SideMenu />
     </div>
     <div>
       <div class="header-content">
-        <!-- <Header
+        <Header
           v-show="!showMobileMenu"
           @showMobileMenu="showMobileMenu = true"
           @openNotification="openNotification = true"
           @openLogout="openLogout = true"
-        /> -->
+        />
       </div>
       <div class="mobile-menu">
-        <!-- <MobileMenu
+        <MobileMenu
           v-show="showMobileMenu"
           @closeMobileMenu="showMobileMenu = false"
-        /> -->
+        />
       </div>
       <div class="main-content">
         <Nuxt />
-        <!-- <Logout
+        <ModalsLogout
           v-if="openLogout"
           @close-logout="openLogout = false"
         />
-        <Notification
+        <ModalsNotification
           v-if="openNotification"
           @close-notification="openNotification = false"
-        /> -->
+        />
       </div>
     </div>
   </div>
@@ -39,16 +35,8 @@
 
 <script>
 // import Cookies from 'js-cookie'
-// import vueInternetChecker from 'vue-internet-checker'
-// import Logout from '~/components/Modals/Logout.vue'
-// import Notification from '~/components/Modals/Notification.vue'
 export default {
   name: 'MainLayout',
-  components: {
-    // Logout,
-    // Notification
-    // vueInternetChecker
-  },
   data () {
     return {
       showMobileMenu: false,
