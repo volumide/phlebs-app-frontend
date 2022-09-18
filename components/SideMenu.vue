@@ -193,7 +193,7 @@ export default {
 
 <style scoped>
 .sidemenu-container {
-  width: 17vw;
+  width: 19vw;
   height: 100vh;
   background-color: #F0F7FE;
   position: fixed;
@@ -215,7 +215,7 @@ export default {
 }
 
 .logo-box img {
-  width: 50%;
+  width: 45%;
   /* margin: 6px 40px; */
 }
 
@@ -247,7 +247,7 @@ export default {
 
 .menu-header {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px;
   color: #000000;
 }
 

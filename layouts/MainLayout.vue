@@ -121,13 +121,13 @@ html {
 }
 
 .header-content {
-  margin-left: 17vw;
+  margin-left: 19vw;
   z-index: 4;
 }
 
 .main-content {
   margin-top: 9vh;
-  margin-left: 18vw;
+  margin-left: 19vw;
   width: 82vw;
 }
 

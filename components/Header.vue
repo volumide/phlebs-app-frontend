@@ -157,10 +157,10 @@ export default {
   align-items: center;
   position: fixed;
   height: 11vh;
-  width: 83vw;
+  width: 81vw;
   background-color: transparent;
   border-bottom: 1px solid rgba(226, 226, 234, 0.161);
-  padding: 0 25px;
+  padding: 0 3vw;
   z-index: 5;
 }
 
@@ -210,7 +210,7 @@ export default {
 }
 
 .username {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   margin-right: 10px;
   white-space: nowrap;
