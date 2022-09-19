@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="mobile_no_show table-container come-down">
+    <div v-if="!emptyTable" class="mobile_no_show table-container come-down">
       <table>
         <tr class="table-header">
           <th class="date">
@@ -61,6 +61,14 @@
         </tr>
       </table>
     </div>
+    <div v-else>
+      <EmptyData
+        :modal-head="'No New Orders Yet!'"
+        :modal-text="'You are all Caught up!'"
+        :bg-btn="'See My Todo'"
+        @bg-action="bhAction"
+      />
+    </div>
     <div class="no_show">
       <div v-for="(appointment, index) in appointments" :key="index" class="data_box slide-in-from-left">
         <div>
@@ -104,6 +112,7 @@ export default {
     return {
       currency: functions.formatCurrency,
       transLoading: false,
+      emptyTable: true,
       appointments: [
         {
           date: 'Tuesday, 29th August 2022',
