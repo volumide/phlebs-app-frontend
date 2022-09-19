@@ -11,6 +11,18 @@
     <div v-if="activeTab === 'All To-do'" class="tab_data">
       <TablesAllToDoTable />
     </div>
+    <div v-if="activeTab === 'New Orders'" class="tab_data">
+      <TablesNewOrdersTable />
+    </div>
+    <ModalsConfirmationModal
+      v-if="instruction"
+      :modal-image="require('assets/images/shield 1.png')"
+      :modal-head="'Instruction!'"
+      :modal-text="'Kindly Approve all orders and Dismiss only for orders you wont be able to fulfill'"
+      :bg-btn="'OK'"
+      @close-modal="instruction = false"
+      @bg-action="instruction = false"
+    />
   </div>
 </template>
 
@@ -19,8 +31,14 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'All To-do'
+      activeTab: 'All To-do',
+      instruction: false
     }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.instruction = true
+    }, 3000)
   },
   methods: {
     setActiveTab (tab) {

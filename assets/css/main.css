@@ -27,7 +27,7 @@ body {
 }
 
 button {
-  font-weight: 600 !important;
+  font-weight: 600;
 }
 
 a {
@@ -397,7 +397,7 @@ animation: slide-in-from-left 0.9s forwards;
 
 @keyframes slide-in-from-left {
 0% {
-  transform: translateX(-80px);
+  transform: translateX(-100px);
 }
 100% {
   transform: translateX(0vw);

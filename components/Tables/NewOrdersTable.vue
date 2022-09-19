@@ -106,13 +106,13 @@ export default {
       transLoading: false,
       appointments: [
         {
-          date: 'Monday, 28th August 2022',
-          time: '8:30am',
+          date: 'Tuesday, 29th August 2022',
+          time: '10:30am',
           address: '42, Local Airport Road, Ikeja, Lagos'
         },
         {
-          date: 'Monday, 28th August 2022',
-          time: '12:00pm',
+          date: 'Wednesday, 30th August 2022',
+          time: '11:00pm',
           address: '3, Shangisha Magodo, Lagos'
         },
         {
