@@ -70,10 +70,6 @@ export default {
   transition: all 0.3s ease-out;
 }
 
-.tab div {
-  /* background: #F4F6FA; */
-}
-
 .tab.active,
 .tab:hover {
   background-color: rgba(255, 255, 255, 0.300);
