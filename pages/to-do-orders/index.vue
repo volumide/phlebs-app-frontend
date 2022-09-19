@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted () {
+    this.$store.commit('setPageName', this.activeTab)
     setTimeout(() => {
       this.instruction = true
     }, 3000)
@@ -43,6 +44,7 @@ export default {
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
+      this.$store.commit('setPageName', tab)
     }
   }
 }

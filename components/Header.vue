@@ -119,14 +119,19 @@ export default {
   },
   computed: {
     pageName () {
+      const newPage = this.$store.state.newPageName
       const str = this.$route.name
+      // console.log(str)
       const splited = str.split('-')
 
       if (this.$route.name === 'index') {
         return 'Overview'
       }
-      if (this.$route.name === 'to-do') {
-        return 'All To-do'
+      if (this.$route.name === 'to-do-orders') {
+        return newPage
+      }
+      if (this.$route.name === 'to-do-orders-details') {
+        return 'Order Details'
       }
 
       if (this.$route.name === `${splited[0]}-${splited[1]}`) {

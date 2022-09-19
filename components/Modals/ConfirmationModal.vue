@@ -149,6 +149,7 @@ export default {
 }
 
 .title {
+  color: var(--primary-color);
   font-size: 20px;
   font-weight: 700;
   text-align: center;
@@ -213,24 +214,9 @@ export default {
     width: 100%;
   }
 
-  .form {
+  .bottom_btn {
     width: 100%;
-  }
-
-  .label {
-    font-size: 12px;
-  }
-
-  ::placeholder {
-    font-size: 12px;
-  }
-
-  .text {
-    font-size: 12px;
-  }
-
-  .btn button {
-    font-size: 14px;
+    gap: 2vw;
   }
 
 }

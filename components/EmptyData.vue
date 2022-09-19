@@ -71,6 +71,7 @@ export default {
 }
 
 .title {
+  color: var(--primary-color);
   font-size: 20px;
   font-weight: 700;
   text-align: center;
@@ -103,5 +104,25 @@ export default {
 .bg_btn {
   width: 50%;
   font-weight: 700;
+}
+
+@media only screen and (max-width: 500px) {
+  .modal-icon svg{
+    width: 150px;
+    height: 145px;
+  }
+  .title {
+    font-size: 20px;
+  }
+
+  .sub-title {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .bottom_btn {
+    width: 100%;
+    gap: 2vw;
+  }
 }
 </style>
