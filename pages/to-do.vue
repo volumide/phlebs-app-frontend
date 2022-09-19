@@ -1,13 +1,47 @@
 <template>
-  <div></div>
+  <div class="container">
+    <div class="tab-ctn">
+      <TabHeaders
+        :tabs="['All To-do', 'New Orders']"
+        padding-left="4px"
+        :active-tab="activeTab"
+        @set-active-tab="setActiveTab"
+      />
+    </div>
+    <div v-if="activeTab === 'All To-do'" class="tab_data">
+      <TablesAllToDoTable />
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  layout: 'MainLayout'
+  layout: 'MainLayout',
+  data () {
+    return {
+      activeTab: 'All To-do'
+    }
+  },
+  methods: {
+    setActiveTab (tab) {
+      this.activeTab = tab
+    }
+  }
 }
 </script>
 
 <style scoped>
+.container {
+  padding: 2vh 3vw;
+}
 
+.tab_data {
+  margin-top: 5vh;
+}
+
+@media only screen and (max-width: 500px) {
+  .container {
+    padding-bottom: 5vh;
+  }
+}
 </style>

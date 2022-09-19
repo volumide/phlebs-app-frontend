@@ -3,7 +3,7 @@
     <div class="inner">
       <div class="mobile_show">
         <div class="new_input ">
-          <input type="search" name="" placeholder="Search for Name, Order Reference No">
+          <input type="text" name="" placeholder="Search for Name, Order Reference No">
           <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="15" cy="15" r="15" fill="#D0F0FB" />
             <g clip-path="url(#clip0_717_13142)">
@@ -268,7 +268,6 @@ export default {
 
 .inner {
   width: 95%;
-  margin-top: 5vh;
 }
 
 .mobile_show {

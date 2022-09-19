@@ -126,7 +126,7 @@ html {
 }
 
 .main-content {
-  margin-top: 9vh;
+  margin-top: 15vh;
   margin-left: 19vw;
   width: 82vw;
 }
@@ -153,7 +153,7 @@ html {
 
 @media only screen and (max-width: 500px) {
 .main-content {
-  margin-top: 16vh;
+  margin-top: 20vh;
   padding: 0;
   margin-left: 0;
   width: 100vw;

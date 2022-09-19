@@ -1,6 +1,6 @@
 <template>
   <div class="mobile_backdrop">
-    <div class="mobile-menu come-down">
+    <div class="mobile-menu come-down-mobile">
       <div class="mobile_inner">
         <div class="close" @click="closeMobileMenu">
           <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -234,4 +234,28 @@ a.nuxt-link-exact-active .menu_text {
   color: black;
   border: 1px solid rgba(0, 0, 0, 0.068);
 } */
+
+.come-down-mobile {
+animation: come-down .7s ease-in-out;
+-webkit-animation: come-down .7s ease-in-out;
+}
+
+@keyframes come-down {
+0% {
+  opacity: 0;
+  transform: translateY(-150px);
+  -webkit-transform: translateY(-150px);
+  -moz-transform: translateY(-150px);
+  -ms-transform: translateY(-150px);
+  -o-transform: translateY(-150px);
+}
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    -o-transform: translateY(0px);
+}
+}
 </style>
