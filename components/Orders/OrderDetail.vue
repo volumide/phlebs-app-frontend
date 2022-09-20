@@ -407,6 +407,20 @@ export default {
     height: 24px;
   }
 
+  .patient_inner {
+    gap: 4.5vw;
+  }
+
+  .patient_image img {
+    width: 54px;
+    height: 54px;
+  }
+
+  .patient_details {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .patient_title,
   .test_title {
     margin-bottom: 2vh;
