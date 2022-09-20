@@ -1,5 +1,5 @@
 <template>
-  <div class="list_ctn">
+  <div class="list_ctn slide-in-from-right">
     <div class="list_inner">
       <div class="list_top">
         <p class="list_title">

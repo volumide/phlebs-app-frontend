@@ -20,21 +20,55 @@
           </defs>
         </svg>
       </div>
-      <div v-if="modalImage" class="modal-icon">
-        <img :src="modalImage" alt="">
-      </div>
-      <h1 v-if="modalHead" class="title">
-        {{ modalHead }}
+      <h1 class="title">
+        Let us know why you are dismissing this order
       </h1>
-      <p v-if="modalText" class="sub-title">
-        {{ modalText }}
-      </p>
+      <div class="form">
+        <div class="input-box">
+          <p class="label">
+            Select Reason
+          </p>
+          <div class="form-select">
+            <select v-model="reason" required>
+              <option value="">
+                Select...
+              </option>
+              <option value="I am not available for the Schedule">
+                I am not available for the Schedule
+              </option>
+              <option value="Patient Rescheduled Order">
+                Patient Rescheduled Order
+              </option>
+              <option value="Patient Cancelled Order">
+                Patient Cancelled Order
+              </option>
+              <option value="Admin Asked to Cancel Order">
+                Admin Asked to Cancel Order
+              </option>
+              <option value="Other, Please Specify Below">
+                Other, Please Specify Below
+              </option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.24652 11.14L2.45052 5.658C1.88452 5.013 2.34452 4 3.20352 4H12.7955C12.9878 3.99984 13.176 4.05509 13.3376 4.15914C13.4993 4.26319 13.6275 4.41164 13.707 4.58669C13.7864 4.76175 13.8137 4.956 13.7856 5.14618C13.7575 5.33636 13.6752 5.51441 13.5485 5.659L8.75252 11.139C8.65866 11.2464 8.54291 11.3325 8.41303 11.3915C8.28316 11.4505 8.14216 11.481 7.99952 11.481C7.85688 11.481 7.71589 11.4505 7.58601 11.3915C7.45614 11.3325 7.34038 11.2464 7.24652 11.139V11.14Z" fill="black" />
+            </svg>
+          </div>
+        </div>
+        <div v-if="reason === 'Other, Please Specify Below'" class="input-box come-down">
+          <p class="label">
+            Specify here (Optional)
+          </p>
+          <div class="">
+            <textarea v-model="other" cols="30" rows="10" placeholder="Type Here" />
+          </div>
+        </div>
+      </div>
       <div class="bottom_btn">
-        <button v-if="transBtn" class="trans_btn" @click="$emit('trans-action')">
-          {{ transBtn }}
+        <button class="trans_btn" @click="$emit('trans-action')">
+          Back
         </button>
-        <button v-if="bgBtn" class="bg_btn" @click="$emit('bg-action')">
-          {{ bgBtn }}
+        <button class="bg_btn" @click="$emit('bg-action')">
+          Submit and Dismiss
         </button>
       </div>
     </div>
@@ -44,34 +78,12 @@
 <script>
 export default {
   props: {
-    modalWidth: {
-      type: Number,
-      default: () => 32
-    },
-    modalImage: {
-      type: String,
-      default: () => ''
-    },
-    modalHead: {
-      type: String,
-      default: () => ''
-    },
-    modalText: {
-      type: String,
-      default: () => ''
-    },
-    transBtn: {
-      type: String,
-      default: () => ''
-    },
-    bgBtn: {
-      type: String,
-      default: () => ''
-    }
   },
   data () {
     return {
-      anim: ''
+      anim: '',
+      other: '',
+      reason: ''
     }
   },
   mounted () {
@@ -108,13 +120,14 @@ export default {
 .modal-2 {
   /* margin-top: 5%; */
   background-color: white;
-  width: 32%;
+  width: 30%;
   height: fit-content;
   align-items: center;
   border-radius: 10px;
   overflow-y: auto;
-  padding: 3vh 2vw;
+  padding: 3vh 2.5vw;
   padding-bottom: 5vh;
+  transition: all 0.3s ease-out;
 }
 
 .modal_top {
@@ -141,13 +154,14 @@ export default {
   margin-top: 3vh;
 }
 
-.sub-title {
-  text-align: center;
-  width: 80%;
-  margin: auto;
-  color: rgba(0, 0, 0, 0.5);
-  margin-top: 2vh;
-  line-height: 24px;
+.form {
+  margin-top: 4vh;
+  transition: all 0.3s ease-out;
+}
+
+.input-box {
+  margin-bottom: 3vh;
+  transition: all 0.3s ease-out;
 }
 
 .bottom_btn {
@@ -191,7 +205,7 @@ export default {
   }
 
   .title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .sub-title {
@@ -202,7 +216,6 @@ export default {
   .bottom_btn {
     width: 100%;
     gap: 2vw;
-    margin-top: 6vh;
   }
 
 }

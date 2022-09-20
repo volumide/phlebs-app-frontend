@@ -1,7 +1,7 @@
 <template>
   <div class="detail_ctn">
-    <div class="top_page">
-      <div class="back come-down" @click="$router.go(-1)">
+    <div class="top_page come-down">
+      <div class="back" @click="$router.go(-1)">
         <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.0629 6.40633L5.69343 10.786C5.31403 11.1676 5.10107 11.6839 5.10107 12.2221C5.10107 12.7602 5.31403 13.2765 5.69343 13.6582L10.0629 18.0378C10.2537 18.2275 10.5119 18.334 10.7809 18.334C11.05 18.334 11.3082 18.2275 11.499 18.0378C11.5944 17.9431 11.6702 17.8305 11.7219 17.7064C11.7736 17.5822 11.8003 17.4491 11.8003 17.3147C11.8003 17.1802 11.7736 17.0471 11.7219 16.923C11.6702 16.7988 11.5944 16.6862 11.499 16.5915L8.14806 13.2406H19.3518C19.6219 13.2406 19.881 13.1333 20.072 12.9423C20.263 12.7513 20.3703 12.4922 20.3703 12.2221C20.3703 11.9519 20.263 11.6929 20.072 11.5019C19.881 11.3109 19.6219 11.2035 19.3518 11.2035H8.14806L11.499 7.85262C11.6908 7.66218 11.7991 7.40335 11.8 7.13308C11.801 6.8628 11.6945 6.60321 11.5041 6.41142C11.3136 6.21963 11.0548 6.11134 10.7845 6.11039C10.5143 6.10943 10.2547 6.21589 10.0629 6.40633Z" fill="#325BD9" fill-opacity="0.5" />
         </svg>
@@ -70,7 +70,7 @@
           </div>
         </div>
       </div>
-      <div class="box_details_ctn">
+      <div class="box_details_ctn come-down">
         <div class="box_details">
           <div class="box_details_icon">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -134,7 +134,7 @@
           </div>
         </div>
       </div>
-      <div class="patient_box">
+      <div class="patient_box slide-in-from-left">
         <p class="patient_title">
           Patient Information
         </p>
@@ -160,7 +160,7 @@
           </div>
         </div>
       </div>
-      <div class="patient_box">
+      <div class="patient_box slide-in-from-left">
         <p class="patient_title">
           Collection Address
         </p>
@@ -168,7 +168,7 @@
           42, Local Airport Road, Ikeja Lagos
         </p>
       </div>
-      <div class="patient_box">
+      <div class="patient_box slide-in-from-left">
         <p class="test_title">
           Tests Information
         </p>
@@ -199,9 +199,9 @@
           </div>
         </div>
       </div>
-      <div class="btns">
+      <div class="btns come-down">
         <div class="bottom_btn">
-          <button class="trans_btn" @click="$emit('back')">
+          <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
           </button>
           <button class="bg_btn" @click="$emit('proceed')">
@@ -210,6 +210,17 @@
         </div>
       </div>
     </div>
+    <ModalsConfirmationModal
+      v-if="dismissOpen"
+      :modal-head="'Are you sure you want to dismiss this order'"
+      :modal-text="'Dismissing this order implies that you wont be able to Carry out this order.'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Dismiss'"
+      @close-modal="dismissOpen = false"
+      @bg-action="openDismissOrder()"
+      @trans-action="dismissOpen = false"
+    />
+    <ModalsDismissOrder v-if="dismissOrder" @close-modal="dismissOrder = false" />
   </div>
 </template>
 
@@ -217,7 +228,15 @@
 export default {
   data () {
     return {
-      successful: false
+      successful: false,
+      dismissOpen: false,
+      dismissOrder: false
+    }
+  },
+  methods: {
+    openDismissOrder () {
+      this.dismissOpen = false
+      this.dismissOrder = true
     }
   }
 }
@@ -367,7 +386,7 @@ export default {
 
 .btns {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .bottom_btn {
