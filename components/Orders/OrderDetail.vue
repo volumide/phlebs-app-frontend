@@ -43,7 +43,7 @@
       <div class="mobile_no_show">
         <div class="top">
           <p class="box_name">
-            New Order
+            {{ boxName }}
           </p>
           <div class="pagination">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -238,6 +238,12 @@
 
 <script>
 export default {
+  props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    }
+  },
   data () {
     return {
       successful: false,

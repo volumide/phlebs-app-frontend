@@ -245,6 +245,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
+      :modal-head="'Thank You!'"
       :modal-image="require('assets/images/96673-success.gif')"
       :modal-text="'The order has been dismissed successfully'"
       :bg-btn="'Close'"

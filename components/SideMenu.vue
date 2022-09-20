@@ -103,7 +103,7 @@
       </div>
       <div class="menu-dropdown">
         <div class="inner-menu">
-          <NuxtLink to="/patients">
+          <NuxtLink to="/history">
             <div class="inner">
               <div class="menu-icon">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

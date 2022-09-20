@@ -130,7 +130,7 @@ export default {
       if (this.$route.name === 'to-do-orders') {
         return newPage
       }
-      if (this.$route.name === 'to-do-orders-details') {
+      if (this.$route.name === 'to-do-orders-details' || this.$route.name === 'to-do-orders-new-order-details') {
         return 'Order Details'
       }
       if (this.$route.name === 'today-order') {

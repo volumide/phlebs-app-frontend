@@ -20,12 +20,12 @@
           </defs>
         </svg>
       </div>
-      <div v-if="modalImage" class="modal-icon">
-        <img :src="modalImage" alt="">
-      </div>
       <h1 v-if="modalHead" class="title">
         {{ modalHead }}
       </h1>
+      <div v-if="modalImage" class="modal-icon">
+        <img :src="modalImage" alt="">
+      </div>
       <p v-if="modalText" class="sub-title">
         {{ modalText }}
       </p>

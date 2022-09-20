@@ -2,10 +2,10 @@
   <div class="container">
     <div class="inner">
       <div class="lhs">
-        <OrdersOrderDetail :box-name="'To-do'" />
+        <OrdersOrderDetail :box-name="'New Order'" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersOrderList :box-name="'To-do'" />
+        <OrdersOrderList :box-name="'New Order'" />
       </div>
     </div>
   </div>

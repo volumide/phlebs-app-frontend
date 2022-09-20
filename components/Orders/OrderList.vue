@@ -3,7 +3,7 @@
     <div class="list_inner">
       <div class="list_top">
         <p class="list_title">
-          New Orders
+          {{ boxName }}
         </p>
         <div class="list_number">
           <p>8</p>
@@ -66,6 +66,12 @@
 
 <script>
 export default {
+  props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    }
+  },
   data () {
     return {
       allOrders: [
