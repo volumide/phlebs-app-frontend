@@ -7,6 +7,9 @@
         </svg>
         <p>Back</p>
       </div>
+      <div v-if="successful" class="mobile_no_show">
+        <Success :success-text="'Accepted order has been added to your To-do'" />
+      </div>
       <div class="no_show">
         <div class="pagination">
           <svg width="24" height="24" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,6 +37,9 @@
       </div>
     </div>
     <div class="box">
+      <div v-if="successful" class="no_show">
+        <Success :success-text="'Accepted order has been added to your To-do'" />
+      </div>
       <div class="mobile_no_show">
         <div class="top">
           <p class="box_name">
@@ -209,7 +215,11 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      successful: false
+    }
+  }
 }
 </script>
 
@@ -220,6 +230,7 @@ export default {
 
 .top_page {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   transition: all 0.3s ease-out;
 }
@@ -241,7 +252,7 @@ export default {
   border: 1px solid rgba(0, 41, 93, 0.1);
   border-radius: 10px;
   padding: 2vh 1.5vw;
-  margin-top: 3vh;
+  margin-top: 1vh;
 }
 
 .top {
@@ -375,6 +386,9 @@ export default {
 }
 
 @media only screen and (max-width: 500px) {
+  .top_page {
+    margin-top: 2vh;
+  }
   .back p {
     font-size: 13px;
   }
