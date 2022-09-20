@@ -21,7 +21,7 @@
             {{ pageName }}
           </p>
           <p class="greeting">
-            Good Afternoon, Adepeju
+            Good Afternoon, David
           </p>
         </div>
       </div>
@@ -85,7 +85,7 @@
         {{ pageName }}
       </p>
       <p class="greeting">
-        Good Afternoon, Adepeju
+        Good Afternoon, David
       </p>
     </div>
   </div>
@@ -107,7 +107,7 @@ export default {
   data () {
     return {
       notificationsCount: '',
-      username: 'Nkoju Adepeju',
+      username: 'David Emaye',
       balance: '',
       challengersOnline: '0',
       newCampaignShow: false,
@@ -132,6 +132,9 @@ export default {
       }
       if (this.$route.name === 'to-do-orders-details') {
         return 'Order Details'
+      }
+      if (this.$route.name === 'today-order') {
+        return "Today's Order"
       }
 
       if (this.$route.name === `${splited[0]}-${splited[1]}`) {

@@ -11,7 +11,7 @@
     </p>
     <div class="form">
       <div v-if="error">
-        <Error :error-text="`Password does not match, Try Again`" />
+        <AlertsError :error-text="`Password does not match, Try Again`" />
       </div>
       <div class="input-box">
         <p class="label">

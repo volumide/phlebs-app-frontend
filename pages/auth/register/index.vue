@@ -14,7 +14,7 @@
           </p>
         </div>
         <div v-if="successPage" class="mobile inner_ no_show">
-          <ModalsSuccess
+          <ModalsAuthSuccess
             :heading="'Your account has been created and verified successfully'"
             :sub-heading="'Just a few steps to go.'"
             :btn-text="'Continue Registration'"
@@ -30,7 +30,7 @@
           </p>
           <div class="form">
             <div v-if="error">
-              <Error :error-text="`Incorrect Username or Password, Try again!`" />
+              <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
             </div>
             <div class="input-box">
               <p class="label">
@@ -125,7 +125,7 @@
             </button>
           </div>
           <div v-if="successPage" class="inner_">
-            <ModalsSuccess
+            <ModalsAuthSuccess
               :heading="'Your account has been created and verified successfully'"
               :sub-heading="'Just a few steps to go.'"
               :btn-text="'Continue Registration'"
@@ -141,7 +141,7 @@
             </p>
             <div class="form">
               <div v-if="error">
-                <Error :error-text="`Incorrect Username or Password, Try again!`" />
+                <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
               </div>
               <div class="input-box">
                 <p class="label">

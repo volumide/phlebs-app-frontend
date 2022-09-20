@@ -24,7 +24,7 @@ export default {
       Cookies.remove('email')
       Cookies.remove('id')
       Cookies.remove('emailVerified')
-      this.$router.push('/login')
+      this.$router.push('/auth/login')
       this.$toast.show('Logged Out')
     }
   }

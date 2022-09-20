@@ -57,18 +57,22 @@ export default {
   justify-content: center;
 }
 .bg_btn {
-  width: 80%;
+  width: 60%;
 }
 
 .head {
   text-align: center;
   font-size: 20px;
   font-weight: 700;
+  width: 70%;
+  margin: auto;
   color: var(--primary-color);
 }
 
 .sub_head {
   text-align: center;
+  width: 80%;
+  margin: auto;
   color: black;
   margin-top: 3vh;
 }

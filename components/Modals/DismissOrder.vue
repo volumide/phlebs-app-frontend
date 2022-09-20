@@ -92,7 +92,7 @@ export default {
       // console.log('come-up')
       this.anim = 'come-up'
     } else {
-      this.anim = 'reveals'
+      this.anim = 'come-down'
     }
   },
   methods: {
@@ -198,6 +198,7 @@ export default {
     padding: 30px;
     border-radius: 40px 40px 0px 0px;
     margin-top: 1rem;
+    padding-bottom: 10vh;
   }
 
   .modal-icon {

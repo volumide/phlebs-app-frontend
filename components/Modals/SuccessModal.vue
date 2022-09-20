@@ -127,7 +127,7 @@ export default {
 }
 
 .modal-icon img {
-  width: 60px;
+  width: 120px;
   margin-top: 40px;
 }
 
@@ -145,7 +145,7 @@ export default {
   text-align: center;
   width: 80%;
   margin: auto;
-  color: rgba(0, 0, 0, 0.5);
+  color: #000;
   margin-top: 2vh;
   line-height: 24px;
 }

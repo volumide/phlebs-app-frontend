@@ -31,7 +31,7 @@
           </p>
           <div class="form">
             <div v-if="error">
-              <Error :error-text="`Incorrect OTP, Try Again!`" />
+              <AlertsError :error-text="`Incorrect OTP, Try Again!`" />
             </div>
             <p class="label">
               Enter code here
@@ -69,11 +69,11 @@
             </button>
           </div>
           <div v-if="SuccessPage" class="inner_">
-            <ModalsSuccess
+            <ModalsAuthSuccess
               :heading="'Your Password has been changed successfully!'"
               :sub-heading="'Just to be sure, you have to login to your account with your new password.'"
               :btn-text="'Login to your account'"
-              @btnAction="btnAction"
+              @btnAction="$router.push('/auth/login')"
             />
           </div>
           <div v-else class="inner_">

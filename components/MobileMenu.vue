@@ -13,7 +13,7 @@
               Menu
             </p>
             <p class="greeting">
-              Good Afternoon, Adepeju
+              Good Afternoon, David
             </p>
           </div>
           <div class="user-image">

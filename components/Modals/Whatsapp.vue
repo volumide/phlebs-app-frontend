@@ -8,7 +8,7 @@
     </p>
     <div class="form">
       <div v-if="error">
-        <Error :error-text="`Incorrect OTP, Try Again!`" />
+        <AlertsError :error-text="`Incorrect OTP, Try Again!`" />
       </div>
       <p class="label">
         Enter code here

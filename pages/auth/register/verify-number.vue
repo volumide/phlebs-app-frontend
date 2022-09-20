@@ -25,7 +25,7 @@
             </button>
           </div>
           <div v-if="SuccessPage" class="inner_">
-            <ModalsSuccess
+            <ModalsAuthSuccess
               :heading="'Your Account has been created successfully!'"
               :sub-heading="'Just a few steps to go.'"
               :btn-text="'Complete Registration'"

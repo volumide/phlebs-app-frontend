@@ -15,12 +15,13 @@
         <RegistrationNextOfKin v-if="nextOfKin" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
         <RegistrationPersonalQualification v-if="personalQualification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true" />
         <RegistrationIdentification v-if="identification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true" />
-        <ModalsSuccess
+        <ModalsAuthSuccess
           v-if="successPage"
           class="success_page"
           :heading="'Your registration has been completed successfully but pending'"
           :sub-heading="'We’ve kept your account pending for verifcation by the admin. You will be able o login to your dashboard once your account verified. '"
           :btn-text="'Proceed to Dashboard'"
+          @btnAction="$router.push('/')"
         />
       </div>
     </div>

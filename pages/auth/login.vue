@@ -22,7 +22,7 @@
           </p>
           <div class="form">
             <div v-if="error">
-              <Error :error-text="`Incorrect Username or Password, Try again!`" />
+              <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
             </div>
             <div class="input-box">
               <p class="label">
@@ -123,7 +123,7 @@
             </p>
             <div class="form">
               <div v-if="error">
-                <Error :error-text="`Incorrect Username or Password, Try again!`" />
+                <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
               </div>
               <div class="input-box">
                 <p class="label">
