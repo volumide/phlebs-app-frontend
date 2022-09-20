@@ -93,6 +93,7 @@
 
 <script>
 import Cookies from 'js-cookie'
+// import functions from '@/utils/functions'
 // import paystack from 'vue-paystack';
 export default {
   components: {
@@ -107,6 +108,7 @@ export default {
   data () {
     return {
       notificationsCount: '',
+      // capitalizeFirstLetter: functions.capitalizeFirstLetter,
       username: 'David Emaye',
       balance: '',
       challengersOnline: '0',
@@ -138,11 +140,11 @@ export default {
       }
 
       if (this.$route.name === `${splited[0]}-${splited[1]}`) {
-        return `${splited[1]}`
+        return `${this.capitalizeFirstLetter(splited[0])} ${this.capitalizeFirstLetter(splited[1])}`
       } else if (this.$route.name === `${splited[0]}-${splited[1]}-${splited[2]}`) {
         return `${splited[1]}`
       } else {
-        return `${splited[0]}`
+        return `${this.capitalizeFirstLetter(splited[0])}`
       }
     }
   },
