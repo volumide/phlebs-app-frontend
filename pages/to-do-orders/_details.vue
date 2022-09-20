@@ -4,7 +4,9 @@
       <div class="lhs">
         <OrdersOrderDetail />
       </div>
-      <div class="rhs mobile_no_show" />
+      <div class="rhs mobile_no_show">
+        <OrdersOrderList />
+      </div>
     </div>
   </div>
 </template>
