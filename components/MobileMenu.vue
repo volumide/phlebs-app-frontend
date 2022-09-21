@@ -214,7 +214,7 @@ export default {
 .menu_ctn {
   display: flex;
   align-items: center;
-  gap: 4vw;
+  gap: 14px;
 }
 
 .menu_text {
