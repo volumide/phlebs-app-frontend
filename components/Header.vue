@@ -301,7 +301,11 @@ export default {
 
 .last-section {
   width: fit-content;
-  gap: 3vw;
+  /* gap: 10px; */
+}
+
+.user {
+  margin-left: 10px;
 }
 
 .new_input {

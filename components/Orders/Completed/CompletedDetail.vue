@@ -325,10 +325,14 @@ export default {
   display: flex;
   align-items: center;
   width: 32%;
-  gap: 10px;
+  /* gap: 10px; */
   padding: 1vh 1vw;
   background: #F0F7FE;
   border-radius: 10px;
+}
+
+.box_details_icon {
+  margin-right: 10px;
 }
 
 .box_details_text {
@@ -380,7 +384,11 @@ export default {
 .gender_age {
   display: flex;
   align-items: center;
-  gap: 1vw;
+  /* gap: 1vw; */
+}
+
+.gender_age svg {
+  margin: 0 5px;
 }
 
 .address_text {
@@ -461,7 +469,7 @@ export default {
   }
 
   .patient_inner {
-    gap: 4.5vw;
+    gap: 0;
   }
 
   .patient_image img {
@@ -470,6 +478,7 @@ export default {
   }
 
   .patient_details {
+    margin-left: 12px;
     flex-direction: column;
     align-items: flex-start;
   }

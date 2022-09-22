@@ -122,7 +122,7 @@ export default {
 
   .bottom_btn {
     width: 100%;
-    gap: 2vw;
+    gap: 10px;
   }
 }
 </style>

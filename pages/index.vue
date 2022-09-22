@@ -319,13 +319,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  /* gap: 10px; */
   width: 10rem;
 }
 
 .bg_btn span {
   color: #fff;
   font-weight: 700;
+  margin-right: 10px;
 }
 
 .trans_btn {
@@ -334,12 +335,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  /* gap: 10px; */
 }
 
 .trans_btn span {
   color: #fff;
   font-weight: 700;
+  margin-right: 10px;
 }
 
 .today_order {
@@ -368,13 +370,14 @@ export default {
 
 .see_all {
   display: flex;
-  gap: 2px;
+  /* gap: 2px; */
   align-items: center;
 }
 
 .see_all p {
   color: #2A7FF3;
   font-weight: 700;
+  margin-right: 2px;
 }
 
 .next_order_box {
@@ -394,12 +397,13 @@ export default {
 .address {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   margin: 15px 0;
 }
 
 .address p {
   color: rgba(255, 255, 255, 0.601);
+  margin-left: 10px;
 }
 
 .user_details {
@@ -410,13 +414,17 @@ export default {
 
 .name_image {
   display: flex;
-  gap: 10px;
+  /* gap: 10px; */
   align-items: center;
 }
 
 .name {
   font-weight: 700;
   color: #fff;
+}
+
+.image {
+  margin-right: 10px;
 }
 
 .image img {
@@ -427,8 +435,12 @@ export default {
 
 .gender_age {
   display: flex;
-  gap: 5px;
+  /* gap: 5px; */
   align-items: center;
+}
+
+.gender_age svg {
+  margin: 0 5px;
 }
 
 .gender,
@@ -450,8 +462,12 @@ export default {
 
 .first_side {
   display: flex;
-  gap: 3vw;
+  /* gap: 3vw; */
   align-items: center;
+}
+
+.bell {
+  margin-right: 12px;
 }
 
 .last_side {
