@@ -214,7 +214,7 @@ export default {
 .menu_ctn {
   display: flex;
   align-items: center;
-  gap: 14px;
+  /* gap: 14px; */
 }
 
 .menu_text {
@@ -222,6 +222,7 @@ export default {
   font-size: 16px;
   color: var(--primary-color);
   margin: 3vh 0;
+  margin-left: 14px;
 }
 
 a.nuxt-link-exact-active .menu_text {
