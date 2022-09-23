@@ -401,6 +401,9 @@ export default {
   .rhs {
     width: 100%;
     box-shadow: none;
+  }
+
+  .rhs_inner {
     flex-direction: column;
   }
 
