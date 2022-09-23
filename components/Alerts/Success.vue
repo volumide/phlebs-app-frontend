@@ -32,13 +32,17 @@ export default {
 .success {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   background-color: rgba(0, 183, 143, 0.1);
   border-left: 4px solid #00B78F;
   height: 50px;
   padding: 0 20px;
   border-radius: 6px;
   margin-bottom: 3vh;
+}
+
+.success svg {
+  margin-right: 10px;
 }
 
 .success p {

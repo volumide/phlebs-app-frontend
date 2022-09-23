@@ -23,12 +23,16 @@ export default {
 .error {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   background-color: #FDE3E3;
   height: 50px;
   padding: 0 20px;
   border-radius: 6px;
   margin-bottom: 3vh;
+}
+
+.error svg {
+  margin-right: 10px;
 }
 
 .error p {

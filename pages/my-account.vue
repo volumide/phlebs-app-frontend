@@ -14,6 +14,9 @@
     <div v-if="activeTab === 'Security'" class="tab_data">
       <ProfileSecurity />
     </div>
+    <div v-if="activeTab === 'Password'" class="tab_data">
+      <ProfilePassword />
+    </div>
   </div>
 </template>
 

@@ -39,7 +39,7 @@ export default {
     this.$store.commit('setPageName', this.activeTab)
     setTimeout(() => {
       this.instruction = true
-    }, 3000)
+    }, 1000)
   },
   methods: {
     setActiveTab (tab) {
