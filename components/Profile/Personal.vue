@@ -314,7 +314,7 @@ input {
   font-weight: 700;
 }
 
-.new_input {
+.new_input svg {
   cursor: pointer;
 }
 
