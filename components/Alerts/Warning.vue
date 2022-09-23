@@ -30,7 +30,7 @@ export default {
 .success {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 10px; */
   background-color: #FFE9D9;
   border-left: 4px solid #8B3127;
   height: 50px;
@@ -42,6 +42,10 @@ export default {
 .success p {
   font-weight: 500;
   color: #8B3127;
+}
+
+.success svg {
+  margin-right: 10px;
 }
 
 .success p span {
