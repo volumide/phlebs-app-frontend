@@ -309,11 +309,12 @@ export default {
 
 .pagination {
   display: flex;
-  gap: 1vw;
+  /* gap: 1vw; */
 }
 
 .pagination svg {
   cursor: pointer;
+  margin-left: 7px;
 }
 
 .box_details_ctn {

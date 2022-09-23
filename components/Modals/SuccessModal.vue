@@ -29,6 +29,12 @@
       <p v-if="modalText" class="sub-title">
         {{ modalText }}
       </p>
+      <p v-if="addDataOne" class="sub-data">
+        {{ addDataOne }}
+      </p>
+      <p v-if="addDataTwo" class="sub-data">
+        {{ addDataTwo }}
+      </p>
       <div class="bottom_btn">
         <button v-if="transBtn" class="trans_btn" @click="$emit('trans-action')">
           {{ transBtn }}
@@ -57,6 +63,14 @@ export default {
       default: () => ''
     },
     modalText: {
+      type: String,
+      default: () => ''
+    },
+    addDataOne: {
+      type: String,
+      default: () => ''
+    },
+    addDataTwo: {
       type: String,
       default: () => ''
     },
@@ -148,6 +162,14 @@ export default {
   color: #000;
   margin-top: 2vh;
   line-height: 24px;
+}
+
+.sub-data {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 12px 0;
 }
 
 .bottom_btn {

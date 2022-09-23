@@ -335,11 +335,12 @@ export default {
 
 .pagination {
   display: flex;
-  gap: 1vw;
+  /* gap: 1vw; */
 }
 
 .pagination svg {
   cursor: pointer;
+  margin-left: 7px;
 }
 
 .box_details_ctn {
@@ -410,7 +411,11 @@ export default {
 .gender_age {
   display: flex;
   align-items: center;
-  gap: 1vw;
+  /* gap: 1vw; */
+}
+
+.gender_age svg {
+  margin: 0 5px;
 }
 
 .address_text {
