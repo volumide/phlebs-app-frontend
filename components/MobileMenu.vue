@@ -117,7 +117,7 @@
               </p>
             </div>
           </nuxt-link>
-          <nuxt-link to="/r">
+          <nuxt-link to="/earnings">
             <div class="menu_ctn">
               <div class="menu_icon">
                 <svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

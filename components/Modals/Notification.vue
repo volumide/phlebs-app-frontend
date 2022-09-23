@@ -48,8 +48,8 @@
         </div>
       </div>
       <div class="bottom-bar">
-        <p v-if="notifications.length" class="clear" @click="clearAll()">
-          Clear all Notifications
+        <p v-if="!notifications.length" class="clear" @click="$router.push('/notifications')">
+          See All
         </p>
       </div>
     </div>
