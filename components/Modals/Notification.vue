@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="bottom-bar">
-        <p v-if="!notifications.length" class="clear" @click="$router.push('/notifications')">
+        <p v-if="!notifications.length" class="clear" @click="$router.push('/notifications'); $emit('close-notification')">
           See All
         </p>
       </div>
