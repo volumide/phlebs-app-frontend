@@ -9,28 +9,13 @@
       />
     </div>
     <div v-if="activeTab === 'To-do'" class="inner">
-      <div class="lhs">
-        <OrdersToDoDetail />
-      </div>
-      <div class="rhs mobile_no_show">
-        <OrdersToDoList />
-      </div>
+      <TablesAllToDoTable />
     </div>
     <div v-if="activeTab === 'Completed'" class="inner">
-      <div class="lhs">
-        <OrdersCompletedDetail />
-      </div>
-      <div class="rhs mobile_no_show">
-        <OrdersCompletedList />
-      </div>
+      <TablesCompletedTable />
     </div>
     <div v-if="activeTab === 'Dismissed'" class="inner">
-      <div class="lhs">
-        <OrdersDismissedDetail />
-      </div>
-      <div class="rhs mobile_no_show">
-        <OrdersDismissedList />
-      </div>
+      <TablesDismissedTable />
     </div>
   </div>
 </template>
@@ -55,32 +40,34 @@ export default {
 <style scoped>
 .container {
   padding: 2vh 3vw;
+  padding-right: 5vw;
 }
 
 .tab-ctn {
   margin-bottom: 5vh;
 }
 
-.inner {
+/* .inner {
   display: flex;
+  width: 100%;
   justify-content: space-between;
-}
+} */
 
-.lhs {
+/* .lhs {
   width: 67%;
 }
 
 .rhs {
   width: 30%;
-}
+} */
 
 @media only screen and (max-width: 500px) {
   .container {
     padding: 0 5vw;
     padding-bottom: 5vh;
   }
-  .lhs {
+  /* .lhs {
     width: 100%;
-  }
+  } */
 }
 </style>

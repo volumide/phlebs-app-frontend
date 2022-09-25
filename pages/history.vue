@@ -37,6 +37,7 @@ export default {
 <style scoped>
 .container {
   padding: 2vh 3vw;
+  padding-right: 5vw;
 }
 
 .tab_data {
@@ -45,6 +46,7 @@ export default {
 
 @media only screen and (max-width: 500px) {
   .container {
+    padding: 0 5vw;
     padding-bottom: 5vh;
   }
 }
