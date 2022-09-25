@@ -80,7 +80,7 @@
             <div class="back" @click="$router.go(-1)">
               Back
             </div>
-            <ModalsResetPassword v-if="resetPassword" />
+            <ModalsResetPassword v-if="resetPassword" @close-reset="resetPassword = false; SuccessPage = true" />
             <ModalsOtp v-else @closeOtp="resetPassword = true" />
           </div>
         </div>
@@ -94,7 +94,7 @@ export default {
   data () {
     return {
       resetPassword: false,
-      SuccessPage: true
+      SuccessPage: false
     }
   }
 }

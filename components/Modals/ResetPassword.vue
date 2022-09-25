@@ -107,7 +107,7 @@
           </svg>
         </div>
       </div>
-      <button class="bg_btn" @click="$router.push('/')">
+      <button class="bg_btn" @click="$emit('close-reset')">
         Reset Password
       </button>
     </div>

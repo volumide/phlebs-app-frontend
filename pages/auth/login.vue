@@ -219,6 +219,9 @@ export default {
     return {
       checked: false,
       error: false,
+      resetPassword: false,
+      linkSent: false,
+      createPassword: false,
       email: '',
       password: '',
       type: 'password'
