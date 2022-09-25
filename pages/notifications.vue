@@ -12,11 +12,12 @@
       <NotificationAll />
     </div>
     <div v-if="activeTab === 'Read'" class="tab_data">
-      <ProfileSecurity />
+      <NotificationAll />
     </div>
     <div v-if="activeTab === 'Unread'" class="tab_data">
-      <ProfilePassword />
+      <NotificationAll />
     </div>
+    <ModalsFromTheSide />
   </div>
 </template>
 
