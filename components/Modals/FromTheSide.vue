@@ -177,10 +177,19 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin: 5vh 0;
+  /* position: fixed;
+  width: 85%; */
 }
 
 .modal_top svg {
   cursor: pointer;
+}
+
+.modal_inner {
+  position: fixed;
+  width: 75%;
+  height: 70%;
+  overflow: auto;
 }
 
 .modal_head {
@@ -213,10 +222,16 @@ export default {
   }
   .modal {
     width: 90%;
-    padding: 30px;
+    padding: 2vh 30px 10vh;
     border-radius: 0;
     margin-top: 1rem;
-    padding-bottom: 10vh;
+  }
+  .modal_bottom {
+    bottom: 5%;
+  }
+
+  .modal_inner {
+    width: 85%;
   }
 }
 
