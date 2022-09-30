@@ -9,13 +9,13 @@
       />
     </div>
     <div v-if="activeTab === 'To-do'" class="inner">
-      <TablesAllToDoTable :table-data="todoData" />
+      <TablesAllToDoTable :table-data="todoData" :table-loader="todoLoading" />
     </div>
     <div v-if="activeTab === 'Completed'" class="inner">
-      <TablesCompletedTable :table-data="completedOrdersData" />
+      <TablesCompletedTable :table-data="completedOrdersData" :table-loader="completedLoading" />
     </div>
     <div v-if="activeTab === 'Dismissed'" class="inner">
-      <TablesDismissedTable :table-data="dismissedOrdersData" />
+      <TablesDismissedTable :table-data="dismissedOrdersData" :table-loader="dismissedLoading" />
     </div>
   </div>
 </template>
@@ -27,6 +27,9 @@ export default {
   data () {
     return {
       activeTab: 'To-do',
+      completedLoading: false,
+      todoLoading: false,
+      dismissedLoading: false,
       todoData: [],
       completedOrdersData: [],
       dismissedOrdersData: []
@@ -34,15 +37,21 @@ export default {
   },
   created () {
     this.getAllToDo()
-    this.getCompletedOrders()
-    this.getDismissedOrders()
   },
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
+      if (this.activeTab === 'To-do') {
+        this.getAllToDo()
+      } else if (this.activeTab === 'Completed') {
+        this.getCompletedOrders()
+      } else if (this.activeTab === 'Dismissed') {
+        this.getDismissedOrders()
+      }
       // this.$store.commit('setPageName', tab)
     },
     getAllToDo () {
+      this.todoLoading = true
       this.$axios.$get('/orders/get/all/todo/10/0', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -50,9 +59,11 @@ export default {
       }).then((response) => {
         // console.log(response)
         this.todoData = response.orders.order
+        this.todoLoading = false
       })
     },
     getCompletedOrders () {
+      this.completedLoading = true
       this.$axios.$get('/orders/completed/all/10/0', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -60,9 +71,11 @@ export default {
       }).then((response) => {
         // console.log(response)
         this.completedOrdersData = response.data.completed
+        this.completedLoading = false
       })
     },
     getDismissedOrders () {
+      this.dismissedLoading = true
       this.$axios.$get('/orders/dismissed/all/10/0', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -70,6 +83,7 @@ export default {
       }).then((response) => {
         console.log(response)
         this.dismissedOrdersData = response.data.dismissed
+        this.dismissedLoading = false
       })
     }
   }
