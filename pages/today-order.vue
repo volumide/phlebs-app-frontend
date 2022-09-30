@@ -12,10 +12,10 @@
       <TablesAllToDoTable :table-data="todoData" />
     </div>
     <div v-if="activeTab === 'Completed'" class="inner">
-      <TablesCompletedTable />
+      <TablesCompletedTable :table-data="completedOrdersData" />
     </div>
     <div v-if="activeTab === 'Dismissed'" class="inner">
-      <TablesDismissedTable />
+      <TablesDismissedTable :table-data="dismissedOrdersData" />
     </div>
   </div>
 </template>
@@ -28,12 +28,14 @@ export default {
     return {
       activeTab: 'To-do',
       todoData: [],
-      completedOrdersData: []
+      completedOrdersData: [],
+      dismissedOrdersData: []
     }
   },
   created () {
     this.getAllToDo()
     this.getCompletedOrders()
+    this.getDismissedOrders()
   },
   methods: {
     setActiveTab (tab) {
@@ -56,8 +58,18 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
+        // console.log(response)
+        this.completedOrdersData = response.data.completed
+      })
+    },
+    getDismissedOrders () {
+      this.$axios.$get('/orders/dismissed/all/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
         console.log(response)
-        this.completedOrdersData = response.orders.order
+        this.dismissedOrdersData = response.data.dismissed
       })
     }
   }

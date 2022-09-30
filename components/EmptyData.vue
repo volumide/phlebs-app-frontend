@@ -93,7 +93,7 @@ export default {
   gap: 1vw;
   width: 40%;
   margin: auto;
-  margin-top: 6vh;
+  margin-top: 3vh;
 }
 
 .trans_btn {
