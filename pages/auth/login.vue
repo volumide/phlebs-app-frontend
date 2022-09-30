@@ -199,7 +199,10 @@
                   Forgot Password?
                 </p>
               </div>
-              <button class="bg_btn" @click="$router.push('/')">
+              <button v-if="loading" class="bg_btn" disabled>
+                <Loader class="come-down" />
+              </button>
+              <button v-else class="bg_btn" @click="login()">
                 Login
               </button>
             </div>
@@ -214,9 +217,11 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
+      loading: false,
       checked: false,
       error: false,
       resetPassword: false,
@@ -245,6 +250,35 @@ export default {
     setPassword () {
       this.linkSent = false
       this.createPassword = true
+    },
+    login () {
+      this.loading = true
+      this.$axios.$post('/auth/login', {
+        email: this.email,
+        password: this.password
+      }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${Cookies.get('token')}`
+      //   }
+      // }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        if (!response.error) {
+          Cookies.set('token', response.data.token)
+          this.$router.push('/')
+          // this.$toast.success(response.statusText)
+        } else {
+          this.$toast.error(response.errorMsg)
+        }
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+        if (onrejected.error) {
+          this.$toast.error(onrejected.errorMsg)
+        }
+      })
     }
   }
 }
