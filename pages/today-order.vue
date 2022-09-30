@@ -9,7 +9,7 @@
       />
     </div>
     <div v-if="activeTab === 'To-do'" class="inner">
-      <TablesAllToDoTable />
+      <TablesAllToDoTable :table-data="todoData" />
     </div>
     <div v-if="activeTab === 'Completed'" class="inner">
       <TablesCompletedTable />
@@ -21,17 +21,44 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'To-do'
+      activeTab: 'To-do',
+      todoData: [],
+      completedOrdersData: []
     }
+  },
+  created () {
+    this.getAllToDo()
+    this.getCompletedOrders()
   },
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
       // this.$store.commit('setPageName', tab)
+    },
+    getAllToDo () {
+      this.$axios.$get('/orders/get/all/todo/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.todoData = response.orders.order
+      })
+    },
+    getCompletedOrders () {
+      this.$axios.$get('/orders/completed/all/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        this.completedOrdersData = response.orders.order
+      })
     }
   }
 }

@@ -27,12 +27,12 @@
           </th>
           <th class="action-ctn" />
         </tr>
-        <tr v-for="(appointment, index) in appointments" :key="index" class="table-details">
+        <tr v-for="(data, index) in tableData" :key="index" class="table-details">
           <td class="date">
-            {{ appointment.date }}
+            {{ detailedDate(data[0].collectionDate) }}
           </td>
           <td class="time">
-            {{ appointment.time }}
+            {{ data[0].collectionTime }}
           </td>
           <td class="address">
             <div class="address_ctn">
@@ -47,7 +47,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <span>{{ appointment.address }}</span>
+              <span>{{ data[0].cAddress }}</span>
             </div>
           </td>
           <td class="action-ctn">
@@ -69,13 +69,13 @@
       </table>
     </div>
     <div class="no_show">
-      <div v-for="(appointment, index) in appointments" :key="index" class="data_box slide-in-from-left" @click="$router.push('/to-do-orders/details')">
+      <div v-for="(data, index) in tableData" :key="index" class="data_box slide-in-from-left" @click="$router.push('/to-do-orders/details')">
         <div>
           <p class="mobile_time">
-            {{ appointment.time }}
+            {{ data[0].collectionTime }}
           </p>
           <p class="mobile_date">
-            {{ appointment.date }}
+            {{ data[0].collectionDate }}
           </p>
           <p class="mobile_address">
             <svg width="13" height="15" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -89,7 +89,7 @@
                 </clipPath>
               </defs>
             </svg>
-            <span>{{ appointment.address }}</span>
+            <span>{{ data[0].cAddress }}</span>
           </p>
         </div>
         <div class="action">
@@ -104,12 +104,20 @@
 </template>
 
 <script>
+import { detailedDate } from '@/utils/date-formats.js'
 import functions from '@/utils/functions'
 // import Cookies from 'js-cookie'
 export default {
+  props: {
+    tableData: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       currency: functions.formatCurrency,
+      detailedDate,
       transLoading: false,
       appointments: [
         {
@@ -243,16 +251,16 @@ th {
 }
 
 .date {
-  width: 13rem;
+  width: 30%;
   padding-left: 25px;
 }
 
 .time {
-  width: 14rem;
+  width: 20%;
 }
 
 .address {
-  width: 18rem;
+  width: 40%;
 }
 
 .address_ctn {
