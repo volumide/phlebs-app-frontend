@@ -34,7 +34,7 @@
 </template>
 
 <script>
-// import Cookies from 'js-cookie'
+import Cookies from 'js-cookie'
 export default {
   name: 'MainLayout',
   data () {
@@ -50,31 +50,29 @@ export default {
   watch: {
     $route () {
       this.showMobileMenu = false
-      // this.checkLoggedIn()
-      // this.checkInternet()
+      this.checkLoggedIn()
     }
   },
   created () {
-    // this.checkLoggedIn()
-    // this.checkInternet()
+    this.checkLoggedIn()
   },
   methods: {
-    // checkLoggedIn () {
-    //   if (Cookies.get('token') === undefined) {
-    //     this.$router.push('/login?error=session has expired')
-    //   } else {
-    //     this.getUserDetails()
-    //   }
-    // },
+    checkLoggedIn () {
+      if (Cookies.get('token') === undefined) {
+        this.$router.push('/auth/login?error=session has expired')
+      } else {
+        this.getUserDetails()
+      }
+    },
     getUserDetails () {
-      this.$axios.$get('/get_user_details', {
+      this.$axios.$get('/auth/all/registration/information', {
         headers: {
-          // Authorization: `Bearer ${Cookies.get('token')}`
+          Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         // console.log(response)
         if (response.error && response.errorMsg === 'Authentication Failed') {
-          this.$router.push('/login?error=session has expired')
+          this.$router.push('/auth/login?error=session has expired')
         }
       })
     }

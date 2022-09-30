@@ -26,7 +26,7 @@
                   You have
                 </p>
                 <p class="orders">
-                  8 New Orders
+                  {{ newOrders }} New Orders
                 </p>
               </div>
               <div class="icon">
@@ -56,7 +56,7 @@
               Today’s Orders
             </p>
             <p class="number_orders">
-              14
+              {{ todayOrders }}
             </p>
             <button class="trans_btn">
               <span>My Todo</span>
@@ -83,10 +83,10 @@
             <div class="top">
               <div>
                 <p class="next_order_time">
-                  8:00 am
+                  {{ nextOrders.collection_time }}
                 </p>
                 <p class="next_order_date">
-                  Monday, 12th Sept, 2022
+                  {{ nextOrders.collection_date }}
                 </p>
               </div>
               <svg width="36" height="36" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,7 +106,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <p>5b, Gregson Street, Alapere, Ketu</p>
+              <p>{{ nextOrders.collection_address }}</p>
             </div>
             <div class="user_details">
               <div class="name_image">
@@ -115,18 +115,18 @@
                 </div>
                 <div>
                   <p class="name">
-                    Adekolu Patience
+                    {{ nextOrders.user_name }}
                   </p>
                   <div class="no_show">
                     <div class="gender_age">
                       <p class="age">
-                        44 Years
+                        {{ nextOrders.user_age }}
                       </p>
                       <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
                       </svg>
                       <p class="gender">
-                        Female
+                        {{ nextOrders.gender }}
                       </p>
                     </div>
                   </div>
@@ -135,13 +135,13 @@
               <div class="mobile_no_show">
                 <div class="gender_age">
                   <p class="age">
-                    44 Years
+                    {{ nextOrders.user_age }}
                   </p>
                   <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
                   </svg>
                   <p class="gender">
-                    Female
+                    {{ nextOrders.gender }}
                   </p>
                 </div>
               </div>
@@ -156,13 +156,13 @@
           </div>
           <div class="notif_center">
             <p class="notif_head">
-              You have 6 orders you have not completed yet
+              You have {{ incompleteOrders }} orders you have not completed yet
             </p>
             <p class="notif_text">
               Proceed to Ongoing orders to complete or dismiss orders assigned to you.
             </p>
             <div class="no_show">
-              <div class="see_all">
+              <div class="see_all" @click="$router.push('/to-do-orders')">
                 <p>See To-do</p>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.2667 6.58663L7.20666 3.52663C7.08175 3.40246 6.91278 3.33276 6.73666 3.33276C6.56053 3.33276 6.39157 3.40246 6.26666 3.52663C6.20417 3.5886 6.15458 3.66233 6.12073 3.74357C6.08688 3.82481 6.06946 3.91195 6.06946 3.99996C6.06946 4.08797 6.08688 4.1751 6.12073 4.25634C6.15458 4.33758 6.20417 4.41132 6.26666 4.47329L9.33332 7.52663C9.39581 7.5886 9.44541 7.66233 9.47925 7.74357C9.5131 7.82481 9.53052 7.91195 9.53052 7.99996C9.53052 8.08797 9.5131 8.1751 9.47925 8.25634C9.44541 8.33758 9.39581 8.41132 9.33332 8.47329L6.26666 11.5266C6.14112 11.6513 6.07024 11.8207 6.06962 11.9976C6.06899 12.1745 6.13867 12.3444 6.26332 12.47C6.38798 12.5955 6.55739 12.6664 6.7343 12.667C6.91121 12.6676 7.08112 12.5979 7.20666 12.4733L10.2667 9.41329C10.6412 9.03829 10.8516 8.52996 10.8516 7.99996C10.8516 7.46996 10.6412 6.96163 10.2667 6.58663Z" fill="#2A7FF3" />
@@ -172,7 +172,7 @@
           </div>
         </div>
         <div class="mobile_no_show">
-          <div class="last_side">
+          <div class="last_side" @click="$router.push('/to-do-orders')">
             <p>Open To-do</p>
             <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="32" height="32" rx="10" fill="#325BD9" fill-opacity="0.2" />
@@ -190,7 +190,7 @@
               </p>
               <div class="notif_number">
                 <p>
-                  9
+                  {{ completeOrders }}
                 </p>
                 <svg
                   class="no_show"
@@ -224,7 +224,7 @@
               </p>
               <div class="notif_number">
                 <p>
-                  12
+                  {{ dismissedOrders }}
                 </p>
                 <svg
                   class="no_show"
@@ -256,8 +256,89 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
-  layout: 'MainLayout'
+  layout: 'MainLayout',
+  data () {
+    return {
+      newOrders: null,
+      nextOrders: {},
+      todayOrders: null,
+      incompleteOrders: null,
+      dismissedOrders: null,
+      completeOrders: null
+    }
+  },
+  created () {
+    this.getNewOrderTotal()
+    this.getTodayOrdersTotal()
+    this.getNextOrderDetails()
+    this.getIncompleteOrders()
+    this.getCompletedOrders()
+    this.getDismissedOrders()
+  },
+  methods: {
+    getNewOrderTotal () {
+      this.$axios.$get('/orders/new/total', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.newOrders = response.orders.total
+      })
+    },
+    getTodayOrdersTotal () {
+      this.$axios.$get('/orders/total/today/orders', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.todayOrders = response.orders.total
+      })
+    },
+    getNextOrderDetails () {
+      this.$axios.$get('/orders/get/next/order', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.nextOrders = response.next_order
+      })
+    },
+    getIncompleteOrders () {
+      this.$axios.$get('/orders/get/total/todo', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.incompleteOrders = response.orders.total
+      })
+    },
+    getCompletedOrders () {
+      this.$axios.$get('/orders/total/completed/order', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.completeOrders = response.orders.total
+      })
+    },
+    getDismissedOrders () {
+      this.$axios.$get('/orders/total/Dismissed/order', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.dismissedOrders = response.orders.dismissed
+      })
+    }
+  }
 }
 </script>
 
@@ -474,6 +555,7 @@ export default {
   display: flex;
   align-items: center;
   gap: 1vw;
+  cursor: pointer;
 }
 
 .last_side p {
