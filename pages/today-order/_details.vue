@@ -55,7 +55,7 @@ export default {
         } else {
           this.detailsData = response.dismissed[0]
         }
-        // console.log(this.detailsData)
+        console.log(this.detailsData)
         this.detailsLoading = false
       })
     },
@@ -74,7 +74,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.orderList = response.orders.order
         // console.log(this.orderList)
         this.listLoading = false

@@ -140,7 +140,7 @@
         </p>
         <div class="patient_inner">
           <div class="patient_image">
-            <img src="~assets/images/patient-image.png" alt="">
+            <img :src="detailsData.avatar" alt="">
           </div>
           <div class="patient_details">
             <p class="patient_name">
@@ -408,6 +408,7 @@ export default {
 .patient_image img {
   width: 70px;
   height: 70px;
+  border-radius: 50%;
 }
 
 .patient_details {
