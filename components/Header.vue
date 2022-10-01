@@ -135,6 +135,9 @@ export default {
       if (this.$route.name === 'to-do-orders-details' || this.$route.name === 'to-do-orders-new-order-details') {
         return 'Order Details'
       }
+      if (this.$route.name === 'today-order-details' || this.$route.name === 'to-do-orders-new-order-details') {
+        return 'Order Details'
+      }
       if (this.$route.name === 'today-order') {
         return "Today's Order"
       }
