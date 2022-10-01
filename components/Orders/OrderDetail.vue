@@ -90,7 +90,7 @@
               Collection Time
             </p>
             <p class="box_details_subtext">
-              8:00am
+              {{ detailsData.collectionTime }}
             </p>
           </div>
         </div>
@@ -106,7 +106,7 @@
               Phone Number
             </p>
             <p class="box_details_subtext">
-              08101234567
+              {{ detailsData.phone }}
             </p>
           </div>
         </div>
@@ -129,7 +129,7 @@
               Collection Date
             </p>
             <p class="box_details_subtext">
-              Monday 5th Sept 2022
+              {{ detailsData.collectionDate }}
             </p>
           </div>
         </div>
@@ -144,17 +144,17 @@
           </div>
           <div class="patient_details">
             <p class="patient_name">
-              Adekolu Patience
+              {{ detailsData.fullname }}
             </p>
             <div class="gender_age">
               <p class="age">
-                44 Years
+                {{ detailsData.age }}
               </p>
               <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="3" cy="3" r="3" fill="black" />
               </svg>
               <p class="gender">
-                Female
+                {{ detailsData.gender }}
               </p>
             </div>
           </div>
@@ -165,7 +165,7 @@
           Collection Address
         </p>
         <p class="address_text">
-          42, Local Airport Road, Ikeja Lagos
+          {{ detailsData.cAddress }}
         </p>
       </div>
       <div class="patient_box slide-in-from-left">
@@ -178,7 +178,7 @@
               Order No
             </p>
             <p class="test_subtext">
-              382799353
+              {{ detailsData.orderNo }}
             </p>
           </div>
           <div>
@@ -186,7 +186,7 @@
               Test to be Taken
             </p>
             <p class="test_subtext">
-              Comprehensive Metabolic Blood Panel Test
+              {{ detailsData.testAddress }}
             </p>
           </div>
           <div>
@@ -194,7 +194,7 @@
               Sample Required
             </p>
             <p class="test_subtext">
-              Blood
+              {{ detailsData.sample }}
             </p>
           </div>
         </div>
@@ -204,12 +204,27 @@
           <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
           </button>
-          <button class="bg_btn" @click="$emit('proceed')">
+          <button class="bg_btn" @click="confirmOpen = true">
             Accept Order
           </button>
         </div>
       </div>
     </div>
+    <ModalsConfirmationModal
+      v-if="confirmOpen"
+      :modal-head="'Complete Order'"
+      :modal-text="'Completing this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Complete Order'"
+      @close-modal="confirmOpen = false"
+      @bg-action="openConfirmOrder()"
+      @trans-action="confirmOpen = false"
+    />
+    <ModalsConfirmOrder
+      v-if="confirmOrder"
+      @close-modal="confirmOrder = false"
+      @bg-action="closeConfirmOrder()"
+    />
     <ModalsConfirmationModal
       v-if="dismissOpen"
       :modal-head="'Are you sure you want to dismiss this order'"
@@ -226,12 +241,20 @@
       @bg-action="closeDismissOrder()"
     />
     <ModalsSuccessModal
-      v-if="successModal"
+      v-if="dismissedSuccessModal"
       :modal-image="require('assets/images/96673-success.gif')"
       :modal-text="'The order has been dismissed successfully'"
       :bg-btn="'Close'"
-      @close-modal="successModal = false"
-      @bg-action="successModal = false"
+      @close-modal="dismissedSuccessModal = false"
+      @bg-action="dismissedSuccessModal = false"
+    />
+    <ModalsSuccessModal
+      v-if="confirmSuccessModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-text="'The order has been submitted and completed successfully'"
+      :modal-head="'Thank You!'"
+      :bg-btn="'Close'"
+      @bg-action="$router.psuh('/today-order')"
     />
   </div>
 </template>
@@ -242,14 +265,21 @@ export default {
     boxName: {
       type: String,
       default: () => ''
+    },
+    detailsData: {
+      type: Object,
+      default: () => {}
     }
   },
   data () {
     return {
       successful: false,
-      successModal: false,
+      dismissedSuccessModal: false,
+      confirmSuccessModal: false,
       dismissOpen: false,
-      dismissOrder: false
+      confirmOpen: false,
+      dismissOrder: false,
+      confirmOrder: false
     }
   },
   methods: {
@@ -259,7 +289,15 @@ export default {
     },
     closeDismissOrder () {
       this.dismissOrder = false
-      this.successModal = true
+      this.dismissedSuccessModal = true
+    },
+    openConfirmOrder () {
+      this.confirmOpen = false
+      this.confirmOrder = true
+    },
+    closeConfirmOrder () {
+      this.confirmOrder = false
+      this.confirmSuccessModal = true
     }
   }
 }

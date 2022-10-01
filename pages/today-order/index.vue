@@ -69,8 +69,12 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
-        this.completedOrdersData = response.data.completed
+        console.log(response)
+        if (response.orders) {
+          this.completedOrdersData = response.orders.order
+        } else {
+          this.completedOrdersData = response.data.completed
+        }
         this.completedLoading = false
       })
     },
@@ -81,8 +85,12 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
-        this.dismissedOrdersData = response.data.dismissed
+        // console.log(response)
+        if (response.orders) {
+          this.dismissedOrdersData = response.orders.order
+        } else {
+          this.dismissedOrdersData = response.data.dismissed
+        }
         this.dismissedLoading = false
       })
     }

@@ -32,24 +32,12 @@
             Select Location
           </p>
           <div class="form-select">
-            <select v-model="reason" required>
+            <select v-model="location" required>
               <option value="">
                 Select...
               </option>
-              <option value="Medplus, Ikoyi">
-                Medplus, Ikoyi
-              </option>
-              <option value="Medplus, Obalende">
-                Medplus, Obalende
-              </option>
-              <option value="Medplus, Ogba">
-                Medplus, Ogba
-              </option>
-              <option value="RX Plus, VI">
-                RX Plus, VI
-              </option>
-              <option value="Peel Pharmacy, Obalende">
-                Peel Pharmacy, Obalende
+              <option v-for="(data, index) in dropoffLocation" :key="index" :value="data">
+                {{ data }}
               </option>
             </select>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +50,7 @@
         <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button>
-        <button class="bg_btn" @click="$emit('bg-action')">
+        <button class="bg_btn" @click="completeOrder()">
           Submit and Dismiss
         </button>
       </div>
@@ -71,6 +59,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   props: {
   },
@@ -78,7 +67,8 @@ export default {
     return {
       anim: '',
       other: '',
-      reason: ''
+      dropoffLocation: '',
+      location: ''
     }
   },
   mounted () {
@@ -90,7 +80,42 @@ export default {
       this.anim = 'come-down'
     }
   },
+  created () {
+    this.getDropofflist()
+  },
   methods: {
+    getDropofflist (val) {
+      this.detailsLoading = true
+      this.$axios.$get('/auth/get_drop_off_location', {
+        // headers: {
+        //   Authorization: `Bearer ${Cookies.get('token')}`
+        // }
+      }).then((response) => {
+        console.log(response)
+        this.dropoffLocation = response.data.location
+        // console.log(this.detailsData)
+        this.todoLoading = false
+      })
+    },
+    completeOrder () {
+      this.loading = true
+      const id = this.$route.query.id
+      console.log(this.location)
+      this.$axios.$post('/orders/complete/order', {
+        orderId: id,
+        location: this.location
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.$emit('bg-action')
+      })
+    }
   }
 }
 </script>

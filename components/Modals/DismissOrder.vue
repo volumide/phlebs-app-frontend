@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   props: {
   },
@@ -96,6 +97,25 @@ export default {
     }
   },
   methods: {
+    completeOrder () {
+      this.loading = true
+      const id = this.$route.query.id
+      console.log(this.location)
+      this.$axios.$post('/orders/dismiss/order', {
+        orderId: id,
+        dismissalReason: this.reason
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.$emit('bg-action')
+      })
+    }
   }
 }
 </script>

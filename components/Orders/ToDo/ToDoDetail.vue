@@ -229,7 +229,7 @@
       :modal-text="'Completing this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
       :trans-btn="'No, Go Back'"
       :bg-btn="'Yes, Complete Order'"
-      @close-modal="dismissOpen = false"
+      @close-modal="confirmOpen = false"
       @bg-action="openConfirmOrder()"
       @trans-action="confirmOpen = false"
     />
