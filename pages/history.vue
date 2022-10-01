@@ -9,26 +9,71 @@
       />
     </div>
     <div v-if="activeTab === 'Completed Orders'" class="tab_data">
-      <TablesCompletedTable />
+      <TablesCompletedTable :table-data="completedOrdersData" :table-loader="completedLoading" />
     </div>
     <div v-if="activeTab === 'Dismissed Orders'" class="tab_data">
-      <TablesDismissedTable />
+      <TablesDismissedTable :table-data="dismissedOrdersData" :table-loader="dismissedLoading" />
     </div>
   </div>
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'Completed Orders'
+      activeTab: 'Completed Orders',
+      completedLoading: false,
+      dismissedLoading: false,
+      completedOrdersData: [],
+      dismissedOrdersData: []
     }
+  },
+  created () {
+    this.getCompletedOrders()
   },
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
       this.$store.commit('setPageName', tab)
+      if (this.activeTab === 'Completed Orders') {
+        this.getCompletedOrders()
+      } else if (this.activeTab === 'Dismissed Orders') {
+        this.getDismissedOrders()
+      }
+    },
+    getCompletedOrders () {
+      this.completedLoading = true
+      this.$axios.$get('/orders/completed/all/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        if (response.orders) {
+          this.completedOrdersData = response.orders.order
+        } else {
+          this.completedOrdersData = response.data.completed
+        }
+        this.completedLoading = false
+      })
+    },
+    getDismissedOrders () {
+      this.dismissedLoading = true
+      this.$axios.$get('/orders/dismissed/all/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        if (response.orders) {
+          this.dismissedOrdersData = response.orders.order
+        } else {
+          this.dismissedOrdersData = response.data.dismissed
+        }
+        this.dismissedLoading = false
+      })
     }
   }
 }
