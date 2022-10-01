@@ -199,7 +199,7 @@
           </div>
         </div>
       </div>
-      <div class="btns come-down">
+      <div v-show="boxName === 'To-do'" class="btns come-down">
         <div class="bottom_btn">
           <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
@@ -245,8 +245,7 @@
       :modal-image="require('assets/images/96673-success.gif')"
       :modal-text="'The order has been dismissed successfully'"
       :bg-btn="'Close'"
-      @close-modal="dismissedSuccessModal = false"
-      @bg-action="dismissedSuccessModal = false"
+      @bg-action="$router.push('/today-order')"
     />
     <ModalsSuccessModal
       v-if="confirmSuccessModal"
@@ -254,7 +253,7 @@
       :modal-text="'The order has been submitted and completed successfully'"
       :modal-head="'Thank You!'"
       :bg-btn="'Close'"
-      @bg-action="$router.psuh('/today-order')"
+      @bg-action="$router.push('/today-order')"
     />
   </div>
 </template>

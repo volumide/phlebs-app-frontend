@@ -67,7 +67,7 @@
         <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button>
-        <button class="bg_btn" @click="$emit('bg-action')">
+        <button class="bg_btn" @click="dismissOrder()">
           Submit and Dismiss
         </button>
       </div>
@@ -97,10 +97,10 @@ export default {
     }
   },
   methods: {
-    completeOrder () {
+    dismissOrder () {
       this.loading = true
       const id = this.$route.query.id
-      console.log(this.location)
+      console.log(this.reason)
       this.$axios.$post('/orders/dismiss/order', {
         orderId: id,
         dismissalReason: this.reason
@@ -111,9 +111,11 @@ export default {
         }
       }
       ).then((response) => {
-        this.loading = false
         console.log(response)
-        this.$emit('bg-action')
+        if (!response.error) {
+          this.$emit('bg-action')
+        }
+        this.loading = false
       })
     }
   }

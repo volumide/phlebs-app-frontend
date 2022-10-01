@@ -5,7 +5,7 @@
         <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersOrderList :box-name="boxName" />
+        <OrdersOrderList :box-name="boxName" :list-data="orderList" />
       </div>
     </div>
   </div>
@@ -30,33 +30,53 @@ export default {
     const name = this.$route.params.details
     const id = this.$route.query.id
     this.boxName = this.capitalizeFirstLetter(name)
-    this.getOrderDetails(id)
+    this.getOrderDetails(id, name)
+    this.getOrderlist(id, name)
   },
   methods: {
-    getOrderDetails (val) {
+    getOrderDetails (id, name) {
       this.detailsLoading = true
-      this.$axios.$get(`/orders/single/order/${val}`, {
+      let url = ''
+      if (name === 'to-do') {
+        url = `/orders/single/order/${id}`
+      } else if (name === 'completed') {
+        url = `/orders/complete/single/order/${id}`
+      } else if (name === 'dismissed') {
+        url = `/orders/dismissed/single/order/${id}`
+      }
+      this.$axios.$get(url, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         // console.log(response)
-        this.detailsData = response.todo[0]
+        if (response.todo) {
+          this.detailsData = response.todo[0]
+        } else {
+          this.detailsData = response.dismissed[0]
+        }
         // console.log(this.detailsData)
         this.detailsLoading = false
-        this.getOrderlist()
       })
     },
-    getOrderlist (val) {
+    getOrderlist (id, name) {
       this.listLoading = true
-      this.$axios.$get('/orders/next/todo', {
+      let url = ''
+      if (name === 'to-do') {
+        url = '/orders/get/all/todo/10/0'
+      } else if (name === 'completed') {
+        url = '/orders/completed/all/10/0'
+      } else if (name === 'dismissed') {
+        url = '/orders/dismissed/all/10/0'
+      }
+      this.$axios.$get(url, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         console.log(response)
-        // this.orderList = response
-        // console.log(this.detailsData)
+        this.orderList = response.orders.order
+        // console.log(this.orderList)
         this.listLoading = false
       })
     }

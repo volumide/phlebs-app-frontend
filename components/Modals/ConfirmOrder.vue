@@ -68,6 +68,7 @@ export default {
       anim: '',
       other: '',
       dropoffLocation: '',
+      loading: false,
       location: ''
     }
   },
@@ -85,22 +86,14 @@ export default {
   },
   methods: {
     getDropofflist (val) {
-      this.detailsLoading = true
       this.$axios.$get('/auth/get_drop_off_location', {
-        // headers: {
-        //   Authorization: `Bearer ${Cookies.get('token')}`
-        // }
       }).then((response) => {
-        console.log(response)
         this.dropoffLocation = response.data.location
-        // console.log(this.detailsData)
-        this.todoLoading = false
       })
     },
     completeOrder () {
       this.loading = true
       const id = this.$route.query.id
-      console.log(this.location)
       this.$axios.$post('/orders/complete/order', {
         orderId: id,
         location: this.location
@@ -111,9 +104,11 @@ export default {
         }
       }
       ).then((response) => {
-        this.loading = false
         console.log(response)
-        this.$emit('bg-action')
+        if (!response.error) {
+          this.$emit('bg-action')
+        }
+        this.loading = false
       })
     }
   }

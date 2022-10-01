@@ -6,16 +6,16 @@
           {{ boxName }}
         </p>
         <div class="list_number">
-          <p>8</p>
+          <p>{{ listData.length }}</p>
         </div>
       </div>
-      <div v-for="(order, index) in allOrders" :key="index" class="list_details">
+      <div v-for="(order, index) in listData" :key="index" class="list_details">
         <div class="time_date">
           <p class="time">
-            {{ order.time }}
+            {{ order[0].collectionTime }}
           </p>
           <p class="date">
-            {{ order.date }}
+            {{ order[0].collectionDate }}
           </p>
         </div>
         <div class="address_icon">
@@ -33,7 +33,7 @@
               </defs>
             </svg>
             <p>
-              {{ order.address }}
+              {{ order[0].cAddress }}
             </p>
           </div>
           <div class="action_icon">
@@ -70,6 +70,10 @@ export default {
     boxName: {
       type: String,
       default: () => ''
+    },
+    listData: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
