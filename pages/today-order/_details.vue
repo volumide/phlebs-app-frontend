@@ -55,7 +55,7 @@ export default {
         } else {
           this.detailsData = response.dismissed[0]
         }
-        console.log(this.detailsData)
+        // console.log(this.detailsData)
         this.detailsLoading = false
       })
     },

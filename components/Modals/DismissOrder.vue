@@ -100,7 +100,7 @@ export default {
     dismissOrder () {
       this.loading = true
       const id = this.$route.query.id
-      console.log(this.reason)
+      // console.log(this.reason)
       this.$axios.$post('/orders/dismiss/order', {
         orderId: id,
         dismissalReason: this.reason
@@ -111,7 +111,7 @@ export default {
         }
       }
       ).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           this.$emit('bg-action')
         }

@@ -69,7 +69,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (response.orders) {
           this.completedOrdersData = response.orders.order
         } else {
