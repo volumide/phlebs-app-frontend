@@ -43,13 +43,15 @@ export default {
         url = `/orders/complete/single/order/${id}`
       } else if (name === 'dismissed') {
         url = `/orders/dismissed/single/order/${id}`
+      } else if (name === 'new-orders') {
+        url = `/orders/new/order/${id}`
       }
       this.$axios.$get(url, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         if (response.todo) {
           this.detailsData = response.todo[0]
         } else {
@@ -68,6 +70,8 @@ export default {
         url = '/orders/completed/all/10/0'
       } else if (name === 'dismissed') {
         url = '/orders/dismissed/all/10/0'
+      } else if (name === 'new-orders') {
+        url = '/orders/all/new/order/10/0'
       }
       this.$axios.$get(url, {
         headers: {

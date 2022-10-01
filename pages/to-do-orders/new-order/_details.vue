@@ -43,6 +43,8 @@ export default {
         url = `/orders/complete/single/order/${id}`
       } else if (name === 'dismissed') {
         url = `/orders/dismissed/single/order/${id}`
+      } else if (name === 'new-orders') {
+        url = `/orders/new/order/${id}`
       }
       this.$axios.$get(url, {
         headers: {
