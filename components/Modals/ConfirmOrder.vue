@@ -62,6 +62,10 @@
 import Cookies from 'js-cookie'
 export default {
   props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    }
   },
   data () {
     return {
@@ -93,23 +97,42 @@ export default {
     },
     completeOrder () {
       this.loading = true
-      const id = this.$route.query.id
-      this.$axios.$post('/orders/complete/order', {
-        orderId: id,
-        location: this.location
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
+      // console.log(this.boxName)
+      const name = this.boxName
+      if (name === 'New-orders') {
+        const id = this.$route.query.id
+        this.$axios.$get(`orders/accept/order/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`
+            }
+          }
+        ).then((response) => {
+          console.log(response)
+          if (!response.error) {
+            this.$emit('bg-action')
+          }
+          this.loading = false
+        })
+      } else {
+        const id = this.$route.query.id
+        this.$axios.$post('/orders/complete/order', {
+          orderId: id,
+          location: this.location
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
         }
+        ).then((response) => {
+          console.log(response)
+          if (!response.error) {
+            this.$emit('bg-action')
+          }
+          this.loading = false
+        })
       }
-      ).then((response) => {
-        console.log(response)
-        if (!response.error) {
-          this.$emit('bg-action')
-        }
-        this.loading = false
-      })
     }
   }
 }

@@ -228,7 +228,7 @@
                   Forgot Password?
                 </p> -->
               </div>
-              <button class="bg_btn" @click="$router.push('/auth/register/verify-number')">
+              <button class="bg_btn" @click="register()">
                 Create Account
               </button>
             </div>
@@ -240,6 +240,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
@@ -273,6 +274,31 @@ export default {
     setPassword () {
       this.linkSent = false
       this.createPassword = true
+    },
+    register () {
+      this.loading = true
+      this.$axios.$post('/auth/signup', {
+        email: this.email,
+        phone: this.phone,
+        password: this.password
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        if (!response.error) {
+          Cookies.set('token', response.data.token)
+          // this.$router.push('/auth/register/verify-number')
+          // this.$toast.success(response.statusText)
+        } else {
+          this.$toast.error(response.errorMsg)
+        }
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
+      })
     }
   }
 }

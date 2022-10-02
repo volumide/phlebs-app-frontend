@@ -222,6 +222,7 @@
     />
     <ModalsConfirmOrder
       v-if="confirmOrder"
+      :box-name="boxName"
       @close-modal="confirmOrder = false"
       @bg-action="closeConfirmOrder()"
     />

@@ -157,19 +157,19 @@ export default {
     }
   },
   created () {
-    // this.getUserDetails()
+    this.getUserDetails()
   },
   methods: {
     getUserDetails () {
-      this.$axios.$get('/get_user_details', {
+      this.$axios.$get('/auth/all/registration/information', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
-        this.userDetails = response.data
-        this.username = this.capitalizeFirstLetter(this.userDetails.username)
-        this.$store.commit('setUserDetails', this.userDetails)
+        console.log(response)
+        // this.userDetails = response.data
+        // this.username = this.capitalizeFirstLetter(this.userDetails.username)
+        // this.$store.commit('setUserDetails', this.userDetails)
       })
     },
     capitalizeFirstLetter (string) {
