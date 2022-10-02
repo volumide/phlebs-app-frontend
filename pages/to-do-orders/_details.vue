@@ -27,11 +27,12 @@ export default {
     }
   },
   created () {
-    const name = this.$route.params.details
-    const id = this.$route.query.id
-    this.boxName = this.capitalizeFirstLetter(name)
-    this.getOrderDetails(id, name)
-    this.getOrderlist(id, name)
+    // const name = this.$route.params.details
+    // console.log(name)
+    // const id = this.$route.query.id
+    // this.boxName = this.capitalizeFirstLetter(name)
+    // this.getOrderDetails(id, name)
+    // this.getOrderlist(id, name)
   },
   methods: {
     getOrderDetails (id, name) {
