@@ -199,7 +199,7 @@
           </div>
         </div>
       </div>
-      <div v-show="boxName === 'To-do'" class="btns come-down">
+      <div v-show="boxName === 'To-do' || boxName === 'New-orders'" class="btns come-down">
         <div class="bottom_btn">
           <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
