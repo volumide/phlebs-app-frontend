@@ -136,8 +136,8 @@
 export default {
   props: {
     userDetails: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -281,6 +281,14 @@ export default {
   top: 60%;
   cursor: pointer;
   box-shadow: 0px 4px 20px rgba(0, 41, 93, 0.1);
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {

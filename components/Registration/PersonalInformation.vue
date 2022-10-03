@@ -108,8 +108,8 @@ import Cookies from 'js-cookie'
 export default {
   props: {
     userDetails: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -170,7 +170,6 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        this.$emit('proceed')
         if (!response.error) {
           console.log(response)
           this.$emit('proceed')
@@ -183,14 +182,15 @@ export default {
       })
     },
     getDetails () {
-      console.log(this.userDetails)
-      this.first_name = this.userDetails.firstname
-      this.last_name = this.userDetails.lastname
-      this.age = this.userDetails.age
-      this.gender = this.userDetails.gender
-      this.address = this.userDetails.address
-      this.operating_location = this.userDetails.operatingLocation
-      this.drop_location = this.userDetails.dropoff
+      // console.log(this.userDetails)
+      const details = this.userDetails.personal_information
+      this.first_name = details.firstname
+      this.last_name = details.lastname
+      this.age = details.age
+      this.gender = details.gender
+      this.address = details.address
+      this.operating_location = details.operatingLocation
+      this.drop_location = details.dropoff
     }
   }
 }

@@ -53,8 +53,8 @@ import Cookies from 'js-cookie'
 export default {
   data () {
     return {
-      userDetails: [],
-      personalInformation: true,
+      userDetails: {},
+      personalInformation: false,
       nextOfKin: false,
       personalQualification: false,
       identification: false,
@@ -75,7 +75,7 @@ export default {
       return this.identification === true
     }
   },
-  created () {
+  mounted () {
     this.getUserDetails()
   },
   methods: {
@@ -86,10 +86,11 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
-        const data = response.data
-        this.userDetails = data
-        this.$store.commit('setUserDetails', data)
+        // console.log(response)
+        this.userDetails = response.data
+        console.log(this.userDetails)
+        this.$store.commit('setUserDetails', this.userDetails)
+        this.personalInformation = true
       })
     }
   }

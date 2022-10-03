@@ -102,8 +102,8 @@ import Cookies from 'js-cookie'
 export default {
   props: {
     userDetails: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     }
   },
   data () {
@@ -161,12 +161,13 @@ export default {
     },
     getDetails () {
       console.log(this.userDetails)
-      this.nok_first_name = this.userDetails.kinfirstname
-      this.nok_last_name = this.userDetails.kinlastname
-      this.nok_phone = this.userDetails.kin_mobile_number
-      this.nok_address = this.userDetails.kinaddress
-      this.nok_relationship = this.userDetails.kin_relationship
-      this.nok_relationship_others = this.userDetails.kin_relationship
+      const details = this.userDetails.nextofkin
+      this.nok_first_name = details.kinfirstname
+      this.nok_last_name = details.kinlastname
+      this.nok_phone = details.kin_mobile_number
+      this.nok_address = details.kinaddress
+      this.nok_relationship = details.kin_relationship
+      this.nok_relationship_others = details.kin_relationship
     }
   }
 }
@@ -210,6 +211,14 @@ export default {
 
 .bg_btn {
   width: 48%;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {

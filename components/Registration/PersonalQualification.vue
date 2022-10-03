@@ -179,7 +179,10 @@
           <button class="trans_btn" @click="$emit('back')">
             Back
           </button>
-          <button class="bg_btn" @click="$emit('proceed')">
+          <button v-if="loading" class="bg_btn">
+            <Loader class="come-down" />
+          </button>
+          <button v-else :disabled="disabled" class="bg_btn" @click="submit()">
             Save and Proceed
           </button>
         </div>
@@ -189,26 +192,48 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   props: {
     userDetails: {
-      type: Array,
-      default: () => []
+      type: Object,
+      default: () => {}
     }
   },
   data () {
     return {
+      loading: false,
       proficiency: '',
       years_expertise: '',
-      address: '',
-      drop_location: '',
       inputCVfile: null,
       inputLicencefile: null,
-      inputSupportingfile: null,
-      age: ''
+      inputSupportingfile: null
     }
   },
+  computed: {
+    disabled () {
+      return (
+        this.proficiency === '' ||
+        this.years_expertise === '' ||
+        this.inputCVfile === null ||
+        this.inputLicencefile === null ||
+        this.inputSupportingfile === null
+      )
+    }
+  },
+  created () {
+    // this.getDetails()
+  },
   methods: {
+    getDetails () {
+      // console.log(this.userDetails)
+      const details = this.userDetails.personal_information
+      this.first_name = details.proficiency
+      this.last_name = details.years_expertise
+      this.age = details.inputCVfile
+      this.gender = details.inputLicencefile
+      this.address = details.inputSupportingfile
+    },
     selectCVfile (event) {
       const CVfileId = event.target.files[0]
       this.inputCVfile = CVfileId
@@ -241,6 +266,50 @@ export default {
       // } else {
       //   this.inputSupportingfile = SupportingfileId
       // }
+    },
+    submit () {
+      // this.$emit('proceed')
+      this.loading = true
+      this.$axios.$post('/auth/upload_qualification', {
+        proficiency: this.proficiency,
+        yearsofexpertise: this.years_expertise
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        if (!response.error) {
+          console.log(response)
+          this.$emit('proceed')
+        } else {
+          console.log(response)
+        }
+      }).catch((err) => {
+        const errorMsg = err
+        console.log(errorMsg, 'error')
+      })
+    },
+    uploadCv () {
+      // this.$emit('proceed')
+      this.loading = true
+      const formdata = new FormData()
+      formdata.append('image', this.inputCVfile)
+      this.$axios.$post('/auth/upload_cv', formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+      }).catch((err) => {
+        const errorMsg = err
+        console.log(errorMsg, 'error')
+      })
     }
   }
 }
@@ -289,6 +358,14 @@ export default {
 
 .bg_btn {
   width: 48%;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {
