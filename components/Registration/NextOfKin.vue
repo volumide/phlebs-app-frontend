@@ -149,7 +149,7 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.$emit('proceed')
       }).catch((onrejected) => {
         console.log(onrejected)
@@ -160,7 +160,7 @@ export default {
       })
     },
     getDetails () {
-      console.log(this.userDetails)
+      // console.log(this.userDetails)
       const details = this.userDetails.nextofkin
       this.nok_first_name = details.kinfirstname
       this.nok_last_name = details.kinlastname

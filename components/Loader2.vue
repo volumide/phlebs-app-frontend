@@ -9,9 +9,9 @@
   /* width: 100%; */
 }
 .loader {
-  border: 2.5px solid #f2f3f3;
+  border: 2.5px solid var(--primary-color);
   border-radius: 50%;
-  border-top: 2.5px solid var(--primary-color);
+  border-top: 2.5px solid #fff;
   width: 18px;
   height: 18px;
   -webkit-animation: spin 0.6s linear infinite;

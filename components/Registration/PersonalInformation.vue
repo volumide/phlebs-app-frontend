@@ -170,12 +170,7 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        if (!response.error) {
-          console.log(response)
-          this.$emit('proceed')
-        } else {
-          console.log(response)
-        }
+        this.$emit('proceed')
       }).catch((err) => {
         const errorMsg = err.response?.errorMsg || err.errorMsg
         console.log(errorMsg)
