@@ -166,10 +166,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
-        // this.userDetails = response.data
-        // this.username = this.capitalizeFirstLetter(this.userDetails.username)
-        // this.$store.commit('setUserDetails', this.userDetails)
+        // console.log(response)
       })
     },
     capitalizeFirstLetter (string) {

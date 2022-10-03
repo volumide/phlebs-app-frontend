@@ -263,21 +263,44 @@ export default {
       //   }
       // }
       ).then((response) => {
-        this.loading = false
         console.log(response)
         if (!response.error) {
           Cookies.set('token', response.data.token)
-          this.$router.push('/')
+          this.getUserDetails()
           // this.$toast.success(response.statusText)
         } else {
           this.$toast.error(response.errorMsg)
         }
       }).catch((onrejected) => {
         console.log(onrejected)
-        this.loading = false
+        // this.loading = false
         if (onrejected.error) {
           this.$toast.error(onrejected.errorMsg)
         }
+      })
+    },
+    getUserDetails () {
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        const data = response.data
+        if (
+          data.ProfessionalQualification === null ||
+          data.nextofkin === null ||
+          data.personal_information === null ||
+          data.profiles === null
+        ) {
+          this.$router.push('/auth/register/details')
+        } else {
+          this.$router.push('/')
+        }
+        // this.userDetails = response.data
+        // this.username = this.capitalizeFirstLetter(this.userDetails.username)
+        // this.$store.commit('setUserDetails', this.userDetails)
       })
     }
   }
