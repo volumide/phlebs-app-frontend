@@ -298,9 +298,7 @@ export default {
         } else {
           this.$router.push('/')
         }
-        // this.userDetails = response.data
-        // this.username = this.capitalizeFirstLetter(this.userDetails.username)
-        // this.$store.commit('setUserDetails', this.userDetails)
+        this.$store.commit('setUserDetails', data)
       })
     }
   }

@@ -13,21 +13,25 @@
       <div class="form_ctn">
         <RegistrationPersonalInformation
           v-if="personalInformation"
+          :user-details="userDetails"
           @back="$router.go(-1)"
           @proceed="personalInformation = false; nextOfKin = true"
         />
         <RegistrationNextOfKin
           v-if="nextOfKin"
+          :user-details="userDetails"
           @back="nextOfKin = false; personalInformation = true;"
           @proceed="nextOfKin = false; personalInformation = false; personalQualification = true"
         />
         <RegistrationPersonalQualification
           v-if="personalQualification"
+          :user-details="userDetails"
           @back="personalInformation = false; personalQualification = false; nextOfKin = true;"
           @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true"
         />
         <RegistrationIdentification
           v-if="identification"
+          :user-details="userDetails"
           @back="personalInformation = false; nextOfKin = false; identification = false; personalQualification = true;"
           @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true"
         />
@@ -45,9 +49,11 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
+      userDetails: [],
       personalInformation: true,
       nextOfKin: false,
       personalQualification: false,
@@ -67,6 +73,24 @@ export default {
     },
     bar_active_4 () {
       return this.identification === true
+    }
+  },
+  created () {
+    this.getUserDetails()
+  },
+  methods: {
+    getUserDetails () {
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        const data = response.data
+        this.userDetails = data
+        this.$store.commit('setUserDetails', data)
+      })
     }
   }
 }

@@ -134,6 +134,12 @@
 
 <script>
 export default {
+  props: {
+    userDetails: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       means_identification: '',

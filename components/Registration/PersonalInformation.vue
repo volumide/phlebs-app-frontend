@@ -106,6 +106,12 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  props: {
+    userDetails: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       dropoffLocation: '',
@@ -134,6 +140,7 @@ export default {
   },
   created () {
     this.getDropofflist()
+    this.getDetails()
   },
   methods: {
     getDropofflist (val) {
@@ -174,6 +181,16 @@ export default {
         const errorMsg = err.response?.errorMsg || err.errorMsg
         console.log(errorMsg)
       })
+    },
+    getDetails () {
+      console.log(this.userDetails)
+      this.first_name = this.userDetails.firstname
+      this.last_name = this.userDetails.lastname
+      this.age = this.userDetails.age
+      this.gender = this.userDetails.gender
+      this.address = this.userDetails.address
+      this.operating_location = this.userDetails.operatingLocation
+      this.drop_location = this.userDetails.dropoff
     }
   }
 }

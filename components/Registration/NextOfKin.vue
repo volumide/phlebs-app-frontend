@@ -85,7 +85,10 @@
           <button class="trans_btn" @click="$emit('back')">
             Back
           </button>
-          <button class="bg_btn" @click="submit()">
+          <button v-if="loading" class="bg_btn">
+            <Loader class="come-down" />
+          </button>
+          <button v-else :disabled="disabled" class="bg_btn" @click="submit()">
             Save and Proceed
           </button>
         </div>
@@ -97,8 +100,15 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  props: {
+    userDetails: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
+      loading: false,
       nok_first_name: '',
       nok_last_name: '',
       nok_phone: '',
@@ -106,6 +116,20 @@ export default {
       nok_relationship: '',
       nok_relationship_others: ''
     }
+  },
+  computed: {
+    disabled () {
+      return (
+        this.nok_first_name === '' ||
+        this.nok_last_name === '' ||
+        this.nok_phone === '' ||
+        this.nok_address === '' ||
+        (this.nok_relationship === '' || this.nok_relationship_others === '')
+      )
+    }
+  },
+  created () {
+    this.getDetails()
   },
   methods: {
     submit () {
@@ -134,6 +158,15 @@ export default {
           // this.$toast.error(onrejected.errorMsg)
         }
       })
+    },
+    getDetails () {
+      console.log(this.userDetails)
+      this.nok_first_name = this.userDetails.kinfirstname
+      this.nok_last_name = this.userDetails.kinlastname
+      this.nok_phone = this.userDetails.kin_mobile_number
+      this.nok_address = this.userDetails.kinaddress
+      this.nok_relationship = this.userDetails.kin_relationship
+      this.nok_relationship_others = this.userDetails.kin_relationship
     }
   }
 }
