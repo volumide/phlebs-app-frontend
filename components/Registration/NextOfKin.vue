@@ -29,7 +29,7 @@
             Next of Kin Phone Number
           </p>
           <div class="new_input">
-            <input v-model="nok_phone" placeholder="e.g. 45" type="text">
+            <input v-model="nok_phone" placeholder="e.g. 45" type="number">
           </div>
         </div>
         <div class="input-box">
@@ -85,7 +85,7 @@
           <button class="trans_btn" @click="$emit('back')">
             Back
           </button>
-          <button class="bg_btn" @click="$emit('proceed')">
+          <button class="bg_btn" @click="submit()">
             Save and Proceed
           </button>
         </div>
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
@@ -104,6 +105,35 @@ export default {
       nok_address: '',
       nok_relationship: '',
       nok_relationship_others: ''
+    }
+  },
+  methods: {
+    submit () {
+      // this.$emit('proceed')
+      this.loading = true
+      this.$axios.$post('/auth/upload_next_of_kin', {
+        kinfirstname: this.nok_first_name,
+        kinlastname: this.nok_last_name,
+        kin_mobile_number: this.nok_phone,
+        kin_relationship: this.nok_relationship === 'Others' ? this.nok_relationship_others : this.nok_relationship,
+        kinaddress: this.nok_address
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.$emit('proceed')
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
+      })
     }
   }
 }

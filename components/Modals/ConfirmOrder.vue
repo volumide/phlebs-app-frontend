@@ -100,7 +100,7 @@ export default {
       // console.log(this.boxName)
       const name = this.boxName
       if (name === 'New-orders') {
-        const id = this.$route.query.id
+        const id = this.$route.query.idk
         this.$axios.$get(`orders/accept/order/${id}`,
           {
             headers: {
@@ -117,8 +117,8 @@ export default {
       } else {
         const id = this.$route.query.id
         this.$axios.$post('/orders/complete/order', {
-          orderId: id,
-          location: this.location
+          orderId: id
+          // location: this.location
         },
         {
           headers: {

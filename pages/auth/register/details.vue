@@ -11,10 +11,26 @@
         <hr :class="`progress_1 ${bar_active_4 ? 'active_bar' : ''}`">
       </div>
       <div class="form_ctn">
-        <RegistrationPersonalInformation v-if="personalInformation" @back="back()" @proceed="personalInformation = false; nextOfKin = true" />
-        <RegistrationNextOfKin v-if="nextOfKin" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = true" />
-        <RegistrationPersonalQualification v-if="personalQualification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true" />
-        <RegistrationIdentification v-if="identification" @back="back()" @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true" />
+        <RegistrationPersonalInformation
+          v-if="personalInformation"
+          @back="$router.go(-1)"
+          @proceed="personalInformation = false; nextOfKin = true"
+        />
+        <RegistrationNextOfKin
+          v-if="nextOfKin"
+          @back="nextOfKin = false; personalInformation = true;"
+          @proceed="nextOfKin = false; personalInformation = false; personalQualification = true"
+        />
+        <RegistrationPersonalQualification
+          v-if="personalQualification"
+          @back="personalInformation = false; personalQualification = false; nextOfKin = true;"
+          @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = true"
+        />
+        <RegistrationIdentification
+          v-if="identification"
+          @back="personalInformation = false; nextOfKin = false; identification = false; personalQualification = true;"
+          @proceed="nextOfKin = false; personalInformation = false; personalQualification = false; identification = false; successPage = true"
+        />
         <ModalsAuthSuccess
           v-if="successPage"
           class="success_page"

@@ -145,7 +145,7 @@ export default {
       })
     },
     submit () {
-      // this.$router.push(`/auth/register/verify-number?phone=${this.phone}`)
+      // this.$emit('proceed')
       this.loading = true
       this.$axios.$post('/auth/upload_personal_info', {
         firstname: this.first_name,
@@ -163,14 +163,16 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        console.log(response)
-        this.$emit('back')
-      }).catch((onrejected) => {
-        console.log(onrejected)
-        this.loading = false
-        if (onrejected.error) {
-          // this.$toast.error(onrejected.errorMsg)
+        this.$emit('proceed')
+        if (!response.error) {
+          console.log(response)
+          this.$emit('proceed')
+        } else {
+          console.log(response)
         }
+      }).catch((err) => {
+        const errorMsg = err.response?.errorMsg || err.errorMsg
+        console.log(errorMsg)
       })
     }
   }
@@ -215,6 +217,10 @@ export default {
 
 .bg_btn {
   width: 48%;
+}
+
+.succes {
+  margin-top: 20px;
 }
 
 button:disabled,
