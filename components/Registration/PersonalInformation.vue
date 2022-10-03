@@ -29,7 +29,7 @@
             Age
           </p>
           <div class="new_input">
-            <input v-model="age" placeholder="e.g. 45" type="text">
+            <input v-model="age" placeholder="e.g. 45" type="number">
           </div>
         </div>
         <div class="input-box">
@@ -70,20 +70,8 @@
               <option value="">
                 Select...
               </option>
-              <option value="Medplus, Obalende">
-                Medplus, Obalende
-              </option>
-              <option value="Medplus, Ikoyi">
-                Medplus, Ikoyi
-              </option>
-              <option value="Super Pharmacy, Ikota">
-                Super Pharmacy, Ikota
-              </option>
-              <option value="The Crown Plus Pharmacy, Ogudu">
-                The Crown Plus Pharmacy, Ogudu
-              </option>
-              <option value="Medplus, Ojoo">
-                Medplus, Ojoo
+              <option v-for="(data, index) in dropoffLocation" :key="index" :value="data">
+                {{ data }}
               </option>
             </select>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,11 +79,22 @@
             </svg>
           </div>
         </div>
+        <div class="input-box">
+          <p class="label">
+            Operating Location
+          </p>
+          <div class="new_input">
+            <input v-model="operating_location" placeholder="eg. Agege, Oshodi, Lekki" type="text">
+          </div>
+        </div>
         <div class="bottom_btn">
           <button class="trans_btn" @click="$emit('back')">
             Back
           </button>
-          <button class="bg_btn" @click="$emit('proceed')">
+          <button v-if="loading" class="bg_btn">
+            <Loader class="come-down" />
+          </button>
+          <button v-else :disabled="disabled" class="bg_btn" @click="submit()">
             Save and Proceed
           </button>
         </div>
@@ -105,15 +104,74 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
+      dropoffLocation: '',
       first_name: '',
+      loading: false,
       last_name: '',
       gender: '',
       address: '',
       drop_location: '',
+      operating_location: '',
       age: ''
+    }
+  },
+  computed: {
+    disabled () {
+      return (
+        this.first_name === '' ||
+        this.last_name === '' ||
+        this.age === '' ||
+        this.gender === '' ||
+        this.address === '' ||
+        this.operating_location === '' ||
+        this.drop_location === ''
+      )
+    }
+  },
+  created () {
+    this.getDropofflist()
+  },
+  methods: {
+    getDropofflist (val) {
+      this.$axios.$get('/auth/get_drop_off_location', {
+      }).then((response) => {
+        this.dropoffLocation = response.data.location
+        this.$store.commit('setDropoffLocation', this.dropoffLocation)
+        // console.log(response)
+      })
+    },
+    submit () {
+      // this.$router.push(`/auth/register/verify-number?phone=${this.phone}`)
+      this.loading = true
+      this.$axios.$post('/auth/upload_personal_info', {
+        firstname: this.first_name,
+        lastname: this.last_name,
+        age: this.age,
+        gender: this.gender,
+        address: this.address,
+        dropoff: this.drop_location,
+        operatingLocation: this.operating_location
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.$emit('back')
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
+      })
     }
   }
 }
@@ -157,6 +215,14 @@ export default {
 
 .bg_btn {
   width: 48%;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {

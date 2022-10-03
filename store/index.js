@@ -1,6 +1,7 @@
 export const state = () => ({
   newPageName: '',
-  userDetails: {}
+  userDetails: {},
+  dropOffLocation: []
 })
 
 export const mutations = {
@@ -9,5 +10,8 @@ export const mutations = {
   },
   setUserDetails (state, val) {
     state.userDetails = val
+  },
+  setDropoffLocation (state, val) {
+    state.dropOffLocation = val
   }
 }
