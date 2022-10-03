@@ -70,7 +70,21 @@
                 required
               >
             </div>
-            <div class="upload-btn">
+            <div v-if="cvSaved" class="upload-btn">
+              <p class="come-down">Saved</p>
+              <svg
+                class="come-down"
+                width="20"
+                height="20"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M18.5 10.5L7.5 21.5L2 16.0002" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M30 10.5L19 21.5L16.0784 18.5785" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div v-else class="upload-btn">
               <p>Upload File</p>
               <Loader2 v-if="cvLoading" class="come-down" />
               <svg
@@ -121,7 +135,21 @@
                 required
               >
             </div>
-            <div class="upload-btn">
+            <div v-if="licenseSaved" class="upload-btn">
+              <p class="come-down">Saved</p>
+              <svg
+                class="come-down"
+                width="20"
+                height="20"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M18.5 10.5L7.5 21.5L2 16.0002" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M30 10.5L19 21.5L16.0784 18.5785" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div v-else class="upload-btn">
               <p>Upload File</p>
               <Loader2 v-if="licenseLoading" class="come-down" />
               <svg
@@ -172,7 +200,21 @@
                 required
               >
             </div>
-            <div class="upload-btn">
+            <div v-if="supportSaved" class="upload-btn">
+              <p class="come-down">Saved</p>
+              <svg
+                class="come-down"
+                width="20"
+                height="20"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M18.5 10.5L7.5 21.5L2 16.0002" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M30 10.5L19 21.5L16.0784 18.5785" stroke="#00295D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </div>
+            <div v-else class="upload-btn">
               <p>Upload File</p>
               <Loader2 v-if="supportLoading" class="come-down" />
               <svg
@@ -230,6 +272,9 @@ export default {
       cvLoading: false,
       licenseLoading: false,
       supportLoading: false,
+      cvSaved: false,
+      licenseSaved: false,
+      supportSaved: false,
       proficiency: null,
       years_expertise: '',
       inputCVfile: null,
@@ -317,6 +362,10 @@ export default {
         }
       ).then((response) => {
         this.cvLoading = false
+        this.cvSaved = true
+        setTimeout(() => {
+          this.cvSaved = false
+        }, 3000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
@@ -337,6 +386,10 @@ export default {
         }
       ).then((response) => {
         this.licenseLoading = false
+        this.licenseSaved = true
+        setTimeout(() => {
+          this.licenseSaved = false
+        }, 3000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
@@ -357,6 +410,10 @@ export default {
         }
       ).then((response) => {
         this.supportLoading = false
+        this.supportSaved = true
+        setTimeout(() => {
+          this.supportSaved = false
+        }, 3000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
