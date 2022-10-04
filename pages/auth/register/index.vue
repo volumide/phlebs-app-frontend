@@ -108,7 +108,10 @@
                 </svg>
               </div>
             </div>
-            <button class="bg_btn" @click="$router.push('/auth/register/verify-number')">
+            <button v-if="loading" class="bg_btn" disabled>
+              <Loader class="come-down" />
+            </button>
+            <button v-else class="bg_btn" @click="register()">
               Create Account
             </button>
             <p class="create" @click="$router.push('/auth/login')">

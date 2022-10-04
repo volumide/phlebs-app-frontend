@@ -98,7 +98,10 @@
                 Forgot Password?
               </p>
             </div>
-            <button class="bg_btn" @click="$router.push('/')">
+            <button v-if="loading" class="bg_btn" disabled>
+              <Loader class="come-down" />
+            </button>
+            <button v-else class="bg_btn" @click="login()">
               Login
             </button>
             <p class="create" @click="$router.push('/auth/register')">
