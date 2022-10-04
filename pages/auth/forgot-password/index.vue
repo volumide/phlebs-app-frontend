@@ -129,9 +129,9 @@
         </div>
       </div>
     </div>
-    <ModalsResetPassword v-if="resetPassword" @sentInst="sentInst" @close-modal="resetPassword = false" />
+    <!-- <ModalsResetPassword v-if="resetPassword" @sentInst="sentInst" @close-modal="resetPassword = false" />
     <ModalsLinkSent v-if="linkSent" @set-password="setPassword" />
-    <ModalsCreatePassword v-if="createPassword" />
+    <ModalsCreatePassword v-if="createPassword" /> -->
   </div>
 </template>
 

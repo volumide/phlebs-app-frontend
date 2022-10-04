@@ -94,7 +94,7 @@
                 <input class="check-input" type="checkbox" :checked="checked" @click="toogleCheck">
                 <span class="checkmark" />
               </label>
-              <p class="forgot" @click="$router.push('/auth/forgot-password')">
+              <p class="forgot" @click="$router.push('/auth/forgot-password/enter-email')">
                 Forgot Password?
               </p>
             </div>
@@ -198,7 +198,7 @@
                   <input class="check-input" type="checkbox" :checked="checked" @click="toogleCheck">
                   <span class="checkmark" />
                 </label>
-                <p class="forgot" @click="$router.push('/auth/forgot-password')">
+                <p class="forgot" @click="$router.push('/auth/forgot-password/enter-email')">
                   Forgot Password?
                 </p>
               </div>
