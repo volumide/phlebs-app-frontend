@@ -285,7 +285,7 @@ export default {
   computed: {
     disabled () {
       return (
-        this.proficiency === '' ||
+        this.proficiency === null ||
         this.years_expertise === '' ||
         this.inputCVfile === null ||
         this.inputLicencefile === null ||
@@ -298,7 +298,7 @@ export default {
   },
   methods: {
     getDetails () {
-      console.log(this.userDetails)
+      // console.log(this.userDetails)
       const details = this.userDetails.ProfessionalQualification
       this.proficiency = details.proficiency
       this.years_expertise = details.yearsofexpertise
@@ -365,7 +365,7 @@ export default {
         this.cvSaved = true
         setTimeout(() => {
           this.cvSaved = false
-        }, 3000)
+        }, 5000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
@@ -389,7 +389,7 @@ export default {
         this.licenseSaved = true
         setTimeout(() => {
           this.licenseSaved = false
-        }, 3000)
+        }, 5000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
@@ -413,7 +413,7 @@ export default {
         this.supportSaved = true
         setTimeout(() => {
           this.supportSaved = false
-        }, 3000)
+        }, 5000)
         console.log(response)
       }).catch((err) => {
         const errorMsg = err
