@@ -270,12 +270,14 @@ export default {
         if (!response.error) {
           Cookies.set('token', response.data.token)
           this.getUserDetails()
+          this.loading = true
           // this.$toast.success(response.statusText)
         } else {
           this.$toast.error(response.errorMsg)
         }
       }).catch((onrejected) => {
         console.log(onrejected)
+        this.loading = true
         // this.loading = false
         if (onrejected.error) {
           this.$toast.error(onrejected.errorMsg)
