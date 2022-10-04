@@ -8,7 +8,7 @@
     </p>
     <div class="form">
       <div v-if="error">
-        <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
+        <AlertsError :error-text="`Email not valid`" />
       </div>
       <div class="input-box">
         <p class="label">
@@ -25,10 +25,13 @@
               </clipPath>
             </defs>
           </svg>
-          <input v-model="email" placeholder="Email Address" type="email">
+          <input v-model="email" placeholder="Email Address" type="email" name="email">
         </div>
       </div>
-      <button class="bg_btn" @click="$emit('closeOtp')">
+      <button v-if="loading" class="bg_btn" disabled>
+        <Loader class="come-down" />
+      </button>
+      <button v-else class="bg_btn" @click="submit()">
         Submit Email
       </button>
       <!-- <div class="bottom_sec">
@@ -51,8 +54,23 @@
 export default {
   data () {
     return {
+      loading: false,
       error: false,
-      code: ''
+      email: ''
+    }
+  },
+  methods: {
+    submit () {
+      if (this.email === '') {
+        this.error = true
+        setTimeout(() => {
+          this.error = false
+        }, 4000)
+      } else {
+        this.loading = true
+        this.$router.push(`/auth/forgot-password?email=${this.email}`)
+        this.loading = false
+      }
     }
   }
 }

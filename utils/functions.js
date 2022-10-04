@@ -113,6 +113,10 @@ function truncateString (str) {
   return str.slice(0, 12) + '...'
 }
 
+function truncateEmail (str) {
+  return '***' + '****' + '***' + str.slice(2, 5)
+}
+
 const functions = {
   lastFourDigits,
   formatNumber: number,
@@ -126,6 +130,7 @@ const functions = {
   numberToArray: numberToArrayMethod,
   capitalizeFirstLetter,
   truncateString,
+  truncateEmail,
   formatPhoneNumber
   // timeToText: timeText
 }

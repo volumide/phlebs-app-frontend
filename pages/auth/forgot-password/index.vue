@@ -61,7 +61,7 @@
                   Via email
                 </p>
                 <p class="text">
-                  *** **** *** ke@gmail.com
+                  {{ email }}
                 </p>
               </div>
             </div>
@@ -120,7 +120,7 @@
                     Via email
                   </p>
                   <p class="text">
-                    *** **** *** ke@gmail.com
+                    {{ email }}
                   </p>
                 </div>
               </div>
@@ -136,18 +136,18 @@
 </template>
 
 <script>
+import functions from '@/utils/functions'
 export default {
   data () {
     return {
       checked: false,
       error: false,
-      email: '',
-      password: '',
-      type: 'password',
-      resetPassword: false,
-      createPassword: false,
-      linkSent: false
+      truncateEmail: functions.truncateEmail,
+      email: ''
     }
+  },
+  created () {
+    this.email = this.$route.query.email
   },
   methods: {
     showHide () {
