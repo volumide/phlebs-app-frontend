@@ -263,6 +263,7 @@ export default {
       }).catch((err) => {
         const errorMsg = err
         console.log(errorMsg, 'error')
+        this.loading = false
       })
     },
     uploadProfileImage () {

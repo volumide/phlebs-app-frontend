@@ -57,6 +57,12 @@ export default {
           this.completedOrdersData = response.data.completed
         }
         this.completedLoading = false
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.completedLoading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
       })
     },
     getDismissedOrders () {
@@ -73,6 +79,12 @@ export default {
           this.dismissedOrdersData = response.data.dismissed
         }
         this.dismissedLoading = false
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.dismissedLoading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
       })
     }
   }

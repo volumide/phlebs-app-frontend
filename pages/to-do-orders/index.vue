@@ -69,6 +69,12 @@ export default {
         // console.log(response)
         this.todoData = response.orders.order
         this.todoLoading = false
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.todoLoading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
       })
     },
     getNewOrders () {
@@ -81,6 +87,12 @@ export default {
         // console.log(response)
         this.newOrderData = response.orders.order
         this.newOrderLoading = false
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.newOrderLoading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
       })
     }
   }

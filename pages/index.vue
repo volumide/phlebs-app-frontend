@@ -26,7 +26,7 @@
                   You have
                 </p>
                 <p class="orders">
-                  {{ newOrders }} New Orders
+                  {{ newOrders ? newOrders : 0 }} New Orders
                 </p>
               </div>
               <div class="icon">
@@ -56,7 +56,7 @@
               Today’s Orders
             </p>
             <p class="number_orders">
-              {{ todayOrders }}
+              {{ todayOrders ? todayOrders : 0 }}
             </p>
             <button class="trans_btn">
               <span>My Todo</span>

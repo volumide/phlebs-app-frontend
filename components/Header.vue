@@ -21,7 +21,7 @@
             {{ pageName }}
           </p>
           <p class="greeting">
-            Good Afternoon, David
+            Good Afternoon, {{ userDetails.firstname }}
           </p>
         </div>
       </div>
@@ -58,7 +58,7 @@
             <img src="~assets/images/user-image.png" alt="">
           </div>
           <p class="username">
-            {{ username }}
+            {{ userDetails.firstname }} {{ userDetails.lastname }}
           </p>
           <svg
             width="16"
@@ -85,7 +85,7 @@
         {{ pageName }}
       </p>
       <p class="greeting">
-        Good Afternoon, David
+        Good Afternoon, {{ userDetails.firstname }}
       </p>
     </div>
   </div>
@@ -110,13 +110,8 @@ export default {
       notificationsCount: '',
       // capitalizeFirstLetter: functions.capitalizeFirstLetter,
       username: 'David Emaye',
-      balance: '',
-      challengersOnline: '0',
-      newCampaignShow: false,
-      campaignContactShow: false,
-      email: 'foobar@example.com',
-      amount: 1000000,
-      overviewData: []
+      overviewData: [],
+      userDetails: {}
     }
   },
   computed: {
@@ -166,7 +161,8 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
+        this.userDetails = response.data.personal_information
       })
     },
     capitalizeFirstLetter (string) {
