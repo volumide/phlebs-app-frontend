@@ -46,6 +46,21 @@ export default {
       error: false,
       code: ''
     }
+  },
+  submit () {
+    this.$axios.$post('/auth/verify/otp', {
+      code: this.code,
+      email: this.email
+    }
+    // {
+    //   headers: {
+    //     Authorization: `Bearer ${Cookies.get('token')}`
+    //   }
+    // }
+    ).then((response) => {
+      console.log(response)
+      this.loading = false
+    })
   }
 }
 </script>
