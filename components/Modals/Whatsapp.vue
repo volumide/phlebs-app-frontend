@@ -44,7 +44,7 @@
             </svg>
           </div>
         </div>
-        <button class="bg_btn" @click="$emit('closeWhatsapp')">
+        <button class="bg_btn" @click="verifyNumber()">
           Submit Code
         </button>
       </div>
@@ -98,6 +98,18 @@ export default {
         }
       }).then((response) => {
         console.log(response)
+      })
+    },
+    verifyNumber () {
+      // const phoneNumber = this.acceptNumber(this.phone)
+      console.log(this.code)
+      this.$axios.$get(`/auth/verify/${this.code}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        // this.$emit('closeWhatsapp')
       })
     },
     resendVerificationCode () {

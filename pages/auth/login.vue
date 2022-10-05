@@ -277,7 +277,7 @@ export default {
         }
       }).catch((onrejected) => {
         console.log(onrejected)
-        this.loading = true
+        this.loading = false
         // this.loading = false
         if (onrejected.error) {
           this.$toast.error(onrejected.errorMsg)

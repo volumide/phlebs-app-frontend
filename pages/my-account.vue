@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   layout: 'MainLayout',
   data () {
@@ -28,10 +29,22 @@ export default {
       activeTab: 'Personal'
     }
   },
+  created () {
+    this.getUserDetails()
+  },
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
       this.$store.commit('setPageName', tab)
+    },
+    getUserDetails () {
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+      })
     }
   }
 }

@@ -114,12 +114,14 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
       email: 'nkojuadeposi@gmail.com',
       phone: '08012345678',
       allowEdit: false,
+      loading: false,
       openOtp: false,
       successModal: false,
       userImage: null,
@@ -150,6 +152,24 @@ export default {
         reader.readAsDataURL(imgFile[0])
         this.$emit('fileInput', imgFile[0])
       }
+    },
+    updateNumber () {
+      this.loading = true
+      this.$axios.$post('/auth/update/mobile', {
+        mobile_number: this.phone
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+      })
     }
   }
 }

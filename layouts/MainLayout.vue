@@ -71,7 +71,7 @@ export default {
         }
       }).then((response) => {
         // console.log(response)
-        if (response.error && response.errorMsg === 'Authentication Failed') {
+        if (response.error && (response.errorMsg === 'Authentication Failed' || response.errorMsg === 'Unauthorized User')) {
           this.$router.push('/auth/login?error=session has expired')
         }
       })
