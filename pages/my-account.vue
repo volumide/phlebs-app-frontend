@@ -8,8 +8,8 @@
         @set-active-tab="setActiveTab"
       />
     </div>
-    <div v-if="activeTab === 'Personal'" class="tab_data">
-      <ProfilePersonal />
+    <div v-if="activeTab === 'Personal' && !userLoading" class="tab_data">
+      <ProfilePersonal :user-data="userData" />
     </div>
     <div v-if="activeTab === 'Security'" class="tab_data">
       <ProfileSecurity />
@@ -26,7 +26,9 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'Personal'
+      activeTab: 'Personal',
+      userLoading: true,
+      userData: {}
     }
   },
   created () {
@@ -38,12 +40,15 @@ export default {
       this.$store.commit('setPageName', tab)
     },
     getUserDetails () {
+      this.userLoading = true
       this.$axios.$get('/auth/all/registration/information', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         console.log(response)
+        this.userData = response.data
+        this.userLoading = false
       })
     }
   }

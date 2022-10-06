@@ -33,8 +33,11 @@
         <button v-if="transBtn" class="trans_btn" @click="$emit('trans-action')">
           {{ transBtn }}
         </button>
-        <button v-if="bgBtn" class="bg_btn" @click="$emit('bg-action')">
+        <button v-if="!bgLoading && bgBtn" class="bg_btn" @click="$emit('bg-action')">
           {{ bgBtn }}
+        </button>
+        <button v-else class="bg_btn" disabled>
+          <Loader class="come-down" />
         </button>
       </div>
     </div>
@@ -67,6 +70,10 @@ export default {
     bgBtn: {
       type: String,
       default: () => ''
+    },
+    bgLoading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data () {
