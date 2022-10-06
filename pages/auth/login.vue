@@ -39,7 +39,7 @@
                     </clipPath>
                   </defs>
                 </svg>
-                <input v-model="email" placeholder="Email Address" type="email">
+                <input v-model="email" placeholder="Email Address" name="email" type="email">
               </div>
             </div>
             <div class="input-box">
@@ -58,7 +58,7 @@
                     </clipPath>
                   </defs>
                 </svg>
-                <input v-model="password" placeholder="Enter Password" :type="type">
+                <input v-model="password" placeholder="Enter Password" name="password" :type="type">
                 <svg
                   v-if="type === 'password'"
                   class="pass_svg"
@@ -143,7 +143,7 @@
                       </clipPath>
                     </defs>
                   </svg>
-                  <input v-model="email" placeholder="Email Address" type="email">
+                  <input v-model="email" placeholder="Email Address" name="email" type="email">
                 </div>
               </div>
               <div class="input-box">
@@ -162,7 +162,7 @@
                       </clipPath>
                     </defs>
                   </svg>
-                  <input v-model="password" placeholder="Enter Password" :type="type">
+                  <input v-model="password" placeholder="Enter Password" name="password" :type="type">
                   <svg
                     v-if="type === 'password'"
                     class="pass_svg"

@@ -44,7 +44,10 @@
             </svg>
           </div>
         </div>
-        <button class="bg_btn" @click="verifyNumber()">
+        <button v-if="loading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="verifyNumber()">
           Submit Code
         </button>
       </div>
@@ -53,7 +56,9 @@
           {{ acceptNumber($route.query.phone) }}
         </p>
         <div class="resend">
-          <p @click="changeNumber = true">Change Number</p>
+          <p @click="changeNumber = true">
+            Change Number
+          </p>
         </div>
       </div>
     </div>
@@ -67,6 +72,7 @@ export default {
   data () {
     return {
       error: false,
+      loading: false,
       changeNumber: false,
       resendLoading: false,
       formatPhone: functions.formatPhoneNumber,
@@ -101,6 +107,7 @@ export default {
       })
     },
     verifyNumber () {
+      this.loading = true
       // const phoneNumber = this.acceptNumber(this.phone)
       console.log(this.code)
       this.$axios.$get(`/auth/verify/${this.code}`, {
@@ -108,8 +115,9 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
+        this.loading = false
         console.log(response)
-        // this.$emit('closeWhatsapp')
+        this.$emit('closeWhatsapp')
       })
     },
     resendVerificationCode () {

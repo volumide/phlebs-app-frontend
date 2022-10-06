@@ -270,7 +270,12 @@ export default {
     }
   },
   created () {
-    this.getUserDetails()
+    this.getNewOrderTotal()
+    this.getTodayOrdersTotal()
+    this.getNextOrderDetails()
+    this.getIncompleteOrders()
+    this.getCompletedOrders()
+    this.getDismissedOrders()
   },
   methods: {
     getNewOrderTotal () {
@@ -332,35 +337,35 @@ export default {
         // console.log(response)
         this.dismissedOrders = response.orders.dismissed
       })
-    },
-    getUserDetails () {
-      this.$axios.$get('/auth/all/registration/information', {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
-        }
-      }).then((response) => {
-        console.log(response)
-        const data = response.data
-        if (
-          data.ProfessionalQualification === null ||
-          data.nextofkin === null ||
-          data.personal_information === null ||
-          data.profiles === null
-        ) {
-          this.$router.push('/auth/register/details')
-        } else {
-          this.getNewOrderTotal()
-          this.getTodayOrdersTotal()
-          this.getNextOrderDetails()
-          this.getIncompleteOrders()
-          this.getCompletedOrders()
-          this.getDismissedOrders()
-        }
-        // this.userDetails = response.data
-        // this.username = this.capitalizeFirstLetter(this.userDetails.username)
-        // this.$store.commit('setUserDetails', this.userDetails)
-      })
     }
+    // getUserDetails () {
+    //   this.$axios.$get('/auth/all/registration/information', {
+    //     headers: {
+    //       Authorization: `Bearer ${Cookies.get('token')}`
+    //     }
+    //   }).then((response) => {
+    //     console.log(response)
+    //     const data = response.data
+    //     if (
+    //       data.ProfessionalQualification === null ||
+    //       data.nextofkin === null ||
+    //       data.personal_information === null ||
+    //       data.profiles === null
+    //     ) {
+    //       this.$router.push('/auth/register/details')
+    //     } else {
+    //       this.getNewOrderTotal()
+    //       this.getTodayOrdersTotal()
+    //       this.getNextOrderDetails()
+    //       this.getIncompleteOrders()
+    //       this.getCompletedOrders()
+    //       this.getDismissedOrders()
+    //     }
+    // this.userDetails = response.data
+    // this.username = this.capitalizeFirstLetter(this.userDetails.username)
+    // this.$store.commit('setUserDetails', this.userDetails)
+    // })
+    // }
   }
 }
 </script>

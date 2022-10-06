@@ -161,7 +161,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.userDetails = response.data.personal_information
       })
     },

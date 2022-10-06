@@ -124,7 +124,7 @@ export default {
         this.nok_last_name === '' ||
         this.nok_phone === '' ||
         this.nok_address === '' ||
-        (this.nok_relationship === '' || this.nok_relationship_others === '')
+        this.nok_relationship === ''
       )
     }
   },

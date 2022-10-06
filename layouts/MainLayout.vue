@@ -71,8 +71,16 @@ export default {
         }
       }).then((response) => {
         // console.log(response)
+        const data = response.data
         if (response.error && (response.errorMsg === 'Authentication Failed' || response.errorMsg === 'Unauthorized User')) {
           this.$router.push('/auth/login?error=session has expired')
+        } else if (
+          data.ProfessionalQualification === null ||
+          data.nextofkin === null ||
+          data.personal_information === null ||
+          data.profiles === null
+        ) {
+          this.$router.push('/auth/register/details')
         }
       })
     }
