@@ -43,7 +43,7 @@
                 </svg>
               </div>
             </div>
-            <button class="bg_btn">
+            <button class="bg_btn" @click="$router.push('/to-do-orders?type=New Orders')">
               <span>Accept Orders</span>
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="10" fill="white" fill-opacity="0.2" />
@@ -58,7 +58,7 @@
             <p class="number_orders">
               {{ todayOrders ? todayOrders : 0 }}
             </p>
-            <button class="trans_btn">
+            <button class="trans_btn" @click="$router.push('/today-order')">
               <span>My Todo</span>
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="10" fill="#325BD9" />

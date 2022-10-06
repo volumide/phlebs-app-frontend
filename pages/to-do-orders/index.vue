@@ -32,7 +32,7 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'All To-do',
+      activeTab: '',
       todoData: [],
       newOrderData: [],
       todoLoading: false,
@@ -47,6 +47,14 @@ export default {
     }, 1000)
   },
   created () {
+    const tabfromUrl = this.$route.query.type
+    console.log(tabfromUrl)
+    if (tabfromUrl) {
+      this.activeTab = tabfromUrl
+      this.getNewOrders()
+    } else {
+      this.activeTab = 'All To-do'
+    }
     this.getAllToDo()
   },
   methods: {
