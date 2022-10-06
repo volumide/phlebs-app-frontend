@@ -21,7 +21,7 @@
             {{ pageName }}
           </p>
           <p class="greeting">
-            Good Afternoon, {{ userDetails.firstname }}
+            Good {{ timeOfDay }}, {{ userDetails.firstname }}
           </p>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default {
     return {
       notificationsCount: '',
       // capitalizeFirstLetter: functions.capitalizeFirstLetter,
-      username: 'David Emaye',
+      timeOfDay: '',
       overviewData: [],
       userDetails: {}
     }
@@ -152,9 +152,22 @@ export default {
     }
   },
   created () {
+    this.getTimeofDay()
     this.getUserDetails()
   },
   methods: {
+    getTimeofDay () {
+      const today = new Date()
+      const curHr = today.getHours()
+
+      if (curHr < 12) {
+        this.timeOfDay = 'Morning'
+      } else if (curHr < 18) {
+        this.timeOfDay = 'Afternoon'
+      } else {
+        this.timeOfDay = 'Evening'
+      }
+    },
     getUserDetails () {
       this.$axios.$get('/auth/all/registration/information', {
         headers: {
