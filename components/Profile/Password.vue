@@ -37,6 +37,9 @@
         </div>
       </div>
       <div class="rhs">
+        <div v-if="error">
+          <AlertsError :error-text="errorText" />
+        </div>
         <p class="rhs_title">
           Change Password
         </p>
@@ -57,7 +60,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="password" placeholder="Enter Current Password" :type="type">
+              <input v-model="password" placeholder="Enter Current Password" :type="type" @focus="error = false">
               <svg
                 v-if="type === 'password'"
                 class="pass_svg"
@@ -104,7 +107,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="new_password" placeholder="Enter New Password" :type="new_type">
+              <input v-model="new_password" placeholder="Enter New Password" :type="new_type" @focus="error = false">
               <svg
                 v-if="new_type === 'password'"
                 class="pass_svg"
@@ -151,7 +154,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="con_new_password" placeholder="Confrirm New Password" :type="con_new_type">
+              <input v-model="con_new_password" placeholder="Confrirm New Password" :type="con_new_type" @focus="error = false">
               <svg
                 v-if="con_new_type === 'password'"
                 class="pass_svg"
@@ -186,7 +189,10 @@
       </div>
     </div>
     <div class="bottom_btn slide-in-from-left">
-      <button class="bg_btn" @click="successModal = true">
+      <button v-if="updateLoading" class="bg_btn">
+        <Loader class="come-down" />
+      </button>
+      <button v-else :disabled="disabled" class="bg_btn" @click="updateChanges()">
         Update Changes
       </button>
     </div>
@@ -203,12 +209,16 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
       email: 'nkojuadeposi@gmail.com',
       phone: '08012345678',
+      errorText: '',
       successModal: false,
+      updateLoading: false,
+      error: false,
       userImage: null,
       altImage: require('assets/images/no-image.png'),
       password: '',
@@ -218,6 +228,15 @@ export default {
       new_password: '',
       new_type: 'password',
       age: ''
+    }
+  },
+  computed: {
+    disabled () {
+      return (
+        this.password === '' ||
+        this.new_password === '' ||
+        this.con_new_password === ''
+      )
     }
   },
   methods: {
@@ -264,6 +283,45 @@ export default {
         reader.readAsDataURL(imgFile[0])
         this.$emit('fileInput', imgFile[0])
       }
+    },
+    updateChanges () {
+      console.log(this.updateLoading)
+      // this.updateLoading = true
+      if (this.new_password === this.con_new_password) {
+        this.updateLoading = true
+        this.$axios.$post('/auth/change/password',
+          {
+            current_password: this.password,
+            new_password: this.new_password
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`
+            }
+          }
+        ).then((response) => {
+          // console.log(response)
+          this.updateLoading = false
+          if (!response.error) {
+            // console.log(response)
+            this.successModal = true
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+        // this.editAccess = response.editAccess
+        }).catch((onrejected) => {
+          console.log(onrejected)
+          this.updateLoading = false
+        })
+      } else {
+        this.error = true
+        this.errorText = 'Comfirm New Password is wrong'
+        setTimeout(() => {
+          this.error = false
+        }, 3000)
+      }
+      // this.updateLoading = false
     }
   }
 }
@@ -385,6 +443,14 @@ export default {
 
 .bg_btn {
   width: 11rem;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {
