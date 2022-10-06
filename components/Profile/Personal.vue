@@ -322,7 +322,7 @@ export default {
         this.loading = false
         console.log(response)
         this.pushData()
-        // this.editAccess = response.editAccess
+        this.editAccess = response.editAccess
       }).catch((onrejected) => {
         console.log(onrejected)
         this.loading = false

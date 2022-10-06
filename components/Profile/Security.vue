@@ -88,7 +88,7 @@
       </div>
     </div>
     <div class="bottom_btn slide-in-from-left">
-      <button class="bg_btn" @click="openOtp = true">
+      <button class="bg_btn" @click="updateNumber()">
         Update Changes
       </button>
     </div>
@@ -155,7 +155,7 @@ export default {
     },
     updateNumber () {
       this.loading = true
-      this.$axios.$post('/auth/update/mobile', {
+      this.$axios.$patch('/auth/update/mobile', {
         mobile_number: this.phone
       },
       {
@@ -166,6 +166,9 @@ export default {
       ).then((response) => {
         this.loading = false
         console.log(response)
+        if (!response.error) {
+          this.openOtp = true
+        }
       }).catch((onrejected) => {
         console.log(onrejected)
         this.loading = false
