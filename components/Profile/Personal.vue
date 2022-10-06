@@ -46,8 +46,27 @@
               <p class="label">
                 Proficiency
               </p>
-              <div class="new_input" @click="checkEdit()">
-                <input v-model="proficiency" :disabled="inputDisabled" type="text">
+              <div class="form-select" @click="checkEdit()">
+                <select v-model="proficiency" :disabled="inputDisabled">
+                  <option value="null">
+                    Select...
+                  </option>
+                  <option value="Nurse">
+                    Nurse
+                  </option>
+                  <option value="Med Lab Scientists">
+                    Med Lab Scientists
+                  </option>
+                  <option value="Science Lab Technician">
+                    Science Lab Technician
+                  </option>
+                  <option value="Phlebotomist">
+                    Phlebotomist
+                  </option>
+                  <option value="Others">
+                    Others
+                  </option>
+                </select>
                 <svg
                   v-if="editAccess"
                   width="12"
@@ -71,8 +90,18 @@
               <p class="label">
                 Gender
               </p>
-              <div class="new_input" @click="checkEdit()">
-                <input v-model="gender" type="text">
+              <div class="form-select" @click="checkEdit()">
+                <select v-model="gender" :disabled="inputDisabled">
+                  <option value="">
+                    Select...
+                  </option>
+                  <option value="male">
+                    Male
+                  </option>
+                  <option value="female">
+                    Female
+                  </option>
+                </select>
                 <svg
                   v-if="editAccess"
                   width="12"
@@ -99,7 +128,7 @@
                 Address
               </p>
               <div class="new_input" @click="checkEdit()">
-                <input v-model="address" type="text">
+                <input v-model="address" type="text" :disabled="inputDisabled">
                 <svg
                   v-if="editAccess"
                   width="12"
@@ -124,7 +153,7 @@
                 Nearest Dropoff Location
               </p>
               <div class="new_input" @click="checkEdit()">
-                <input v-model="dropoff" type="text">
+                <input v-model="dropoff" type="text" :disabled="inputDisabled">
                 <svg
                   v-if="editAccess"
                   width="12"
@@ -149,11 +178,14 @@
       </div>
     </div>
     <div class="bottom_btn slide-in-from-left">
-      <button v-if="editAccess" class="bg_btn" @click="requestEdit = true">
+      <button v-if="!updateLoading && editAccess" class="bg_btn" @click="updateChanges()">
         Update Changes
       </button>
-      <button v-else class="bg_btn" @click="requestEdit = true">
+      <button v-else-if="!updateLoading && !editAccess" class="bg_btn" @click="requestEdit = true">
         Request Edit Access
+      </button>
+      <button v-else class="bg_btn" disabled>
+        <Loader class="come-down" />
       </button>
     </div>
     <ModalsConfirmationModal
@@ -176,6 +208,15 @@
       @close-modal="successModal = false"
       @bg-action="successModal = false"
     />
+    <ModalsSuccessModal
+      v-if="successModalSaved"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'Update Saved'"
+      :modal-text="'Update Changed successfully'"
+      :bg-btn="'Close'"
+      @close-modal="successModalSaved = false"
+      @bg-action="successModalSaved = false"
+    />
   </div>
 </template>
 
@@ -197,9 +238,11 @@ export default {
       dropoff: '',
       error: false,
       requestLoading: false,
+      updateLoading: false,
       editAccess: false,
       requestEdit: false,
       successModal: false,
+      successModalSaved: false,
       userImage: null,
       altImage: require('assets/images/no-image.png'),
       age: ''
@@ -279,7 +322,33 @@ export default {
         this.loading = false
         console.log(response)
         this.pushData()
-        this.editAccess = response.editAccess
+        // this.editAccess = response.editAccess
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.loading = false
+      })
+    },
+    updateChanges () {
+      this.updateLoading = true
+      this.$axios.$patch('/auth/personal/update/changes',
+        {
+          proficiency: this.proficiency,
+          address: this.address,
+          gender: this.gender,
+          dropoff: this.dropoff
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+      ).then((response) => {
+        this.updateLoading = false
+        if (!response.error) {
+          console.log(response)
+          this.successModalSaved = true
+        }
+        // this.editAccess = response.editAccess
       }).catch((onrejected) => {
         console.log(onrejected)
         this.loading = false
@@ -386,7 +455,6 @@ input {
   border-bottom: 1px solid rgba(0, 41, 93, 0.1);
   background-color: transparent;
   border-radius: 0;
-  font-weight: 700;
 }
 
 .new_input svg {
@@ -401,6 +469,22 @@ input {
 
 .bg_btn {
   width: 11rem;
+}
+
+.form-select select {
+  background-color: transparent;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(0, 41, 93, 0.1);
+  padding: 0;
+  color: unset;
+}
+
+.new_input input:disabled,
+.new_input input[disabled],
+.form-select select:disabled,
+.form-select select[disabled] {
+  /* background-color: #F8F8F8; */
+  cursor: not-allowed;
 }
 
 @media only screen and (max-width: 500px) {
