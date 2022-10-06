@@ -22,21 +22,35 @@
 
 <script>
 import Cookies from 'js-cookie'
+import functions from '@/utils/functions'
 export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'To-do',
+      activeTab: '',
       completedLoading: false,
       todoLoading: false,
       dismissedLoading: false,
+      capitalizeFirstLetter: functions.capitalizeFirstLetter,
       todoData: [],
       completedOrdersData: [],
       dismissedOrdersData: []
     }
   },
   created () {
-    this.getAllToDo()
+    const tabfromUrl = this.$route.query.type
+    // console.log(tabfromUrl)
+    if (tabfromUrl) {
+      this.activeTab = this.capitalizeFirstLetter(tabfromUrl)
+      if (this.activeTab === 'Completed') {
+        this.getCompletedOrders()
+      } else if (this.activeTab === 'Dismissed') {
+        this.getDismissedOrders()
+      }
+    } else {
+      this.activeTab = 'To-do'
+      this.getAllToDo()
+    }
   },
   methods: {
     setActiveTab (tab) {
