@@ -201,7 +201,7 @@ export default {
   background-color: white;
   position: fixed;
   width: 100%;
-  padding-top: 8vh;
+  padding-top: 4vh;
   padding-bottom: 4vh;
   border-radius: 0 0 40px 40px;
   height: fit-content;

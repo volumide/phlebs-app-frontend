@@ -280,6 +280,7 @@ export default {
     }
   },
   created () {
+    // this.getAllRequests()
     this.getNewOrderTotal()
     this.getTodayOrdersTotal()
     this.getNextOrderDetails()
@@ -288,6 +289,22 @@ export default {
     this.getDismissedOrders()
   },
   methods: {
+    getAllRequests () {
+      const newOrderTotal = this.$axios.$get('/orders/new/total')
+      const todayOrdersTotal = this.$axios.$get('/orders/total/today/orders')
+      const nextOrderDetails = this.$axios.$get('/orders/get/next/order')
+      const incompleteOrders = this.$axios.$get('/orders/get/total/todo')
+      const completedOrders = this.$axios.$get('/orders/total/completed/order')
+      const dismissedOrders = this.$axios.$get('/orders/total/Dismissed/order')
+      Promise.all([newOrderTotal, todayOrdersTotal, nextOrderDetails, incompleteOrders, completedOrders, dismissedOrders], {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        // this.newOrders = response.orders.total
+      })
+    },
     getNewOrderTotal () {
       this.$axios.$get('/orders/new/total', {
         headers: {
@@ -314,7 +331,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.nextOrders = response.next_order
       })
     },

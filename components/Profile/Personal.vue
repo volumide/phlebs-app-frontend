@@ -348,7 +348,7 @@ export default {
           console.log(response)
           this.successModalSaved = true
         }
-        // this.editAccess = response.editAccess
+        this.editAccess = response.editAccess
       }).catch((onrejected) => {
         console.log(onrejected)
         this.loading = false
