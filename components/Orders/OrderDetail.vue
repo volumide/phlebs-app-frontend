@@ -204,7 +204,10 @@
           <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
           </button>
-          <button class="bg_btn" @click="confirmOpen = true">
+          <button v-if="boxName === 'To-do'" class="bg_btn" @click="confirmOpen = true">
+            Complete Order
+          </button>
+          <button v-if="boxName === 'New-orders'" class="bg_btn" @click="acceptOrder = true">
             Accept Order
           </button>
         </div>
@@ -219,6 +222,16 @@
       @close-modal="confirmOpen = false"
       @bg-action="openConfirmOrder()"
       @trans-action="confirmOpen = false"
+    />
+    <ModalsConfirmationModal
+      v-if="acceptOrder"
+      :modal-head="'Accept Order'"
+      :modal-text="'Accepting this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Accept Order'"
+      @close-modal="acceptOrder = false"
+      @bg-action="acceptOrderd()"
+      @trans-action="acceptOrder = false"
     />
     <ModalsConfirmOrder
       v-if="confirmOrder"
@@ -260,6 +273,7 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   props: {
     boxName: {
@@ -279,6 +293,7 @@ export default {
       dismissOpen: false,
       confirmOpen: false,
       dismissOrder: false,
+      acceptOrder: false,
       confirmOrder: false
     }
   },
@@ -298,6 +313,27 @@ export default {
     closeConfirmOrder () {
       this.confirmOrder = false
       this.confirmSuccessModal = true
+    },
+    acceptOrderd () {
+      const id = this.$route.query.id
+      this.$axios.$get(`orders/accept/order/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+      ).then((response) => {
+        this.loading = false
+        console.log(response)
+        if (!response.error) {
+          this.acceptOrder = false
+          this.confirmSuccessModal = true
+          this.confirmSuccessText = 'The order has been accepted and added to to-do successfully'
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+        }
+      })
     }
   }
 }

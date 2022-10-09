@@ -4,7 +4,7 @@
       <LoadersOverview />
     </div>
     <div v-else class="inner">
-      <div v-if="warning" class="mobile_no_show">
+      <div v-if="warning" class="">
         <AlertsWarning :warning-text="warningText" />
       </div>
       <div class="mobile_show">

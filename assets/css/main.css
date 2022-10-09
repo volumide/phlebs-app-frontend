@@ -73,6 +73,23 @@ textarea {
 
 /* INPUT CSS START */
 
+/* custom select plugin style START */
+.vs__dropdown-option {
+  padding: 15px 10px !important;
+}
+.vs__dropdown-option:hover {
+  background-color:var(--primary-color);
+}
+.vs__dropdown-toggle {
+  border: none !important;
+  background-color: var(--input-bg-color) !important;
+  padding: 0 15px !important;
+}
+.vs__search, .vs__search:focus {
+  height: 50px;
+}
+/* custom select plugin style END */
+
 .label {
   font-size: 14px;
   font-weight: 700;

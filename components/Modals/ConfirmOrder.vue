@@ -26,12 +26,15 @@
       <p class="sub-title">
         Select Drop-off Location
       </p>
+      <div v-if="error">
+        <AlertsError :error-text="errorText" />
+      </div>
       <div class="form">
         <div class="input-box">
           <p class="label">
             Select Location
           </p>
-          <div class="form-select">
+          <!-- <div class="form-select">
             <select v-model="location" required>
               <option value="">
                 Select...
@@ -43,6 +46,9 @@
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7.24652 11.14L2.45052 5.658C1.88452 5.013 2.34452 4 3.20352 4H12.7955C12.9878 3.99984 13.176 4.05509 13.3376 4.15914C13.4993 4.26319 13.6275 4.41164 13.707 4.58669C13.7864 4.76175 13.8137 4.956 13.7856 5.14618C13.7575 5.33636 13.6752 5.51441 13.5485 5.659L8.75252 11.139C8.65866 11.2464 8.54291 11.3325 8.41303 11.3915C8.28316 11.4505 8.14216 11.481 7.99952 11.481C7.85688 11.481 7.71589 11.4505 7.58601 11.3915C7.45614 11.3325 7.34038 11.2464 7.24652 11.139V11.14Z" fill="black" />
             </svg>
+          </div> -->
+          <div class="custom_select">
+            <v-select v-model="location" :options="dropoffLocation" :placeholder="'Select...'" />
           </div>
         </div>
       </div>
@@ -73,6 +79,8 @@ export default {
       other: '',
       dropoffLocation: '',
       loading: false,
+      error: false,
+      errorText: '',
       location: ''
     }
   },
@@ -97,42 +105,25 @@ export default {
     },
     completeOrder () {
       this.loading = true
-      // console.log(this.boxName)
-      const name = this.boxName
-      if (name === 'New-orders') {
-        const id = this.$route.query.idk
-        this.$axios.$get(`orders/accept/order/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get('token')}`
-            }
-          }
-        ).then((response) => {
-          console.log(response)
-          if (!response.error) {
-            this.$emit('bg-action')
-          }
-          this.loading = false
-        })
-      } else {
-        const id = this.$route.query.id
-        this.$axios.$post('/orders/complete/order', {
-          orderId: id
-          // location: this.location
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
+      // console.log(this.location)
+      // const name = this.boxName
+      const id = this.$route.query.id
+      this.$axios.$post('/orders/complete/order', {
+        orderId: id
+        // location: this.location
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
         }
-        ).then((response) => {
-          console.log(response)
-          if (!response.error) {
-            this.$emit('bg-action')
-          }
-          this.loading = false
-        })
       }
+      ).then((response) => {
+        console.log(response)
+        if (!response.error) {
+          this.$emit('bg-action')
+        }
+        this.loading = false
+      })
     }
   }
 }
@@ -227,6 +218,10 @@ export default {
 .bg_btn {
   width: 50%;
   font-weight: 700;
+}
+
+.custom_select {
+  margin-top: 15px;
 }
 
 @media only screen and (max-width: 900px) {
