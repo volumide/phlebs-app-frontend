@@ -22,7 +22,7 @@
           </p>
           <div class="form">
             <div v-if="error">
-              <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
+              <AlertsError :error-text="errorText" />
             </div>
             <div class="input-box">
               <p class="label">
@@ -39,7 +39,7 @@
                     </clipPath>
                   </defs>
                 </svg>
-                <input v-model="email" placeholder="Email Address" name="email" type="email">
+                <input v-model="email" placeholder="Email Address" name="email" type="email" @focus="error = false">
               </div>
             </div>
             <div class="input-box">
@@ -58,7 +58,7 @@
                     </clipPath>
                   </defs>
                 </svg>
-                <input v-model="password" placeholder="Enter Password" name="password" :type="type">
+                <input v-model="password" placeholder="Enter Password" name="password" :type="type" @focus="error = false">
                 <svg
                   v-if="type === 'password'"
                   class="pass_svg"
@@ -126,7 +126,7 @@
             </p>
             <div class="form">
               <div v-if="error">
-                <AlertsError :error-text="`Incorrect Username or Password, Try again!`" />
+                <AlertsError :error-text="errorText" />
               </div>
               <div class="input-box">
                 <p class="label">
@@ -143,7 +143,7 @@
                       </clipPath>
                     </defs>
                   </svg>
-                  <input v-model="email" placeholder="Email Address" name="email" type="email">
+                  <input v-model="email" placeholder="Email Address" name="email" type="email" @focus="error = false">
                 </div>
               </div>
               <div class="input-box">
@@ -162,7 +162,7 @@
                       </clipPath>
                     </defs>
                   </svg>
-                  <input v-model="password" placeholder="Enter Password" name="password" :type="type">
+                  <input v-model="password" placeholder="Enter Password" name="password" :type="type" @focus="error = false">
                   <svg
                     v-if="type === 'password'"
                     class="pass_svg"
@@ -230,6 +230,7 @@ export default {
       resetPassword: false,
       linkSent: false,
       createPassword: false,
+      errorText: '',
       email: '',
       password: '',
       type: 'password'
@@ -271,9 +272,10 @@ export default {
           Cookies.set('token', response.data.token)
           this.getUserDetails()
           this.loading = true
-          // this.$toast.success(response.statusText)
         } else {
-          this.$toast.error(response.errorMsg)
+          this.loading = false
+          this.error = true
+          this.errorText = response.errorMsg
         }
       }).catch((onrejected) => {
         console.log(onrejected)
