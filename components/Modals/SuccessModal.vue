@@ -136,6 +136,10 @@ export default {
   justify-content: flex-end;
 }
 
+.modal_top svg {
+  cursor: pointer;
+}
+
 .modal-icon {
   text-align: center;
 }

@@ -26,7 +26,7 @@
       <p class="sub-title">
         Select Drop-off Location
       </p>
-      <div v-if="error">
+      <div v-if="error" class="error">
         <AlertsError :error-text="errorText" />
       </div>
       <div class="form">
@@ -47,7 +47,7 @@
               <path d="M7.24652 11.14L2.45052 5.658C1.88452 5.013 2.34452 4 3.20352 4H12.7955C12.9878 3.99984 13.176 4.05509 13.3376 4.15914C13.4993 4.26319 13.6275 4.41164 13.707 4.58669C13.7864 4.76175 13.8137 4.956 13.7856 5.14618C13.7575 5.33636 13.6752 5.51441 13.5485 5.659L8.75252 11.139C8.65866 11.2464 8.54291 11.3325 8.41303 11.3915C8.28316 11.4505 8.14216 11.481 7.99952 11.481C7.85688 11.481 7.71589 11.4505 7.58601 11.3915C7.45614 11.3325 7.34038 11.2464 7.24652 11.139V11.14Z" fill="black" />
             </svg>
           </div> -->
-          <div class="custom_select">
+          <div class="custom_select" @click="error = false">
             <v-select v-model="location" :options="dropoffLocation" :placeholder="'Select...'" />
           </div>
         </div>
@@ -56,7 +56,10 @@
         <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button>
-        <button class="bg_btn" @click="completeOrder()">
+        <button v-if="loading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="completeOrder()">
           Submit and Dismiss
         </button>
       </div>
@@ -104,26 +107,36 @@ export default {
       })
     },
     completeOrder () {
+      this.error = false
       this.loading = true
-      // console.log(this.location)
-      // const name = this.boxName
-      const id = this.$route.query.id
-      this.$axios.$post('/orders/complete/order', {
-        orderId: id
-        // location: this.location
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
-        }
-      }
-      ).then((response) => {
-        console.log(response)
-        if (!response.error) {
-          this.$emit('bg-action')
-        }
+      if (this.location === '') {
+        this.error = true
+        this.errorText = 'Please Select a Location'
         this.loading = false
-      })
+      } else {
+        console.log(this.location)
+        // const name = this.boxName
+        const id = this.$route.query.id
+        this.$axios.$post('/orders/complete/order', {
+          orderId: id,
+          location: this.location
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+        ).then((response) => {
+          console.log(response)
+          if (!response.error) {
+            this.$emit('bg-action')
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+          this.loading = false
+        })
+      }
     }
   }
 }
@@ -189,6 +202,10 @@ export default {
   margin: auto;
   color: rgba(0, 0, 0, 0.482);
   margin-top: 2vh;
+}
+
+.error {
+  margin-top: 10px;
 }
 
 .form {

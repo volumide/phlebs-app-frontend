@@ -229,6 +229,7 @@
       :modal-text="'Accepting this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
       :trans-btn="'No, Go Back'"
       :bg-btn="'Yes, Accept Order'"
+      :bg-loading="acceptLoading"
       @close-modal="acceptOrder = false"
       @bg-action="acceptOrderd()"
       @trans-action="acceptOrder = false"
@@ -259,6 +260,7 @@
       :modal-image="require('assets/images/96673-success.gif')"
       :modal-text="'The order has been dismissed successfully'"
       :bg-btn="'Close'"
+      @close-modal="$router.push('/today-order')"
       @bg-action="$router.push('/today-order')"
     />
     <ModalsSuccessModal
@@ -267,6 +269,7 @@
       :modal-text="confirmSuccessText"
       :modal-head="'Thank You!'"
       :bg-btn="'Close'"
+      @close-modal="$router.push('/today-order')"
       @bg-action="$router.push('/today-order')"
     />
   </div>
@@ -287,6 +290,7 @@ export default {
   },
   data () {
     return {
+      acceptLoading: false,
       successful: false,
       confirmSuccessText: '',
       dismissedSuccessModal: false,
@@ -317,6 +321,7 @@ export default {
       this.confirmSuccessText = 'The order has been submitted and completed successfully'
     },
     acceptOrderd () {
+      this.acceptLoading = true
       const id = this.$route.query.id
       this.$axios.$get(`orders/accept/order/${id}`,
         {
@@ -325,7 +330,7 @@ export default {
           }
         }
       ).then((response) => {
-        this.loading = false
+        this.acceptLoading = false
         console.log(response)
         if (!response.error) {
           this.acceptOrder = false

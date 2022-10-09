@@ -67,7 +67,10 @@
         <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button>
-        <button class="bg_btn" @click="dismissOrder()">
+        <button v-if="loading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="dismissOrder()">
           Submit and Dismiss
         </button>
       </div>
