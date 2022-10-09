@@ -264,7 +264,7 @@
     <ModalsSuccessModal
       v-if="confirmSuccessModal"
       :modal-image="require('assets/images/96673-success.gif')"
-      :modal-text="'The order has been submitted and completed successfully'"
+      :modal-text="confirmSuccessText"
       :modal-head="'Thank You!'"
       :bg-btn="'Close'"
       @bg-action="$router.push('/today-order')"
@@ -288,6 +288,7 @@ export default {
   data () {
     return {
       successful: false,
+      confirmSuccessText: '',
       dismissedSuccessModal: false,
       confirmSuccessModal: false,
       dismissOpen: false,
@@ -313,6 +314,7 @@ export default {
     closeConfirmOrder () {
       this.confirmOrder = false
       this.confirmSuccessModal = true
+      this.confirmSuccessText = 'The order has been submitted and completed successfully'
     },
     acceptOrderd () {
       const id = this.$route.query.id
