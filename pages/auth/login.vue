@@ -267,7 +267,7 @@ export default {
       //   }
       // }
       ).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           Cookies.set('token', response.data.token)
           this.getUserDetails()
@@ -278,7 +278,7 @@ export default {
           this.errorText = response.errorMsg
         }
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.loading = false
         // this.loading = false
         if (onrejected.error) {
@@ -293,7 +293,7 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         const data = response.data
         if (
           data.ProfessionalQualification === null ||

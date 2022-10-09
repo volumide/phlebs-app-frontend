@@ -5,6 +5,13 @@
       <div class="skeleton card ms" />
       <div class="skeleton card ls" />
     </div>
+    <div class="below">
+      <div class="skeleton card notif" />
+      <div class="notif_box">
+        <div class="skeleton card" />
+        <div class="skeleton card" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -19,14 +26,53 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  height: 12rem;
 }
 .fs {
-  width: 45%;
+  width: 35%;
+  height: 100%;
+  margin-bottom: 30px;
 }
 .ms {
-  width: 20%;
+  width: 17%;
+  height: 100%;
+  margin-bottom: 30px;
 }
 .ls {
-  width: 30%;
+  width: 40%;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.notif {
+  margin: 50px 0;
+}
+
+.notif_box {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.notif_box div {
+  width: 48%;
+}
+
+@media only screen and (max-width: 500px) {
+  .top {
+    flex-wrap: wrap;
+  }
+
+  .fs {
+    width: 70%;
+  }
+
+  .ms {
+    width: 27%;
+  }
+
+  .ls {
+    display: none;
+  }
 }
 </style>

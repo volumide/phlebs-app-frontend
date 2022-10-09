@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="inner">
+    <div v-if="loading" class="inner">
+      <LoadersOverview />
+    </div>
+    <div v-else class="inner">
       <div class="mobile_show">
         <div class="new_input ">
           <input type="text" name="" placeholder="Search for Name, Order Reference No">
@@ -271,6 +274,7 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
+      loading: false,
       newOrders: null,
       nextOrders: {},
       todayOrders: null,
@@ -306,6 +310,7 @@ export default {
       })
     },
     getNewOrderTotal () {
+      this.loading = true
       this.$axios.$get('/orders/new/total', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -363,36 +368,9 @@ export default {
       }).then((response) => {
         // console.log(response)
         this.dismissedOrders = response.orders.dismissed
+        this.loading = false
       })
     }
-    // getUserDetails () {
-    //   this.$axios.$get('/auth/all/registration/information', {
-    //     headers: {
-    //       Authorization: `Bearer ${Cookies.get('token')}`
-    //     }
-    //   }).then((response) => {
-    //     console.log(response)
-    //     const data = response.data
-    //     if (
-    //       data.ProfessionalQualification === null ||
-    //       data.nextofkin === null ||
-    //       data.personal_information === null ||
-    //       data.profiles === null
-    //     ) {
-    //       this.$router.push('/auth/register/details')
-    //     } else {
-    //       this.getNewOrderTotal()
-    //       this.getTodayOrdersTotal()
-    //       this.getNextOrderDetails()
-    //       this.getIncompleteOrders()
-    //       this.getCompletedOrders()
-    //       this.getDismissedOrders()
-    //     }
-    // this.userDetails = response.data
-    // this.username = this.capitalizeFirstLetter(this.userDetails.username)
-    // this.$store.commit('setUserDetails', this.userDetails)
-    // })
-    // }
   }
 }
 </script>
