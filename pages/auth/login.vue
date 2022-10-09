@@ -257,6 +257,7 @@ export default {
     },
     login () {
       this.loading = true
+      this.error = false
       this.$axios.$post('/auth/login', {
         email: this.email,
         password: this.password

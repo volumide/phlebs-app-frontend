@@ -8,7 +8,10 @@
     </p>
     <div class="form">
       <div v-if="error">
-        <AlertsError :error-text="`Incorrect OTP, Try Again!`" />
+        <AlertsError :error-text="errorText" />
+      </div>
+      <div v-if="success">
+        <AlertsSuccess :success-text="successText" />
       </div>
       <div v-if="changeNumber" class="input-box come-down">
         <p class="label">
@@ -18,9 +21,12 @@
           <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11.5595 15.6019C12.5968 17.7226 14.3158 19.4338 16.4412 20.4614C16.5967 20.5351 16.7687 20.567 16.9403 20.554C17.1119 20.541 17.2771 20.4836 17.4198 20.3874L20.5492 18.3006C20.6877 18.2083 20.8469 18.152 21.0126 18.1368C21.1782 18.1215 21.3451 18.1479 21.498 18.2134L27.3526 20.7225C27.5515 20.807 27.7175 20.9538 27.8257 21.1409C27.9339 21.328 27.9783 21.5451 27.9524 21.7596C27.7673 23.2076 27.0608 24.5385 25.9652 25.5031C24.8695 26.4678 23.4598 26.9999 22 27C17.4913 27 13.1673 25.2089 9.97919 22.0208C6.79107 18.8327 5 14.5087 5 10C5.00008 8.54022 5.53224 7.13052 6.49685 6.03485C7.46146 4.93918 8.79237 4.23267 10.2404 4.04763C10.4549 4.02167 10.672 4.06612 10.8591 4.1743C11.0461 4.28248 11.193 4.44852 11.2775 4.6474L13.7888 10.5071C13.8537 10.6587 13.8802 10.824 13.8658 10.9883C13.8514 11.1525 13.7967 11.3107 13.7064 11.4487L11.6268 14.6261C11.5322 14.7691 11.4762 14.9341 11.4644 15.1051C11.4526 15.2762 11.4854 15.4473 11.5595 15.6019V15.6019Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <input v-model="phone" placeholder="08012345678" type="number">
+          <input v-model="phone" placeholder="08012345678" type="number" @focus="error = false">
         </div>
-        <button class="bg_btn" @click="changePhoneNumber()">
+        <button v-if="changeLoading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="changePhoneNumber()">
           Submit Number
         </button>
       </div>
@@ -31,6 +37,7 @@
         <PincodeInput
           v-model="code"
           :length="6"
+          @input="error = false"
         />
         <div class="bottom_sec">
           <p class="no_code">
@@ -53,7 +60,7 @@
       </div>
       <div v-if="!changeNumber" class="bottom_sec">
         <p class="no_code">
-          {{ acceptNumber($route.query.phone) }}
+          {{ $route.query.phone }}
         </p>
         <div class="resend">
           <p @click="changeNumber = true">
@@ -72,7 +79,11 @@ export default {
   data () {
     return {
       error: false,
+      success: false,
+      changeLoading: false,
       loading: false,
+      errorText: '',
+      successText: '',
       changeNumber: false,
       resendLoading: false,
       formatPhone: functions.formatPhoneNumber,
@@ -90,35 +101,62 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
-        const number = this.acceptNumber(response.mobile_number)
-        console.log(number)
+        // console.log(response)
       })
     },
     changePhoneNumber () {
-      const phoneNumber = this.acceptNumber(this.phone)
-      console.log(phoneNumber)
-      this.$axios.$get(`/auth/change_mobile_number/${phoneNumber}`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
-        }
-      }).then((response) => {
-        console.log(response)
-      })
+      if (this.phone.replace(/[^\d.-]/g, '').length < 11 ||
+          this.containsSpecialChars2(this.phone)
+      ) {
+        this.error = true
+        this.errorText = 'Invalid Phone Number'
+      } else {
+        this.changeLoading = true
+        this.$axios.$get(`/auth/change_mobile_number/${this.phone}`, {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }).then((response) => {
+          console.log(response)
+          this.changeLoading = false
+          if (!response.error) {
+            this.success = true
+            this.successText = response.statusText
+            setTimeout(() => {
+              this.success = false
+            }, 3000)
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+        })
+      }
     },
     verifyNumber () {
-      this.loading = true
-      // const phoneNumber = this.acceptNumber(this.phone)
-      console.log(this.code)
-      this.$axios.$get(`/auth/verify/${this.code}`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
-        }
-      }).then((response) => {
-        this.loading = false
-        console.log(response)
-        this.$emit('closeWhatsapp')
-      })
+      if (this.code.length < 6) {
+        this.error = true
+        this.errorText = 'Please fill up the OTP field'
+        setTimeout(() => {
+          this.error = false
+        }, 3000)
+      } else {
+        this.loading = true
+        // console.log(this.code)
+        this.$axios.$get(`/auth/verify/${this.code}`, {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }).then((response) => {
+          this.loading = false
+          console.log(response)
+          if (!response.error) {
+            this.$emit('closeWhatsapp')
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+        })
+      }
     },
     resendVerificationCode () {
       this.resendLoading = true
@@ -127,23 +165,29 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
+        if (!response.error) {
+          this.success = true
+          this.successText = response.statusText
+          setTimeout(() => {
+            this.success = false
+          }, 3000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+        }
         console.log(response)
         this.resendLoading = false
       })
     },
-    acceptNumber (val) {
-      const x = val.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/)
-      val = !x[2] ? x[1] : '+234' + '(' + x[1] + ')' + x[2] + (x[3] ? '-' + x[3] : '')
-      return val
+    containsSpecialChars (value) {
+      return /[`!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]/.test(value)
     },
-    formatWhatsappNumber (val) {
-      const userNumber = val
-      const result = userNumber.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
-      const cCode = result[1] ? '+1' : ''
-      const formattedNumber = cCode + ' (' + result[2] + ') ' + result[3] + '-' + result[4]
-      return formattedNumber
+    containsSpecialChars2 (value) {
+      return /[`!@#$%^&*()_\-=[\]{};':"\\|,.<>/?~]/.test(value)
+    },
+    containsNumbers (value) {
+      return /\d/.test(value)
     }
-
   }
 }
 </script>
