@@ -149,13 +149,14 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        // console.log(response)
-        this.$emit('proceed')
-      }).catch((onrejected) => {
-        console.log(onrejected)
-        this.loading = false
-        if (onrejected.error) {
-          // this.$toast.error(onrejected.errorMsg)
+        if (!response.error) {
+          this.$emit('proceed')
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
         }
       })
     },

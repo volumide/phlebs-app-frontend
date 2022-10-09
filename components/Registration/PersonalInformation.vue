@@ -170,10 +170,15 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        this.$emit('proceed')
-      }).catch((err) => {
-        const errorMsg = err.response?.errorMsg || err.errorMsg
-        console.log(errorMsg)
+        if (!response.error) {
+          this.$emit('proceed')
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     },
     getDetails () {

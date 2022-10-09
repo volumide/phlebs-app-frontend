@@ -206,7 +206,7 @@ export default {
   },
   methods: {
     getDetails () {
-      console.log(this.userDetails)
+      // console.log(this.userDetails)
       const details = this.userDetails.profiles
       this.means_identification = details.identificationMeans
       this.id_num = details.identificationNumber
@@ -255,15 +255,14 @@ export default {
       ).then((response) => {
         this.loading = false
         if (!response.error) {
-          console.log(response)
           this.$emit('proceed')
         } else {
-          console.log(response)
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
         }
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.loading = false
       })
     },
     uploadProfileImage () {
@@ -279,15 +278,18 @@ export default {
         }
       ).then((response) => {
         this.profileLoading = false
-        this.profileSaved = true
-        setTimeout(() => {
-          this.profileSaved = false
-        }, 5000)
-        console.log(response)
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.profileLoading = false
+        if (!response.error) {
+          this.profileSaved = true
+          setTimeout(() => {
+            this.profileSaved = false
+          }, 5000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     },
     uploadId () {
@@ -303,15 +305,18 @@ export default {
         }
       ).then((response) => {
         this.idLoading = false
-        this.idSaved = true
-        setTimeout(() => {
-          this.idSaved = false
-        }, 5000)
-        console.log(response)
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.idLoading = false
+        if (!response.error) {
+          this.idSaved = true
+          setTimeout(() => {
+            this.idSaved = false
+          }, 5000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     }
   }

@@ -339,14 +339,14 @@ export default {
       ).then((response) => {
         this.loading = false
         if (!response.error) {
-          console.log(response)
           this.$emit('proceed')
         } else {
-          console.log(response)
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
         }
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
       })
     },
     uploadCv () {
@@ -362,15 +362,18 @@ export default {
         }
       ).then((response) => {
         this.cvLoading = false
-        this.cvSaved = true
-        setTimeout(() => {
-          this.cvSaved = false
-        }, 5000)
-        console.log(response)
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.cvLoading = false
+        if (!response.error) {
+          this.cvSaved = true
+          setTimeout(() => {
+            this.cvSaved = false
+          }, 5000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     },
     uploadLicense () {
@@ -386,15 +389,18 @@ export default {
         }
       ).then((response) => {
         this.licenseLoading = false
-        this.licenseSaved = true
-        setTimeout(() => {
-          this.licenseSaved = false
-        }, 5000)
-        console.log(response)
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.licenseLoading = false
+        if (!response.error) {
+          this.licenseSaved = true
+          setTimeout(() => {
+            this.licenseSaved = false
+          }, 5000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     },
     uploadSupportDoc () {
@@ -410,15 +416,18 @@ export default {
         }
       ).then((response) => {
         this.supportLoading = false
-        this.supportSaved = true
-        setTimeout(() => {
-          this.supportSaved = false
-        }, 5000)
-        console.log(response)
-      }).catch((err) => {
-        const errorMsg = err
-        console.log(errorMsg, 'error')
-        this.supportLoading = false
+        if (!response.error) {
+          this.supportSaved = true
+          setTimeout(() => {
+            this.supportSaved = false
+          }, 5000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 2000)
+        }
       })
     }
   }
