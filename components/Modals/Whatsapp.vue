@@ -117,7 +117,7 @@ export default {
             Authorization: `Bearer ${Cookies.get('token')}`
           }
         }).then((response) => {
-          console.log(response)
+          // console.log(response)
           this.changeLoading = false
           if (!response.error) {
             this.success = true
@@ -148,7 +148,7 @@ export default {
           }
         }).then((response) => {
           this.loading = false
-          console.log(response)
+          // console.log(response)
           if (!response.error) {
             this.$emit('closeWhatsapp')
           } else {
@@ -165,6 +165,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
+        this.resendLoading = false
         if (!response.error) {
           this.success = true
           this.successText = response.statusText
@@ -175,8 +176,7 @@ export default {
           this.error = true
           this.errorText = response.errorMsg
         }
-        console.log(response)
-        this.resendLoading = false
+        // console.log(response)
       })
     },
     containsSpecialChars (value) {

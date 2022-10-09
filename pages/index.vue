@@ -4,6 +4,9 @@
       <LoadersOverview />
     </div>
     <div v-else class="inner">
+      <div v-if="warning" class="mobile_no_show">
+        <AlertsWarning :warning-text="warningText" />
+      </div>
       <div class="mobile_show">
         <div class="new_input ">
           <input type="text" name="" placeholder="Search for Name, Order Reference No">
@@ -86,10 +89,10 @@
             <div class="top">
               <div>
                 <p class="next_order_time">
-                  {{ nextOrders.collection_time }}
+                  {{ nextOrders ? nextOrders.collection_time : '00:00' }}
                 </p>
                 <p class="next_order_date">
-                  {{ nextOrders.collection_date }}
+                  {{ nextOrders ? nextOrders.collection_date : 'Account not approved' }}
                 </p>
               </div>
               <svg
@@ -117,27 +120,27 @@
                   </clipPath>
                 </defs>
               </svg>
-              <p>{{ nextOrders.collection_address }}</p>
+              <p>{{ nextOrders ? nextOrders.collection_address : 'Account not approved' }}</p>
             </div>
             <div class="user_details">
               <div class="name_image">
                 <div class="image">
-                  <img :src="nextOrders.user_avatar" alt="">
+                  <img :src="nextOrders ? nextOrders.user_avatar : require('assets/images/patient-image.png')" alt="">
                 </div>
                 <div>
                   <p class="name">
-                    {{ nextOrders.user_name }}
+                    {{ nextOrders ? nextOrders.user_name : 'Unapproved' }}
                   </p>
                   <div class="no_show">
                     <div class="gender_age">
                       <p class="age">
-                        {{ nextOrders.user_age }}
+                        {{ nextOrders ? nextOrders.user_age : '00' }}
                       </p>
                       <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
                       </svg>
                       <p class="gender">
-                        {{ nextOrders.gender }}
+                        {{ nextOrders ? nextOrders.gender : 'Not specified' }}
                       </p>
                     </div>
                   </div>
@@ -146,13 +149,13 @@
               <div class="mobile_no_show">
                 <div class="gender_age">
                   <p class="age">
-                    {{ nextOrders.user_age }}
+                    {{ nextOrders ? nextOrders.user_age : '00' }}
                   </p>
                   <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
                   </svg>
                   <p class="gender">
-                    {{ nextOrders.gender }}
+                    {{ nextOrders ? nextOrders.gender : 'Not specified' }}
                   </p>
                 </div>
               </div>
@@ -167,7 +170,7 @@
           </div>
           <div class="notif_center">
             <p class="notif_head">
-              You have {{ incompleteOrders }} orders you have not completed yet
+              You have {{ incompleteOrders ? incompleteOrders : 0 }} orders you have not completed yet
             </p>
             <p class="notif_text">
               Proceed to Ongoing orders to complete or dismiss orders assigned to you.
@@ -201,7 +204,7 @@
               </p>
               <div class="notif_number">
                 <p>
-                  {{ completeOrders }}
+                  {{ completeOrders ? completeOrders : 0 }}
                 </p>
                 <svg
                   class="no_show"
@@ -236,7 +239,7 @@
               </p>
               <div class="notif_number">
                 <p>
-                  {{ dismissedOrders }}
+                  {{ dismissedOrders ? dismissedOrders : 0 }}
                 </p>
                 <svg
                   class="no_show"
@@ -275,6 +278,9 @@ export default {
   data () {
     return {
       loading: false,
+      acctApproved: true,
+      warning: false,
+      warningText: 'Your account is pending for verification by the admin',
       newOrders: null,
       nextOrders: {},
       todayOrders: null,
@@ -285,6 +291,7 @@ export default {
   },
   created () {
     // this.getAllRequests()
+    this.getUserDetails()
     this.getNewOrderTotal()
     this.getTodayOrdersTotal()
     this.getNextOrderDetails()
@@ -305,8 +312,23 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         // this.newOrders = response.orders.total
+      })
+    },
+    getUserDetails () {
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        this.acctApproved = response.data.reg_details.approved
+        if (!this.acctApproved) {
+          setTimeout(() => {
+            this.warning = true
+          }, 1000)
+        }
       })
     },
     getNewOrderTotal () {
@@ -369,7 +391,10 @@ export default {
         // console.log(response)
         this.dismissedOrders = response.orders.dismissed
         this.loading = false
+      }).catch(() => {
+        this.loading = false
       })
+      // this.loading = false
     }
   }
 }
