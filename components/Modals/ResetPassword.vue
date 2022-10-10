@@ -29,7 +29,7 @@
               </clipPath>
             </defs>
           </svg>
-          <input v-model="new_password" placeholder="Enter Password" :type="new_type">
+          <input v-model="new_password" placeholder="Enter Password" :type="new_type" @focus="error = false">
           <svg
             v-if="new_type === 'password'"
             class="pass_svg"
@@ -76,7 +76,7 @@
               </clipPath>
             </defs>
           </svg>
-          <input v-model="confrim_password" placeholder="Enter Password" :type="confirm_type">
+          <input v-model="confrim_password" placeholder="Enter Password" :type="confirm_type" @focus="error = false">
           <svg
             v-if="confirm_type === 'password'"
             class="pass_svg"
@@ -107,7 +107,7 @@
           </svg>
         </div>
       </div>
-      <button v-if="resetLoading" class="bg_btn" disabled>
+      <button v-if="resetLoading" class="bg_btn">
         <Loader class="come-down" />
       </button>
       <button v-else class="bg_btn" :disabled="disabled" @click="resetPassword()">
@@ -120,6 +120,12 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  props: {
+    code: {
+      type: String,
+      default: () => ''
+    }
+  },
   data () {
     return {
       resetLoading: false,
@@ -159,7 +165,7 @@ export default {
         this.resetLoading = true
         this.$axios.$post('/auth/reset/password',
           {
-            resetOTP: this.password,
+            resetOTP: this.code,
             newPassword: this.new_password
           },
           {
@@ -172,7 +178,6 @@ export default {
           this.resetLoading = false
           if (!response.error) {
             this.$emit('close-reset')
-            this.successModal = true
           } else {
             this.error = true
             this.errorText = response.errorMsg

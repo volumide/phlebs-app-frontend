@@ -117,6 +117,7 @@ export default {
           console.log(response)
           this.loading = false
           if (!response.error) {
+            this.$emit('getCode', this.code)
             this.$emit('closeOtp')
           } else {
             this.error = true
