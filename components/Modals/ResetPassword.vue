@@ -11,7 +11,7 @@
     </p>
     <div class="form">
       <div v-if="error">
-        <AlertsError :error-text="`Password does not match, Try Again`" />
+        <AlertsError :error-text="errorText" />
       </div>
       <div class="input-box">
         <p class="label">
@@ -107,7 +107,10 @@
           </svg>
         </div>
       </div>
-      <button class="bg_btn" @click="$emit('close-reset')">
+      <button v-if="resetLoading" class="bg_btn" disabled>
+        <Loader class="come-down" />
+      </button>
+      <button v-else class="bg_btn" :disabled="disabled" @click="resetPassword()">
         Reset Password
       </button>
     </div>
@@ -115,14 +118,25 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   data () {
     return {
+      resetLoading: false,
       error: false,
+      errorText: '',
       new_type: 'password',
       confirm_type: 'password',
       new_password: '',
       confrim_password: ''
+    }
+  },
+  computed: {
+    disabled () {
+      return (
+        this.new_password === '' ||
+        this.confrim_password === ''
+      )
     }
   },
   methods: {
@@ -139,6 +153,43 @@ export default {
       } else if (this.confirm_type === 'text') {
         this.confirm_type = 'password'
       }
+    },
+    resetPassword () {
+      if (this.new_password === this.confrim_password) {
+        this.resetLoading = true
+        this.$axios.$post('/auth/reset/password',
+          {
+            resetOTP: this.password,
+            newPassword: this.new_password
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`
+            }
+          }
+        ).then((response) => {
+          console.log(response)
+          this.resetLoading = false
+          if (!response.error) {
+            this.$emit('close-reset')
+            this.successModal = true
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+        // this.editAccess = response.editAccess
+        }).catch((onrejected) => {
+          // console.log(onrejected)
+          this.resetLoading = false
+        })
+      } else {
+        this.error = true
+        this.errorText = 'Comfirm New Password is wrong'
+        setTimeout(() => {
+          this.error = false
+        }, 3000)
+      }
+      // this.resetLoading = false
     }
   }
 }
@@ -176,6 +227,14 @@ export default {
   font-size: 13px;
   margin-top: 20px;
   margin-bottom: 5vh;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: #cacaca;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 @media only screen and (max-width: 500px) {

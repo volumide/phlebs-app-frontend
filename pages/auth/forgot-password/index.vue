@@ -17,16 +17,27 @@
           <div class="back" @click="$router.go(-1)">
             Back
           </div>
-          <p class="title">
-            Forgot Password?
-          </p>
+          <div class="title_div">
+            <p class="title">
+              Forgot Password?
+            </p>
+            <div v-if="smsOtpLoading">
+              <Loader2 class="come-down" />
+            </div>
+          </div>
           <p class="sub-title">
             Select which contact details should we use to
             reset your password
           </p>
           <div class="form">
             <div class="contact_box" @click="sendSMSotp()">
-              <svg width="40" height="40" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="40"
+                height="40"
+                viewBox="0 0 56 56"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g clip-path="url(#clip0_13_54)">
                   <path d="M35.0002 56H21.0002C14.5672 56 9.3335 50.7663 9.3335 44.3333V11.6667C9.3335 5.23367 14.5672 0 21.0002 0H35.0002C41.4332 0 46.6668 5.23367 46.6668 11.6667V44.3333C46.6668 50.7663 41.4332 56 35.0002 56ZM21.0002 4.66667C17.1408 4.66667 14.0002 7.80733 14.0002 11.6667V44.3333C14.0002 48.1927 17.1408 51.3333 21.0002 51.3333H35.0002C38.8595 51.3333 42.0002 48.1927 42.0002 44.3333V11.6667C42.0002 7.80733 38.8595 4.66667 35.0002 4.66667H21.0002ZM32.6668 44.3333C32.6668 43.0453 31.6215 42 30.3335 42H25.6668C24.3788 42 23.3335 43.0453 23.3335 44.3333C23.3335 45.6213 24.3788 46.6667 25.6668 46.6667H30.3335C31.6215 46.6667 32.6668 45.6213 32.6668 44.3333Z" fill="#00295D" />
                 </g>
@@ -76,9 +87,17 @@
             </button>
           </div>
           <div class="inner_">
-            <p class="title">
-              Forgot Password?
-            </p>
+            <div v-if="error">
+              <AlertsError :error-text="errorText" />
+            </div>
+            <div class="title_div">
+              <p class="title">
+                Forgot Password?
+              </p>
+              <div v-if="smsOtpLoading">
+                <Loader2 class="come-down" />
+              </div>
+            </div>
             <p class="sub-title">
               Select which contact details should we use to
               reset your password
@@ -141,6 +160,8 @@ export default {
   data () {
     return {
       checked: false,
+      errorText: '',
+      loading: false,
       smsOtpLoading: false,
       error: false,
       truncateEmail: functions.truncateEmail,
@@ -171,17 +192,19 @@ export default {
     },
     sendSMSotp () {
       this.smsOtpLoading = true
+      // console.log(this.email)
       this.$axios.$get(`auth/send/otp/via/sms/${this.email}`
       ).then((response) => {
         console.log(response)
-        // this.$router.push('/auth/forgot-password/otp')
-        // this.todoData = response.orders.order
         this.smsOtpLoading = false
-      }).catch((onrejected) => {
-        console.log(onrejected)
-        this.smsOtpLoading = false
-        if (onrejected.error) {
-          // this.$toast.error(onrejected.errorMsg)
+        if (!response.error) {
+          this.$router.push(`/auth/forgot-password/otp?email=${this.email}&ref=${response.data.reference}`)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 3000)
         }
       })
     }
@@ -198,6 +221,15 @@ export default {
 .rhs {
   flex-basis: 42%;
   margin-left: 58%;
+}
+
+.title_div {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  margin-right: 10px;
 }
 
 .rhs_inner {
@@ -361,6 +393,9 @@ export default {
 
   .title {
     font-size: 18px;
+  }
+
+  .title_div {
     margin-top: 1.5rem;
   }
 
