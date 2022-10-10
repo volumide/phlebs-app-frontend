@@ -161,6 +161,7 @@ export default {
       }
     },
     resetPassword () {
+      this.error = false
       if (this.new_password === this.confrim_password) {
         this.resetLoading = true
         this.$axios.$post('/auth/reset/password',
@@ -182,7 +183,6 @@ export default {
             this.error = true
             this.errorText = response.errorMsg
           }
-        // this.editAccess = response.editAccess
         }).catch((onrejected) => {
           // console.log(onrejected)
           this.resetLoading = false
