@@ -18,7 +18,15 @@
               @input="selectImgFile"
             >
             <div class="edit-icon">
-              <svg width="16" height="16" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Loader2 v-if="imageLoading" class="come-down" />
+              <svg
+                v-else
+                width="16"
+                height="16"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <g clip-path="url(#clip0_262_5442)">
                   <path d="M15.8333 3.33333H15.41L13.59 0.973333C13.3554 0.671505 13.0553 0.427014 12.7122 0.258378C12.3692 0.0897429 11.9923 0.00138587 11.61 0L8.39 0C8.00775 0.00138587 7.63082 0.0897429 7.28778 0.258378C6.94473 0.427014 6.64456 0.671505 6.41 0.973333L4.59 3.33333H4.16667C3.062 3.33466 2.00296 3.77407 1.22185 4.55518C0.440735 5.3363 0.00132321 6.39534 0 7.5L0 15.8333C0.00132321 16.938 0.440735 17.997 1.22185 18.7782C2.00296 19.5593 3.062 19.9987 4.16667 20H15.8333C16.938 19.9987 17.997 19.5593 18.7782 18.7782C19.5593 17.997 19.9987 16.938 20 15.8333V7.5C19.9987 6.39534 19.5593 5.3363 18.7782 4.55518C17.997 3.77407 16.938 3.33466 15.8333 3.33333ZM7.73 1.99167C7.80806 1.89088 7.90808 1.80922 8.02244 1.7529C8.13681 1.69658 8.26252 1.66709 8.39 1.66667H11.61C11.7375 1.66721 11.8631 1.69676 11.9775 1.75307C12.0918 1.80938 12.1919 1.89097 12.27 1.99167L13.305 3.33333H6.695L7.73 1.99167ZM18.3333 15.8333C18.3333 16.4964 18.0699 17.1323 17.6011 17.6011C17.1323 18.0699 16.4964 18.3333 15.8333 18.3333H4.16667C3.50363 18.3333 2.86774 18.0699 2.3989 17.6011C1.93006 17.1323 1.66667 16.4964 1.66667 15.8333V7.5C1.66667 6.83696 1.93006 6.20107 2.3989 5.73223C2.86774 5.26339 3.50363 5 4.16667 5H15.8333C16.4964 5 17.1323 5.26339 17.6011 5.73223C18.0699 6.20107 18.3333 6.83696 18.3333 7.5V15.8333Z" fill="#00295D" />
                   <path d="M10 6.66666C9.0111 6.66666 8.0444 6.95991 7.22215 7.50932C6.39991 8.05872 5.75904 8.83962 5.3806 9.75325C5.00217 10.6669 4.90315 11.6722 5.09608 12.6421C5.289 13.612 5.76521 14.5029 6.46447 15.2022C7.16373 15.9015 8.05465 16.3777 9.02455 16.5706C9.99446 16.7635 10.9998 16.6645 11.9134 16.2861C12.827 15.9076 13.6079 15.2668 14.1573 14.4445C14.7068 13.6223 15 12.6556 15 11.6667C14.9987 10.341 14.4715 9.06999 13.5341 8.13259C12.5967 7.1952 11.3257 6.66799 10 6.66666ZM10 15C9.34073 15 8.69627 14.8045 8.1481 14.4382C7.59994 14.072 7.1727 13.5514 6.9204 12.9423C6.66811 12.3332 6.6021 11.663 6.73072 11.0164C6.85934 10.3698 7.1768 9.77582 7.64298 9.30964C8.10915 8.84347 8.7031 8.526 9.3497 8.39738C9.9963 8.26876 10.6665 8.33477 11.2756 8.58707C11.8847 8.83936 12.4053 9.2666 12.7716 9.81476C13.1378 10.3629 13.3333 11.0074 13.3333 11.6667C13.3333 12.5507 12.9821 13.3986 12.357 14.0237C11.7319 14.6488 10.8841 15 10 15Z" fill="#00295D" />
@@ -37,8 +45,14 @@
         </div>
       </div>
       <div class="rhs">
+        <div v-if="success">
+          <AlertsSuccess :success-text="successText" />
+        </div>
         <div v-if="error">
-          <AlertsError :error-text="errorText" />
+          <AlertsError :error-text="`Please Request Edit Access`" />
+        </div>
+        <div v-if="error2">
+          <AlertsError :error-text="errorText2" />
         </div>
         <div class="rhs_inn">
           <div>
@@ -74,7 +88,7 @@
                 Phone Number
               </p>
               <div class="new_input">
-                <input v-model="phone" type="text" @focus="error = false">
+                <input v-model="phone" type="text" @focus="error2 = false">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1029_8669)">
                     <path d="M2.34442 12.8891L1.28887 17.4447C1.25245 17.6112 1.2537 17.7838 1.29252 17.9497C1.33134 18.1157 1.40675 18.2709 1.51323 18.4041C1.61972 18.5372 1.7546 18.6448 1.90802 18.7191C2.06144 18.7934 2.22952 18.8325 2.39998 18.8336C2.47941 18.8416 2.55944 18.8416 2.63887 18.8336L7.2222 17.778L16.0222 9.01133L11.1111 4.11133L2.34442 12.8891Z" fill="#325BD9" />
@@ -126,14 +140,34 @@ export default {
     userData: {
       type: Object,
       default: () => {}
+    },
+    successText: {
+      type: String,
+      default: () => ''
+    },
+    success: {
+      type: Boolean,
+      default: () => false
+    },
+    errorText: {
+      type: String,
+      default: () => ''
+    },
+    error: {
+      type: Boolean,
+      default: () => false
+    },
+    imageLoading: {
+      type: Boolean,
+      default: () => false
     }
   },
   data () {
     return {
       email: '',
       phone: '',
-      errorText: '',
-      error: false,
+      errorText2: '',
+      error2: false,
       allowEdit: false,
       loading: false,
       openOtp: false,
@@ -156,6 +190,7 @@ export default {
     pushData () {
       this.email = this.userData.reg_details.email
       this.phone = this.userData.reg_details.mobile_number
+      this.userImage = this.userData.profiles.profile_pics
     },
     sendOtp () {
       this.openOtp = false
@@ -170,6 +205,7 @@ export default {
       // this.selectedImage = this.$refs.fileInput.value
       const fileInput = this.$refs.fileInput
       const imgFile = fileInput.files
+      this.saveImage()
 
       if (imgFile && imgFile[0]) {
         const reader = new FileReader()
@@ -179,6 +215,12 @@ export default {
         reader.readAsDataURL(imgFile[0])
         this.$emit('fileInput', imgFile[0])
       }
+    },
+    saveImage () {
+      // console.log(this.selectedImage)
+      // eslint-disable-next-line vue/no-mutating-props
+      this.imageLoading = true
+      this.$emit('saveImage', this.selectedImage)
     },
     updateNumber () {
       // this.openOtp = true
@@ -197,10 +239,10 @@ export default {
         if (!response.error) {
           this.openOtp = true
         } else {
-          this.error = true
-          this.errorText = response.errorMsg
+          this.error2 = true
+          this.errorText2 = response.errorMsg
           setTimeout(() => {
-            this.error = false
+            this.error2 = false
           }, 3000)
         }
       }).catch((onrejected) => {

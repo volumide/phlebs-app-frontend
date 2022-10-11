@@ -9,13 +9,37 @@
       />
     </div>
     <div v-if="activeTab === 'Personal' && !userLoading" class="tab_data">
-      <ProfilePersonal :user-data="userData" />
+      <ProfilePersonal
+        :user-data="userData"
+        :success-text="successMsg"
+        :error-text="errorText"
+        :image-loading="imageLoading"
+        :success="successStatus"
+        :error="error"
+        @saveImage="uploadProfileImage"
+      />
     </div>
     <div v-if="activeTab === 'Security' && !userLoading" class="tab_data">
-      <ProfileSecurity :user-data="userData" />
+      <ProfileSecurity
+        :user-data="userData"
+        :success-text="successMsg"
+        :error-text="errorText"
+        :image-loading="imageLoading"
+        :success="successStatus"
+        :error="error"
+        @saveImage="uploadProfileImage"
+      />
     </div>
     <div v-if="activeTab === 'Password'" class="tab_data">
-      <ProfilePassword />
+      <ProfilePassword
+        :user-data="userData"
+        :success-text="successMsg"
+        :error-text="errorText"
+        :image-loading="imageLoading"
+        :success="successStatus"
+        :error="error"
+        @saveImage="uploadProfileImage"
+      />
     </div>
   </div>
 </template>
@@ -27,7 +51,12 @@ export default {
   data () {
     return {
       activeTab: 'Personal',
+      errorText: '',
+      error: false,
+      successStatus: false,
+      successMsg: '',
       userLoading: true,
+      imageLoading: false,
       userData: {}
     }
   },
@@ -49,6 +78,37 @@ export default {
         console.log(response)
         this.userData = response.data
         this.userLoading = false
+      })
+    },
+    uploadProfileImage (val) {
+      console.log(val)
+      const image = val
+      // this.$emit('proceed')
+      this.imageLoading = true
+      const formdata = new FormData()
+      formdata.append('image', image)
+      this.$axios.$post('/auth/upload_profile_picture', formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+      ).then((response) => {
+        console.log(response)
+        this.imageLoading = false
+        if (!response.error) {
+          this.successMsg = response.statusText
+          this.successStatus = true
+          setTimeout(() => {
+            this.successStatus = false
+          }, 3000)
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 3000)
+        }
       })
     }
   }
