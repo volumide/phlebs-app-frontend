@@ -11,8 +11,8 @@
     <div v-if="activeTab === 'Personal' && !userLoading" class="tab_data">
       <ProfilePersonal :user-data="userData" />
     </div>
-    <div v-if="activeTab === 'Security'" class="tab_data">
-      <ProfileSecurity />
+    <div v-if="activeTab === 'Security' && !userLoading" class="tab_data">
+      <ProfileSecurity :user-data="userData" />
     </div>
     <div v-if="activeTab === 'Password'" class="tab_data">
       <ProfilePassword />

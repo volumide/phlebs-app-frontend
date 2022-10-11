@@ -116,10 +116,16 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  props: {
+    userData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
-      email: 'nkojuadeposi@gmail.com',
-      phone: '08012345678',
+      email: '',
+      phone: '',
       allowEdit: false,
       loading: false,
       openOtp: false,
@@ -129,7 +135,20 @@ export default {
       age: ''
     }
   },
+  watch: {
+    userData: {
+      immediate: true,
+      handler (val) {
+        // console.log(val)
+        this.pushData()
+      }
+    }
+  },
   methods: {
+    pushData () {
+      this.email = this.userData.reg_details.email
+      this.phone = this.userData.reg_details.mobile_number
+    },
     sendOtp () {
       this.openOtp = false
       this.successModal = true
