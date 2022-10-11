@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="connect_checker">
+      <ConnectionChecker />
+    </div>
     <Nuxt />
   </div>
 </template>
