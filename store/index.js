@@ -1,7 +1,8 @@
 export const state = () => ({
   newPageName: '',
   userDetails: {},
-  dropOffLocation: []
+  dropOffLocation: [],
+  isOnline: false
 })
 
 export const mutations = {
@@ -13,5 +14,19 @@ export const mutations = {
   },
   setDropoffLocation (state, val) {
     state.dropOffLocation = val
+  },
+  setIsOnline (state, value) {
+    state.isOnline = value
+  }
+}
+
+export const actions = {
+  onlineStatusChange ({ state, commit }, payload) {
+    if (payload) {
+      commit('setIsOnline', true)
+      setTimeout(() => {
+        commit('setIsOnline', false)
+      }, 3000)
+    }
   }
 }

@@ -92,7 +92,7 @@
                   {{ nextOrders ? nextOrders.collection_time : '00:00' }}
                 </p>
                 <p class="next_order_date">
-                  {{ nextOrders ? nextOrders.collection_date : 'Account not approved' }}
+                  {{ nextOrders ? nextOrders.collection_date : 'No next order' }}
                 </p>
               </div>
               <svg
@@ -120,7 +120,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <p>{{ nextOrders ? nextOrders.collection_address : 'Account not approved' }}</p>
+              <p>{{ nextOrders ? nextOrders.collection_address : 'No next order' }}</p>
             </div>
             <div class="user_details">
               <div class="name_image">
@@ -129,7 +129,7 @@
                 </div>
                 <div>
                   <p class="name">
-                    {{ nextOrders ? nextOrders.user_name : 'Unapproved' }}
+                    {{ nextOrders ? nextOrders.user_name : 'No Order' }}
                   </p>
                   <div class="no_show">
                     <div class="gender_age">
@@ -322,7 +322,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.acctApproved = response.data.reg_details.approved
         if (!this.acctApproved) {
           setTimeout(() => {

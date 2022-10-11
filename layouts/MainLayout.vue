@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div class="connect_checker">
+    <div class="connect_checker">
       <ConnectionChecker />
-    </div> -->
+    </div>
     <div class="main">
       <div class="sidemenu">
         <SideMenu />

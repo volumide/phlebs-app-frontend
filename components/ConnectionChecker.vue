@@ -9,7 +9,7 @@
       </p>
     </div>
     <div>
-      <div v-if="$nuxt.isOnline" class="online come-down">
+      <div v-if="onlineStatus && $store.state.isOnline" class="online come-down">
         <p class="head mobile_no_show">
           Connection Online :
         </p>
@@ -26,29 +26,16 @@ export default {
   data () {
     return {
       status: this.$nuxt.isOnline,
-      onlineStatus: this.$nuxt.isOnline,
+      // onlineStatus: this.$nuxt.isOnline,
       offlineStatus: this.$nuxt.isOffline
     }
   },
-  watch: {
-    onlineStatus: {
-      immediate: true,
-      handler (val) {
-        // console.log(val)
-        if (val === true) {
-          this.setTime()
-        }
+  computed: {
+    onlineStatus () {
+      if (this.$nuxt.isOnline) {
+        this.$store.dispatch('onlineStatusChange', this.$nuxt.isOnline)
       }
-    }
-  },
-  methods: {
-    setTime () {
-      console.log(this.status)
-      this.status = true
-      setTimeout(() => {
-        this.status = false
-        console.log(this.status)
-      }, 5000)
+      return this.$nuxt.isOnline
     }
   }
 }
