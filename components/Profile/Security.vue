@@ -37,51 +37,56 @@
         </div>
       </div>
       <div class="rhs">
-        <div>
-          <div class="input_cont">
-            <p class="label">
-              Email Address
-            </p>
-            <div class="new_input">
-              <input v-model="email" disabled type="text">
-              <svg
-                v-if="allowEdit"
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <g clip-path="url(#clip0_76_1320)">
-                  <path d="M11.4265 0.573977C11.0866 0.234575 10.6259 0.0439453 10.1455 0.0439453C9.66515 0.0439453 9.20443 0.234575 8.86451 0.573977L0.732508 8.70598C0.499633 8.93754 0.314989 9.21299 0.189257 9.51637C0.0635245 9.81976 -0.000798988 10.1451 7.49061e-06 10.4735V11.5C7.49061e-06 11.6326 0.0526859 11.7598 0.146454 11.8535C0.240222 11.9473 0.367399 12 0.500008 12H1.52651C1.85489 12.0009 2.18019 11.9367 2.48359 11.811C2.78698 11.6854 3.06243 11.5008 3.29401 11.268L11.4265 3.13548C11.7658 2.79557 11.9563 2.33496 11.9563 1.85473C11.9563 1.37449 11.7658 0.913879 11.4265 0.573977ZM2.58701 10.561C2.30501 10.8411 1.92399 10.9988 1.52651 11H1.00001V10.4735C0.999502 10.2764 1.03809 10.0812 1.11353 9.8992C1.18897 9.71717 1.29976 9.5519 1.43951 9.41298L7.61101 3.24148L8.76101 4.39148L2.58701 10.561ZM10.719 2.42848L9.46601 3.68198L8.31601 2.53448L9.56951 1.28098C9.64502 1.20563 9.73463 1.1459 9.83322 1.10518C9.93182 1.06447 10.0375 1.04357 10.1441 1.04369C10.2508 1.0438 10.3564 1.06493 10.4549 1.10586C10.5534 1.14679 10.6429 1.20672 10.7183 1.28223C10.7936 1.35774 10.8533 1.44735 10.8941 1.54594C10.9348 1.64454 10.9557 1.75019 10.9555 1.85686C10.9554 1.96353 10.9343 2.06914 10.8934 2.16764C10.8524 2.26615 10.7925 2.35563 10.717 2.43098L10.719 2.42848Z" fill="#00295D" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_76_1320">
-                    <rect width="12" height="12" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
+        <div v-if="error">
+          <AlertsError :error-text="errorText" />
+        </div>
+        <div class="rhs_inn">
+          <div>
+            <div class="input_cont">
+              <p class="label">
+                Email Address
+              </p>
+              <div class="new_input">
+                <input v-model="email" disabled type="text">
+                <svg
+                  v-if="allowEdit"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g clip-path="url(#clip0_76_1320)">
+                    <path d="M11.4265 0.573977C11.0866 0.234575 10.6259 0.0439453 10.1455 0.0439453C9.66515 0.0439453 9.20443 0.234575 8.86451 0.573977L0.732508 8.70598C0.499633 8.93754 0.314989 9.21299 0.189257 9.51637C0.0635245 9.81976 -0.000798988 10.1451 7.49061e-06 10.4735V11.5C7.49061e-06 11.6326 0.0526859 11.7598 0.146454 11.8535C0.240222 11.9473 0.367399 12 0.500008 12H1.52651C1.85489 12.0009 2.18019 11.9367 2.48359 11.811C2.78698 11.6854 3.06243 11.5008 3.29401 11.268L11.4265 3.13548C11.7658 2.79557 11.9563 2.33496 11.9563 1.85473C11.9563 1.37449 11.7658 0.913879 11.4265 0.573977ZM2.58701 10.561C2.30501 10.8411 1.92399 10.9988 1.52651 11H1.00001V10.4735C0.999502 10.2764 1.03809 10.0812 1.11353 9.8992C1.18897 9.71717 1.29976 9.5519 1.43951 9.41298L7.61101 3.24148L8.76101 4.39148L2.58701 10.561ZM10.719 2.42848L9.46601 3.68198L8.31601 2.53448L9.56951 1.28098C9.64502 1.20563 9.73463 1.1459 9.83322 1.10518C9.93182 1.06447 10.0375 1.04357 10.1441 1.04369C10.2508 1.0438 10.3564 1.06493 10.4549 1.10586C10.5534 1.14679 10.6429 1.20672 10.7183 1.28223C10.7936 1.35774 10.8533 1.44735 10.8941 1.54594C10.9348 1.64454 10.9557 1.75019 10.9555 1.85686C10.9554 1.96353 10.9343 2.06914 10.8934 2.16764C10.8524 2.26615 10.7925 2.35563 10.717 2.43098L10.719 2.42848Z" fill="#00295D" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_76_1320">
+                      <rect width="12" height="12" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div class="input_cont">
-            <p class="label">
-              Phone Number
-            </p>
-            <div class="new_input">
-              <input v-model="phone" type="text">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_1029_8669)">
-                  <path d="M2.34442 12.8891L1.28887 17.4447C1.25245 17.6112 1.2537 17.7838 1.29252 17.9497C1.33134 18.1157 1.40675 18.2709 1.51323 18.4041C1.61972 18.5372 1.7546 18.6448 1.90802 18.7191C2.06144 18.7934 2.22952 18.8325 2.39998 18.8336C2.47941 18.8416 2.55944 18.8416 2.63887 18.8336L7.2222 17.778L16.0222 9.01133L11.1111 4.11133L2.34442 12.8891Z" fill="#325BD9" />
-                  <path d="M18.7889 4.62231L15.5111 1.34454C15.2956 1.13013 15.004 1.00977 14.7 1.00977C14.396 1.00977 14.1044 1.13013 13.8889 1.34454L12.0667 3.16676L16.9722 8.07231L18.7944 6.25009C18.9011 6.14291 18.9855 6.01576 19.043 5.87591C19.1004 5.73605 19.1297 5.58624 19.1292 5.43505C19.1287 5.28386 19.0984 5.13425 19.04 4.9948C18.9816 4.85534 18.8962 4.72876 18.7889 4.62231Z" fill="#325BD9" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_1029_8669">
-                    <rect width="20" height="20" fill="white" />
-                  </clipPath>
-                </defs>
-              </svg>
+          <div>
+            <div class="input_cont">
+              <p class="label">
+                Phone Number
+              </p>
+              <div class="new_input">
+                <input v-model="phone" type="text" @focus="error = false">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_1029_8669)">
+                    <path d="M2.34442 12.8891L1.28887 17.4447C1.25245 17.6112 1.2537 17.7838 1.29252 17.9497C1.33134 18.1157 1.40675 18.2709 1.51323 18.4041C1.61972 18.5372 1.7546 18.6448 1.90802 18.7191C2.06144 18.7934 2.22952 18.8325 2.39998 18.8336C2.47941 18.8416 2.55944 18.8416 2.63887 18.8336L7.2222 17.778L16.0222 9.01133L11.1111 4.11133L2.34442 12.8891Z" fill="#325BD9" />
+                    <path d="M18.7889 4.62231L15.5111 1.34454C15.2956 1.13013 15.004 1.00977 14.7 1.00977C14.396 1.00977 14.1044 1.13013 13.8889 1.34454L12.0667 3.16676L16.9722 8.07231L18.7944 6.25009C18.9011 6.14291 18.9855 6.01576 19.043 5.87591C19.1004 5.73605 19.1297 5.58624 19.1292 5.43505C19.1287 5.28386 19.0984 5.13425 19.04 4.9948C18.9816 4.85534 18.8962 4.72876 18.7889 4.62231Z" fill="#325BD9" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_1029_8669">
+                      <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                  </defs>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -97,6 +102,7 @@
       :modal-head="'Request Edit Access'"
       :modal-text="'Your personal information is a vital information for us. Making edit to these information would require  that you request permission from the admin.'"
       :bg-btn="'Request Edit Access'"
+      :phone-number="phone"
       @close-modal="openOtp = false"
       @trans-action="openOtp = false"
       @bg-action="sendOtp()"
@@ -126,6 +132,8 @@ export default {
     return {
       email: '',
       phone: '',
+      errorText: '',
+      error: false,
       allowEdit: false,
       loading: false,
       openOtp: false,
@@ -173,6 +181,7 @@ export default {
       }
     },
     updateNumber () {
+      // this.openOtp = true
       this.loading = true
       this.$axios.$patch('/auth/update/mobile', {
         mobile_number: this.phone
@@ -187,9 +196,15 @@ export default {
         console.log(response)
         if (!response.error) {
           this.openOtp = true
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+          setTimeout(() => {
+            this.error = false
+          }, 3000)
         }
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.loading = false
       })
     }
@@ -224,11 +239,15 @@ export default {
   box-shadow: 0px 4px 4px rgba(0, 41, 93, 0.09);
   border-radius: 4px;
   padding: 2vh 4vw;
-  display: flex;
-  justify-content: space-between;
 }
 
-.rhs > div {
+.rhs_inn {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.rhs_inn > div {
   flex-basis: 44%;
 }
 
@@ -312,6 +331,9 @@ export default {
   .rhs {
     width: 100%;
     box-shadow: none;
+  }
+
+  .rhs_inn {
     flex-direction: column;
   }
 

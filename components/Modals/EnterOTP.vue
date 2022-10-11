@@ -20,23 +20,30 @@
           </defs>
         </svg>
       </div>
+      <div v-if="error">
+        <AlertsError :error-text="errorText" />
+      </div>
       <h1 class="title">
         Enter OTP
       </h1>
       <p class="sub-title">
-        Kindly enter the OTP sent to +234 7012345678
+        Kindly enter the OTP sent to {{ phoneNumber }}
       </p>
       <div class="form">
         <PincodeInput
           v-model="code"
-          :length="4"
+          :length="6"
+          @input="error = false"
         />
       </div>
       <div class="bottom_btn">
         <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button>
-        <button class="bg_btn" @click="$emit('bg-action')">
+        <button v-if="loading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="submit">
           Proceed
         </button>
       </div>
@@ -45,11 +52,18 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
   props: {
+    phoneNumber: {
+      type: String,
+      default: () => ''
+    }
   },
   data () {
     return {
+      loading: false,
+      error: false,
       anim: '',
       code: ''
     }
@@ -64,6 +78,39 @@ export default {
     }
   },
   methods: {
+    submit () {
+      this.loading = true
+      if (this.code.length < 6) {
+        this.error = true
+        this.loading = false
+        this.errorText = 'Please fill up the OTP field'
+        setTimeout(() => {
+          this.error = false
+        }, 3000)
+      } else {
+        this.$axios.$post('auth/verify/security/otp', {
+          otp: this.code,
+          mobile_number: this.phoneNumber
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+        ).then((response) => {
+          console.log(response)
+          this.loading = false
+          if (!response.error) {
+            this.$emit('bg-action')
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+        }).catch(() => {
+          this.loading = false
+        })
+      }
+    }
   }
 }
 </script>

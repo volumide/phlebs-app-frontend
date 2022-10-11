@@ -128,7 +128,7 @@
                 Address
               </p>
               <div class="new_input" @click="checkEdit()">
-                <input v-model="address" type="text" :disabled="inputDisabled">
+                <input v-model="address" type="text" :disabled="inputDisabled" @focus="error = false">
                 <svg
                   v-if="editAccess"
                   width="12"
