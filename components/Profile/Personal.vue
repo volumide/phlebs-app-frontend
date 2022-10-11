@@ -295,6 +295,7 @@ export default {
     checkEdit () {
       if (!this.editAccess) {
         this.error2 = true
+        this.errorText2 = 'Please request edit access'
         setTimeout(() => {
           this.error2 = false
         }, 3000)

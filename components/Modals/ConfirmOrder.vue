@@ -114,7 +114,7 @@ export default {
         this.errorText = 'Please Select a Location'
         this.loading = false
       } else {
-        console.log(this.location)
+        // console.log(this.location)
         // const name = this.boxName
         const id = this.$route.query.id
         this.$axios.$post('/orders/complete/order', {
@@ -127,7 +127,7 @@ export default {
           }
         }
         ).then((response) => {
-          console.log(response)
+          // console.log(response)
           if (!response.error) {
             this.$emit('bg-action')
           } else {

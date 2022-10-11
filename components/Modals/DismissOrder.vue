@@ -86,6 +86,7 @@ export default {
   data () {
     return {
       anim: '',
+      loading: false,
       other: '',
       reason: ''
     }
