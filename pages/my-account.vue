@@ -75,13 +75,13 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.userData = response.data
         this.userLoading = false
       })
     },
     uploadProfileImage (val) {
-      console.log(val)
+      // console.log(val)
       const image = val
       // this.$emit('proceed')
       this.imageLoading = true
@@ -94,7 +94,7 @@ export default {
           }
         }
       ).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.imageLoading = false
         if (!response.error) {
           this.successMsg = response.statusText

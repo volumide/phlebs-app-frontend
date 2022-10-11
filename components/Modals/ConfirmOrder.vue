@@ -60,7 +60,7 @@
           <Loader class="come-down" />
         </button>
         <button v-else class="bg_btn" @click="completeOrder()">
-          Submit and Dismiss
+          Submit
         </button>
       </div>
     </div>

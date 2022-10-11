@@ -344,11 +344,11 @@ export default {
         }
       ).then((response) => {
         this.requestLoading = false
-        console.log(response)
+        // console.log(response)
         this.requestEdit = false
         this.successModal = true
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.requestLoading = false
       })
     },
@@ -362,11 +362,11 @@ export default {
         }
       ).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.pushData()
         this.editAccess = response.editAccess
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.loading = false
       })
     },
@@ -395,7 +395,7 @@ export default {
         }
         this.editAccess = response.editAccess
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.loading = false
       })
     }

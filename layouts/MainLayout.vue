@@ -1,35 +1,40 @@
 <template>
-  <div class="main">
-    <div class="sidemenu">
-      <SideMenu />
-    </div>
-    <div>
-      <div class="header-content">
-        <Header
-          v-show="!showMobileMenu"
-          @timeOfDay="getTimeOfDay"
-          @showMobileMenu="showMobileMenu = true"
-          @openNotification="openNotification = true"
-          @openLogout="openLogout = true"
-        />
+  <div>
+    <!-- <div class="connect_checker">
+      <ConnectionChecker />
+    </div> -->
+    <div class="main">
+      <div class="sidemenu">
+        <SideMenu />
       </div>
-      <div class="mobile-menu">
-        <MobileMenu
-          v-show="showMobileMenu"
-          :timeOfDay="timeOfDay"
-          @closeMobileMenu="showMobileMenu = false"
-        />
-      </div>
-      <div class="main-content">
-        <Nuxt />
-        <ModalsLogout
-          v-if="openLogout"
-          @close-logout="openLogout = false"
-        />
-        <ModalsNotification
-          v-if="openNotification"
-          @close-notification="openNotification = false"
-        />
+      <div>
+        <div class="header-content">
+          <Header
+            v-show="!showMobileMenu"
+            @timeOfDay="getTimeOfDay"
+            @showMobileMenu="showMobileMenu = true"
+            @openNotification="openNotification = true"
+            @openLogout="openLogout = true"
+          />
+        </div>
+        <div class="mobile-menu">
+          <MobileMenu
+            v-show="showMobileMenu"
+            :time-of-day="timeOfDay"
+            @closeMobileMenu="showMobileMenu = false"
+          />
+        </div>
+        <div class="main-content">
+          <Nuxt />
+          <ModalsLogout
+            v-if="openLogout"
+            @close-logout="openLogout = false"
+          />
+          <ModalsNotification
+            v-if="openNotification"
+            @close-notification="openNotification = false"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -130,6 +135,13 @@ html {
 
 .main {
   display: flex;
+}
+
+.connect_checker {
+  position: fixed ;
+  width: 100%;
+  top: 0;
+  z-index: 100;
 }
 
 .header-content {
