@@ -55,7 +55,7 @@
         </div>
         <div class="user">
           <div class="user-image" @click="$router.push('/my-account')">
-            <img src="~assets/images/user-image.png" alt="">
+            <img :src="userImage === null ? altImage : userImage" alt="">
           </div>
           <p class="username">
             {{ userDetails.firstname }} {{ userDetails.lastname }}
@@ -85,7 +85,7 @@
         {{ pageName }}
       </p>
       <p class="greeting">
-        Good Afternoon, {{ userDetails.firstname }}
+        Good {{ timeOfDay }}, {{ userDetails.firstname }}
       </p>
     </div>
   </div>
@@ -107,11 +107,14 @@ export default {
   },
   data () {
     return {
+      userImage: null,
+      altImage: require('assets/images/no-image.png'),
       notificationsCount: '',
       // capitalizeFirstLetter: functions.capitalizeFirstLetter,
       timeOfDay: '',
       overviewData: [],
-      userDetails: {}
+      userDetails: {},
+      userData: {}
     }
   },
   computed: {
@@ -167,6 +170,7 @@ export default {
       } else {
         this.timeOfDay = 'Evening'
       }
+      this.$emit('timeOfDay', this.timeOfDay)
     },
     getUserDetails () {
       this.$axios.$get('/auth/all/registration/information', {
@@ -174,8 +178,11 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.userDetails = response.data.personal_information
+        this.userImage = response.data.profiles.profile_pics
+        this.userData = response.data
+        this.$store.commit('setUserDetails', this.userData)
       })
     },
     capitalizeFirstLetter (string) {

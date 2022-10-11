@@ -101,6 +101,7 @@ export default {
           this.successStatus = true
           setTimeout(() => {
             this.successStatus = false
+            window.location.reload()
           }, 3000)
         } else {
           this.error = true

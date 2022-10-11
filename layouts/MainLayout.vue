@@ -7,6 +7,7 @@
       <div class="header-content">
         <Header
           v-show="!showMobileMenu"
+          @timeOfDay="getTimeOfDay"
           @showMobileMenu="showMobileMenu = true"
           @openNotification="openNotification = true"
           @openLogout="openLogout = true"
@@ -15,6 +16,7 @@
       <div class="mobile-menu">
         <MobileMenu
           v-show="showMobileMenu"
+          :timeOfDay="timeOfDay"
           @closeMobileMenu="showMobileMenu = false"
         />
       </div>
@@ -44,6 +46,7 @@ export default {
       openNotification: false,
       openLogout: false,
       trigger: false,
+      timeOfDay: '',
       onLine: null
     }
   },
@@ -63,6 +66,9 @@ export default {
       } else {
         this.getUserDetails()
       }
+    },
+    getTimeOfDay (val) {
+      this.timeOfDay = val
     },
     getUserDetails () {
       this.$axios.$get('/auth/all/registration/information', {

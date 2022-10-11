@@ -13,11 +13,11 @@
               Menu
             </p>
             <p class="greeting">
-              Good Afternoon, David
+              Good {{ timeOfDay }}, David
             </p>
           </div>
           <div class="user-image">
-            <img src="~assets/images/user-image.png" alt="">
+            <img :src="userImage === null ? altImage : userImage" alt="">
           </div>
         </div>
         <div class="menu-container">
@@ -164,6 +164,21 @@
 <script>
 import Cookies from 'js-cookie'
 export default {
+  props: {
+    timeOfDay: {
+      type: String,
+      default: () => ''
+    }
+  },
+  data () {
+    return {
+      userImage: null,
+      altImage: require('assets/images/no-image.png')
+    }
+  },
+  created () {
+    this.getUserDetails()
+  },
   methods: {
     closeMobileMenu () {
       this.$emit('closeMobileMenu')
@@ -177,6 +192,16 @@ export default {
       Cookies.remove('emailVerified')
       this.$router.push('/auth/login')
       this.$toast.show('Logged Out')
+    },
+    getUserDetails () {
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        this.userImage = response.data.profiles.profile_pics
+      })
     }
   }
 }
