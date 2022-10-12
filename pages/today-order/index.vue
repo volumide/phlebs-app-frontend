@@ -71,7 +71,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         this.todoData = response.orders.order
         this.todoLoading = false
       }).catch((onrejected) => {

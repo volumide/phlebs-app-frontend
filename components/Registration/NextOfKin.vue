@@ -1,6 +1,9 @@
 <template>
   <div class="form_container come-up">
     <div class="form_inner">
+      <div v-if="error">
+        <AlertsError :error-text="errorText" />
+      </div>
       <p class="title">
         Next of Kin
       </p>
@@ -13,7 +16,7 @@
             Next of Kin First Name
           </p>
           <div class="new_input">
-            <input v-model="nok_first_name" placeholder="Your Legal First Name" type="text">
+            <input v-model="nok_first_name" placeholder="First Name" type="text">
           </div>
         </div>
         <div class="input-box">
@@ -21,7 +24,7 @@
             Next of Kin Last Name
           </p>
           <div class="new_input">
-            <input v-model="nok_last_name" placeholder="Your Legal Surname" type="text">
+            <input v-model="nok_last_name" placeholder="Legal Surname" type="text">
           </div>
         </div>
         <div class="input-box">
@@ -29,7 +32,7 @@
             Next of Kin Phone Number
           </p>
           <div class="new_input">
-            <input v-model="nok_phone" placeholder="e.g. 45" type="number">
+            <input v-model="nok_phone" placeholder="e.g. 8101234567" type="number">
           </div>
         </div>
         <div class="input-box">
@@ -109,6 +112,8 @@ export default {
   data () {
     return {
       loading: false,
+      error: false,
+      errorText: '',
       nok_first_name: '',
       nok_last_name: '',
       nok_phone: '',

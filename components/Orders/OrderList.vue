@@ -12,10 +12,10 @@
       <div v-for="(order, index) in listData" :key="index" class="list_details">
         <div class="time_date">
           <p class="time">
-            {{ order[0].collectionTime }}
+            {{ order.collectionTime }}
           </p>
           <p class="date">
-            {{ order[0].collectionDate }}
+            {{ order.collectionDate }}
           </p>
         </div>
         <div class="address_icon">
@@ -33,7 +33,7 @@
               </defs>
             </svg>
             <p>
-              {{ order[0].cAddress }}
+              {{ order.cAddress }}
             </p>
           </div>
           <div class="action_icon">

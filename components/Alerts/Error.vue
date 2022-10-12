@@ -32,8 +32,9 @@ export default {
   align-items: center;
   /* gap: 10px; */
   background-color: #FDE3E3;
-  height: 50px;
-  padding: 0 20px;
+  min-height: 50px;
+  height: fit-content;
+  padding: 5px 20px;
   border-radius: 6px;
   margin-bottom: 3vh;
 }
@@ -59,7 +60,7 @@ export default {
 
 @media only screen and (max-width: 500px) {
   .error {
-    padding: 0 10px;
+    padding: 5px 10px;
   }
   .error_text {
     font-size: 12px;
