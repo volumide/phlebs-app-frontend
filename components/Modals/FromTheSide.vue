@@ -85,7 +85,7 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.notification = response.data
       })
     },

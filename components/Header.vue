@@ -151,12 +151,13 @@ export default {
   },
   watch: {
     $route () {
-      // this.getNotificationCount()
+      this.getNotificationCount()
     }
   },
   created () {
     this.getTimeofDay()
     this.getUserDetails()
+    this.getNotificationCount()
   },
   methods: {
     getNotificationCount () {

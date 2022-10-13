@@ -93,7 +93,7 @@ export default {
         }
       }).then((response) => {
         this.allNofitLoading = false
-        console.log(response)
+        // console.log(response)
         this.allNotifications = response.data.notification
       })
     },
@@ -105,7 +105,7 @@ export default {
         }
       }).then((response) => {
         this.readNofitLoading = false
-        console.log(response)
+        // console.log(response)
         this.readNotifications = response.data.notification
       })
     },
@@ -117,7 +117,7 @@ export default {
         }
       }).then((response) => {
         this.unreadNofitLoading = false
-        console.log(response)
+        // console.log(response)
         this.unreadNotifications = response.data.notification
       })
     },
