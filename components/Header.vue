@@ -159,6 +159,18 @@ export default {
     this.getUserDetails()
   },
   methods: {
+    getNotificationCount () {
+      this.loading =
+      this.$axios.$get('/auth/notification/all/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.notificationsCount = response.total
+      })
+    },
     getTimeofDay () {
       const today = new Date()
       const curHr = today.getHours()

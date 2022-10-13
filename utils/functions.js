@@ -107,10 +107,17 @@ function capitalizeFirstLetter (string) {
 }
 
 function truncateString (str) {
-  if (str.length <= 12) {
+  if (str.length <= 80) {
     return str
   }
-  return str.slice(0, 12) + '...'
+  return str.slice(0, 80) + '...'
+}
+
+function mobileTruncateString (str) {
+  if (str.length <= 40) {
+    return str
+  }
+  return str.slice(0, 40) + '...'
 }
 
 function truncateEmail (str) {
@@ -130,6 +137,7 @@ const functions = {
   numberToArray: numberToArrayMethod,
   capitalizeFirstLetter,
   truncateString,
+  mobileTruncateString,
   truncateEmail,
   formatPhoneNumber
   // timeToText: timeText

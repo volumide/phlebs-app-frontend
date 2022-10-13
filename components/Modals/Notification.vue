@@ -20,17 +20,20 @@
       </div>
       <div class="content">
         <div class="notification-list">
-          <TableLoader v-if="loading" class="big-loader" />
+          <LoadersNotification v-if="loading" class="big-loader" />
           <EmptyNotification v-else-if="notifications.length === 0" />
           <div v-for="(list, index) in notifications" v-else :key="index" class="list">
             <div class="lhs">
-              <img src="~assets/images/user-image.png" alt="">
+              <img src="~assets/images/notif.png" alt="">
             </div>
             <div class="rhs">
               <div class="top-message">
-                <div v-if="list.status === 'unread'" class="dot" />
-                <p class="notification-text">
-                  {{ list.message }}
+                <!-- <div v-if="list.status === 'unread'" class="dot" /> -->
+                <p class="notification-text mobile_no_show">
+                  {{ truncateString(list.message) }}
+                </p>
+                <p class="notification-text no_show">
+                  {{ mobileTruncateString(list.message) }}
                 </p>
               </div>
               <div class="btns">
@@ -38,7 +41,7 @@
                   Mark as Read
                 </button>
                 <p class="date">
-                  {{ formatDate(list.updatedAt) }}
+                  {{ dateInFull(list.updatedAt) }}
                 </p>
                 <!-- <button class="btn2">Read</button> -->
               </div>
@@ -48,7 +51,7 @@
         </div>
       </div>
       <div class="bottom-bar">
-        <p v-if="!notifications.length" class="clear" @click="$router.push('/notifications'); $emit('close-notification')">
+        <p class="clear" @click="$router.push('/notifications'); $emit('close-notification')">
           See All
         </p>
       </div>
@@ -58,11 +61,16 @@
 
 <script>
 import Cookies from 'js-cookie'
+import { dateInFull } from '@/utils/date-formats.js'
+import functions from '@/utils/functions'
 export default {
   data () {
     return {
       loading: false,
       markLoading: false,
+      truncateString: functions.truncateString,
+      mobileTruncateString: functions.mobileTruncateString,
+      dateInFull,
       notifications: []
     }
   },
@@ -74,79 +82,19 @@ export default {
     }
   },
   created () {
-    // this.getNotification()
+    this.getNotification()
   },
   methods: {
-    async getNotification () {
-      this.loading = true
-      const notificationPromise = await fetch(this.$store.state.baseUrl + '/notifications',
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
-        })
-      const notificationJson = notificationPromise.json()
-      notificationJson.then((response) => {
-        if (!response.error) {
-          this.loading = false
-          // console.log(response)
-          this.notifications = response.data
-        } else {
-          this.loading = false
+    getNotification () {
+      this.loading =
+      this.$axios.$get('/auth/notification/all/3/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
         }
-      })
-    },
-    async markRead (list) {
-      const id = list._id
-      this.loading = true
-      const markPromise = await fetch(`${this.$store.state.baseUrl}/notifications/${id}/mark_as_read`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
-        })
-      const markJson = markPromise.json()
-      markJson.then((response) => {
+      }).then((response) => {
         this.loading = false
-        // console.log(response)
-        this.getNotification()
-      })
-    },
-    async markAll () {
-      this.loading = true
-      const markPromise = await fetch(`${this.$store.state.baseUrl}/notifications/mark_all_as_read`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
-        })
-      const markJson = markPromise.json()
-      markJson.then((response) => {
-        this.loading = false
-        // console.log(response)
-        this.getNotification()
-      })
-    },
-    async clearAll () {
-      this.loading = true
-      const clearPromise = await fetch(`${this.$store.state.baseUrl}/notifications/clear`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
-        })
-      const clearJson = clearPromise.json()
-      clearJson.then((response) => {
-        this.loading = false
-        // console.log(response)
-        this.getNotification()
+        console.log(response)
+        this.notifications = response.data.notification
       })
     },
     formatDate (dateString) {
@@ -314,6 +262,17 @@ export default {
     width: 20rem;
     margin-top: 60px;
     margin-right: 10px;
+  }
+  .lhs img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+  }
+
+  .notification-text {
+    font-size: 13px;
+    font-weight: 500;
+    /* margin-bottom: 10px; */
   }
 }
 </style>
