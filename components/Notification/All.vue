@@ -1,6 +1,6 @@
 <template>
   <div class="ctn come-down">
-    <div class="notif_section">
+    <!-- <div class="notif_section">
       <div class="first_side">
         <div class="bell">
           <img src="~assets/images/notif.png" alt="">
@@ -38,22 +38,34 @@
           </svg>
         </div>
       </div>
+    </div> -->
+    <LoadersNotificationPage v-if="notificationLoading" class="big-loader" />
+    <div v-else-if="notifications.length === 0" class="come-down">
+      <EmptyData
+        :modal-head="'You have no Notification!'"
+        :modal-text="'You are all Caught up!'"
+        :bg-btn="'See My Todo'"
+        @bg-action="$router.push('/to-do-orders')"
+      />
     </div>
-    <div v-for="(data, index) in notifications" :key="index" class="notif_section">
-      <div class="first_side">
+    <div v-for="(data, index) in notifications" v-else :key="index" class="notif_section">
+      <div class="first_side" @click="$emit('open-notification', data.id)">
         <div class="bell">
           <img src="~assets/images/notif.png" alt="">
         </div>
         <div class="notif_center">
           <p class="notif_head">
-            {{ data.title }}
+            {{ data.subject }}
           </p>
           <p class="notif_text">
-            {{ data.details }}
+            {{ data.message }}
+          </p>
+          <p class="notif_date">
+            {{ completeDateInFull(data.updatedAt) }}
           </p>
           <div class="no_show">
-            <div class="see_all">
-              <svg
+            <div class="see_all" @click="$emit('open-notification', data.id)">
+              <!-- <svg
                 class="trash"
                 width="24"
                 height="20"
@@ -71,8 +83,8 @@
                     <rect width="22.9828" height="20" fill="white" transform="translate(0.681152)" />
                   </clipPath>
                 </defs>
-              </svg>
-              <p @click="$emit('open-notification')">
+              </svg> -->
+              <p>
                 Read
               </p>
               <svg
@@ -81,7 +93,7 @@
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                @click="$emit('open-notification')"
+                @click="$emit('open-notification', data.id)"
               >
                 <path d="M10.2667 6.58663L7.20666 3.52663C7.08175 3.40246 6.91278 3.33276 6.73666 3.33276C6.56053 3.33276 6.39157 3.40246 6.26666 3.52663C6.20417 3.5886 6.15458 3.66233 6.12073 3.74357C6.08688 3.82481 6.06946 3.91195 6.06946 3.99996C6.06946 4.08797 6.08688 4.1751 6.12073 4.25634C6.15458 4.33758 6.20417 4.41132 6.26666 4.47329L9.33332 7.52663C9.39581 7.5886 9.44541 7.66233 9.47925 7.74357C9.5131 7.82481 9.53052 7.91195 9.53052 7.99996C9.53052 8.08797 9.5131 8.1751 9.47925 8.25634C9.44541 8.33758 9.39581 8.41132 9.33332 8.47329L6.26666 11.5266C6.14112 11.6513 6.07024 11.8207 6.06962 11.9976C6.06899 12.1745 6.13867 12.3444 6.26332 12.47C6.38798 12.5955 6.55739 12.6664 6.7343 12.667C6.91121 12.6676 7.08112 12.5979 7.20666 12.4733L10.2667 9.41329C10.6412 9.03829 10.8516 8.52996 10.8516 7.99996C10.8516 7.46996 10.6412 6.96163 10.2667 6.58663Z" fill="#2A7FF3" />
               </svg>
@@ -110,7 +122,7 @@
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            @click="$emit('open-notification')"
+            @click="$emit('open-notification', data.id)"
           >
             <rect width="24" height="24" rx="4" fill="#0FB2F3" />
             <path d="M14.9778 10.6844L11.4078 7.11436C11.2621 6.96949 11.0649 6.88818 10.8595 6.88818C10.654 6.88818 10.4568 6.96949 10.3111 7.11436C10.2382 7.18666 10.1804 7.27268 10.1409 7.36746C10.1014 7.46224 10.0811 7.5639 10.0811 7.66658C10.0811 7.76925 10.1014 7.87091 10.1409 7.96569C10.1804 8.06047 10.2382 8.1465 10.3111 8.2188L13.8889 11.781C13.9618 11.8533 14.0197 11.9394 14.0591 12.0341C14.0986 12.1289 14.119 12.2306 14.119 12.3332C14.119 12.4359 14.0986 12.5376 14.0591 12.6324C14.0197 12.7271 13.9618 12.8132 13.8889 12.8855L10.3111 16.4477C10.1647 16.5931 10.082 16.7908 10.0812 16.9972C10.0805 17.2036 10.1618 17.4018 10.3072 17.5482C10.4527 17.6947 10.6503 17.7774 10.8567 17.7781C11.0631 17.7789 11.2613 17.6976 11.4078 17.5521L14.9778 13.9821C15.4147 13.5446 15.6602 12.9516 15.6602 12.3332C15.6602 11.7149 15.4147 11.1219 14.9778 10.6844Z" fill="white" />
@@ -122,23 +134,35 @@
 </template>
 
 <script>
+import { completeDateInFull } from '@/utils/date-formats.js'
 export default {
+  props: {
+    notifications: {
+      type: Array,
+      default: () => []
+    },
+    notificationLoading: {
+      type: Boolean,
+      default: () => false
+    }
+  },
   data () {
     return {
-      notifications: [
-        {
-          title: 'System update',
-          details: 'Dear user, we’ve made some update to the folling processes, kindly reach out...'
-        },
-        {
-          title: 'Referral Bonus',
-          details: 'You’ve just earned a bonus'
-        },
-        {
-          title: 'The CEO want’s you to read this',
-          details: 'All phlebtomists are required to do the following when taking new orders'
-        }
-      ]
+      completeDateInFull
+      // notifications: [
+      //   {
+      //     title: 'System update',
+      //     details: 'Dear user, we’ve made some update to the folling processes, kindly reach out...'
+      //   },
+      //   {
+      //     title: 'Referral Bonus',
+      //     details: 'You’ve just earned a bonus'
+      //   },
+      //   {
+      //     title: 'The CEO want’s you to read this',
+      //     details: 'All phlebtomists are required to do the following when taking new orders'
+      //   }
+      // ]
     }
   }
 }
@@ -188,7 +212,14 @@ export default {
 }
 
 .notif_text {
+  font-weight: 600;
   color: rgba(0, 0, 0, 0.621);
+}
+
+.notif_date {
+  font-size: 13px;
+  color: #A5ACB8;
+  margin-top: 2vh;
 }
 
 .bottom_box {
@@ -239,8 +270,12 @@ export default {
   }
 
   .notif_text {
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 10px;
+  }
+
+  .notif_date {
+    margin-bottom: 15px;
   }
 
   .trash {

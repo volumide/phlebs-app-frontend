@@ -20,24 +20,13 @@
           </defs>
         </svg>
       </div>
-      <div class="modal_inner">
+      <LoadersFromSide v-if="loading" class="big-loader" />
+      <div v-else class="modal_inner">
         <p class="modal_head">
-          System Update
+          {{ notification.subject }}
         </p>
         <p class="modal_text">
-          Hello Adepeju,
-        </p>
-        <p class="modal_text">
-          Please be informed that we will be carrying out a system maintenance today 27th Aug. 2022 from 11 pm till 5 am on Sunday 28th Aug. 2022. During this period, you may experience intermittent service accessibility across our digital platforms.
-        </p>
-        <p class="modal_text">
-          Be rest assured that we are taking every precaution to mitigate and plan for any unforeseen circumstance that may occur during this activity and to ensure that all systems come back online seamlessly.
-        </p>
-        <p class="modal_text">
-          We apologize for any inconvenience caused and thank you for understanding as we strive to serve you better.
-        </p>
-        <p class="modal_text">
-          Thank you.
+          {{ notification.message }}
         </p>
       </div>
       <div class="modal_bottom" @click="closeModal(); $emit('delete')">
@@ -60,10 +49,19 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
+  props: {
+    notificationId: {
+      type: String,
+      default: () => ''
+    }
+  },
   data () {
     return {
-      anim: ''
+      anim: '',
+      loading: true,
+      notification: {}
     }
   },
   // mounted () {
@@ -75,7 +73,22 @@ export default {
   //     // this.anim = 'reveals'
   //   }
   // },
+  created () {
+    this.getNotificationDetails()
+  },
   methods: {
+    getNotificationDetails () {
+      this.loading = true
+      this.$axios.$get(`/auth/notification/${this.notificationId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        this.notification = response.data
+      })
+    },
     closeModal () {
       const modalRef = this.$refs['modal-ctn']
       modalRef.classList.remove('reveals-2')

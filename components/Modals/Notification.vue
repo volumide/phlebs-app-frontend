@@ -20,7 +20,7 @@
       </div>
       <div class="content">
         <div class="notification-list">
-          <LoadersNotification v-if="loading" class="big-loader" />
+          <LoadersNotificationModal v-if="loading" class="big-loader" />
           <EmptyNotification v-else-if="notifications.length === 0" />
           <div v-for="(list, index) in notifications" v-else :key="index" class="list">
             <div class="lhs">
