@@ -358,7 +358,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         this.nextOrders = response.next_order
       })
     },
