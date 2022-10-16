@@ -226,7 +226,7 @@
     <ModalsConfirmationModal
       v-if="acceptOrder"
       :modal-head="'Accept Order'"
-      :modal-text="'Accepting this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
+      :modal-text="'Accepting this order implies that you are available to go and collect this samples at the collection address and the exact date and time'"
       :trans-btn="'No, Go Back'"
       :bg-btn="'Yes, Accept Order'"
       :bg-loading="acceptLoading"

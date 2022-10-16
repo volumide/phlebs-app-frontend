@@ -57,6 +57,7 @@
       </div>
     </div>
     <div class="no_show">
+      <div class="skeleton card search" />
       <div
         v-for="i in 3"
         :key="i"
@@ -103,6 +104,13 @@ table {
 tr.table-row {
   height: 60px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.111);
+}
+
+.search {
+  /* width: 100%; */
+  padding: 3px 7px;
+  height: 40px;
+  margin-bottom: 15px;
 }
 
 .date {
