@@ -1,14 +1,11 @@
 <template>
   <div class="detail_ctn">
     <div class="top_page come-down">
-      <div class="no_show">
-        <div class="back" @click="$router.push('/to-do-orders')">
-          <p>See all</p>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M11.55 7.41011L8.10747 3.96761C7.96695 3.82792 7.77686 3.74951 7.57872 3.74951C7.38058 3.74951 7.1905 3.82792 7.04997 3.96761C6.97968 4.03733 6.92388 4.12028 6.88581 4.21167C6.84773 4.30307 6.82812 4.4011 6.82812 4.50011C6.82812 4.59912 6.84773 4.69714 6.88581 4.78854C6.92388 4.87993 6.97968 4.96288 7.04997 5.03261L10.5 8.46761C10.5703 8.53733 10.6261 8.62028 10.6641 8.71167C10.7022 8.80307 10.7218 8.9011 10.7218 9.00011C10.7218 9.09912 10.7022 9.19714 10.6641 9.28854C10.6261 9.37993 10.5703 9.46288 10.5 9.53261L7.04997 12.9676C6.90875 13.1078 6.82901 13.2984 6.82831 13.4975C6.8276 13.6965 6.90599 13.8876 7.04622 14.0289C7.18646 14.1701 7.37705 14.2498 7.57607 14.2505C7.7751 14.2512 7.96625 14.1728 8.10747 14.0326L11.55 10.5901C11.9713 10.1682 12.208 9.59636 12.208 9.00011C12.208 8.40385 11.9713 7.83198 11.55 7.41011Z" fill="#00295D" fill-opacity="0.5" />
-            <path d="M11.55 7.41011L8.10747 3.96761C7.96695 3.82792 7.77686 3.74951 7.57872 3.74951C7.38058 3.74951 7.1905 3.82792 7.04997 3.96761C6.97968 4.03733 6.92388 4.12028 6.88581 4.21167C6.84773 4.30307 6.82812 4.4011 6.82812 4.50011C6.82812 4.59912 6.84773 4.69714 6.88581 4.78854C6.92388 4.87993 6.97968 4.96288 7.04997 5.03261L10.5 8.46761C10.5703 8.53733 10.6261 8.62028 10.6641 8.71167C10.7022 8.80307 10.7218 8.9011 10.7218 9.00011C10.7218 9.09912 10.7022 9.19714 10.6641 9.28854C10.6261 9.37993 10.5703 9.46288 10.5 9.53261L7.04997 12.9676C6.90875 13.1078 6.82901 13.2984 6.82831 13.4975C6.8276 13.6965 6.90599 13.8876 7.04622 14.0289C7.18646 14.1701 7.37705 14.2498 7.57607 14.2505C7.7751 14.2512 7.96625 14.1728 8.10747 14.0326L11.55 10.5901C11.9713 10.1682 12.208 9.59636 12.208 9.00011C12.208 8.40385 11.9713 7.83198 11.55 7.41011Z" fill="#00295D" fill-opacity="0.5" />
-          </svg>
-        </div>
+      <div class="back" @click="$router.go(-1)">
+        <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10.0629 6.40633L5.69343 10.786C5.31403 11.1676 5.10107 11.6839 5.10107 12.2221C5.10107 12.7602 5.31403 13.2765 5.69343 13.6582L10.0629 18.0378C10.2537 18.2275 10.5119 18.334 10.7809 18.334C11.05 18.334 11.3082 18.2275 11.499 18.0378C11.5944 17.9431 11.6702 17.8305 11.7219 17.7064C11.7736 17.5822 11.8003 17.4491 11.8003 17.3147C11.8003 17.1802 11.7736 17.0471 11.7219 16.923C11.6702 16.7988 11.5944 16.6862 11.499 16.5915L8.14806 13.2406H19.3518C19.6219 13.2406 19.881 13.1333 20.072 12.9423C20.263 12.7513 20.3703 12.4922 20.3703 12.2221C20.3703 11.9519 20.263 11.6929 20.072 11.5019C19.881 11.3109 19.6219 11.2035 19.3518 11.2035H8.14806L11.499 7.85262C11.6908 7.66218 11.7991 7.40335 11.8 7.13308C11.801 6.8628 11.6945 6.60321 11.5041 6.41142C11.3136 6.21963 11.0548 6.11134 10.7845 6.11039C10.5143 6.10943 10.2547 6.21589 10.0629 6.40633Z" fill="#325BD9" fill-opacity="0.5" />
+        </svg>
+        <p>Back</p>
       </div>
       <div v-if="successful" class="mobile_no_show">
         <AlertsSuccess :success-text="'Accepted order has been added to your To-do'" />
@@ -46,7 +43,7 @@
       <div class="mobile_no_show">
         <div class="top">
           <p class="box_name">
-            To-do
+            {{ boxName }}
           </p>
           <div class="pagination">
             <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,7 +90,7 @@
               Collection Time
             </p>
             <p class="box_details_subtext">
-              8:00am
+              {{ detailsData.collectionTime }}
             </p>
           </div>
         </div>
@@ -109,7 +106,7 @@
               Phone Number
             </p>
             <p class="box_details_subtext">
-              08101234567
+              {{ detailsData.phone }}
             </p>
           </div>
         </div>
@@ -132,7 +129,7 @@
               Collection Date
             </p>
             <p class="box_details_subtext">
-              Monday 5th Sept 2022
+              {{ detailsData.collectionDate }}
             </p>
           </div>
         </div>
@@ -143,21 +140,21 @@
         </p>
         <div class="patient_inner">
           <div class="patient_image">
-            <img src="~assets/images/patient-image.png" alt="">
+            <img :src="detailsData.avatar" alt="">
           </div>
           <div class="patient_details">
             <p class="patient_name">
-              Adekolu Patience
+              {{ detailsData.fullname }}
             </p>
             <div class="gender_age">
               <p class="age">
-                44 Years
+                {{ detailsData.age }}
               </p>
               <svg width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="3" cy="3" r="3" fill="black" />
               </svg>
               <p class="gender">
-                Female
+                {{ detailsData.gender }}
               </p>
             </div>
           </div>
@@ -168,7 +165,7 @@
           Collection Address
         </p>
         <p class="address_text">
-          42, Local Airport Road, Ikeja Lagos
+          {{ detailsData.cAddress }}
         </p>
       </div>
       <div class="patient_box slide-in-from-left">
@@ -181,7 +178,7 @@
               Order No
             </p>
             <p class="test_subtext">
-              382799353
+              {{ detailsData.orderNo }}
             </p>
           </div>
           <div>
@@ -189,7 +186,7 @@
               Test to be Taken
             </p>
             <p class="test_subtext">
-              Comprehensive Metabolic Blood Panel Test
+              {{ detailsData.testAddress }}
             </p>
           </div>
           <div>
@@ -197,32 +194,25 @@
               Sample Required
             </p>
             <p class="test_subtext">
-              Blood
+              {{ detailsData.sample }}
             </p>
           </div>
         </div>
       </div>
-      <div class="btns come-down">
+      <div v-show="boxName === 'To-do' || boxName === 'New-orders'" class="btns come-down">
         <div class="bottom_btn">
           <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
           </button>
-          <button class="bg_btn" @click="confirmOpen = true">
+          <button v-if="boxName === 'To-do'" class="bg_btn" @click="confirmOpen = true">
             Complete Order
+          </button>
+          <button v-if="boxName === 'New-orders'" class="bg_btn" @click="acceptOrder = true">
+            Accept Order
           </button>
         </div>
       </div>
     </div>
-    <ModalsConfirmationModal
-      v-if="dismissOpen"
-      :modal-head="'Are you sure you want to dismiss this order'"
-      :modal-text="'Dismissing this order implies that you wont be able to Carry out this order.'"
-      :trans-btn="'No, Go Back'"
-      :bg-btn="'Yes, Dismiss'"
-      @close-modal="dismissOpen = false"
-      @bg-action="openDismissOrder()"
-      @trans-action="dismissOpen = false"
-    />
     <ModalsConfirmationModal
       v-if="confirmOpen"
       :modal-head="'Complete Order'"
@@ -233,37 +223,82 @@
       @bg-action="openConfirmOrder()"
       @trans-action="confirmOpen = false"
     />
+    <ModalsConfirmationModal
+      v-if="acceptOrder"
+      :modal-head="'Accept Order'"
+      :modal-text="'Accepting this order implies you’ve collected the samples from the patient and you’ve been able to submit samples to the drop-off location.'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Accept Order'"
+      :bg-loading="acceptLoading"
+      @close-modal="acceptOrder = false"
+      @bg-action="acceptOrderd()"
+      @trans-action="acceptOrder = false"
+    />
+    <ModalsConfirmOrder
+      v-if="confirmOrder"
+      :box-name="boxName"
+      @close-modal="confirmOrder = false"
+      @bg-action="closeConfirmOrder()"
+    />
+    <ModalsConfirmationModal
+      v-if="dismissOpen"
+      :modal-head="'Are you sure you want to dismiss this order'"
+      :modal-text="'Dismissing this order implies that you wont be able to Carry out this order.'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Dismiss'"
+      @close-modal="dismissOpen = false"
+      @bg-action="openDismissOrder()"
+      @trans-action="dismissOpen = false"
+    />
     <ModalsDismissOrder
       v-if="dismissOrder"
       @close-modal="dismissOrder = false"
       @bg-action="closeDismissOrder()"
     />
-    <ModalsConfirmOrder
-      v-if="confirmOrder"
-      @close-modal="confirmOrder = false"
-      @bg-action="closeConfirmOrder()"
+    <ModalsSuccessModal
+      v-if="dismissedSuccessModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-text="'The order has been dismissed successfully'"
+      :bg-btn="'Close'"
+      @close-modal="$router.push('/today-order')"
+      @bg-action="$router.push('/today-order')"
     />
     <ModalsSuccessModal
-      v-if="successModal"
-      :modal-head="'Thank You!'"
+      v-if="confirmSuccessModal"
       :modal-image="require('assets/images/96673-success.gif')"
-      :modal-text="'The order has been submitted and completed successfully'"
+      :modal-text="confirmSuccessText"
+      :modal-head="'Thank You!'"
       :bg-btn="'Close'"
-      @close-modal="successModal = false"
-      @bg-action="successModal = false"
+      @close-modal="$router.push('/today-order')"
+      @bg-action="$router.push('/today-order')"
     />
   </div>
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
+  props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    },
+    detailsData: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
+      acceptLoading: false,
       successful: false,
-      successModal: false,
+      confirmSuccessText: '',
+      dismissedSuccessModal: false,
+      confirmSuccessModal: false,
       dismissOpen: false,
       confirmOpen: false,
       dismissOrder: false,
+      acceptOrder: false,
       confirmOrder: false
     }
   },
@@ -274,7 +309,7 @@ export default {
     },
     closeDismissOrder () {
       this.dismissOrder = false
-      this.successModal = true
+      this.dismissedSuccessModal = true
     },
     openConfirmOrder () {
       this.confirmOpen = false
@@ -282,7 +317,30 @@ export default {
     },
     closeConfirmOrder () {
       this.confirmOrder = false
-      this.successModal = true
+      this.confirmSuccessModal = true
+      this.confirmSuccessText = 'The order has been submitted and completed successfully'
+    },
+    acceptOrderd () {
+      this.acceptLoading = true
+      const id = this.$route.query.id
+      this.$axios.$get(`orders/accept/order/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+      ).then((response) => {
+        this.acceptLoading = false
+        console.log(response)
+        if (!response.error) {
+          this.acceptOrder = false
+          this.confirmSuccessModal = true
+          this.confirmSuccessText = 'The order has been accepted and added to to-do successfully'
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+        }
+      })
     }
   }
 }
@@ -394,6 +452,7 @@ export default {
 .patient_image img {
   width: 70px;
   height: 70px;
+  border-radius: 50%;
 }
 
 .patient_details {

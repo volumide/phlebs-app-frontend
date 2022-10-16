@@ -3,19 +3,19 @@
     <div class="list_inner">
       <div class="list_top">
         <p class="list_title">
-          To-do
+          {{ boxName }}
         </p>
         <div class="list_number">
-          <p>6</p>
+          <p>{{ listData.length }}</p>
         </div>
       </div>
-      <div v-for="(order, index) in allOrders" :key="index" class="list_details">
+      <div v-for="(order, index) in listData" :key="index" class="list_details">
         <div class="time_date">
           <p class="time">
-            {{ order.time }}
+            {{ order.collectionTime }}
           </p>
           <p class="date">
-            {{ order.date }}
+            {{ order.collectionDate }}
           </p>
         </div>
         <div class="address_icon">
@@ -33,7 +33,7 @@
               </defs>
             </svg>
             <p>
-              {{ order.address }}
+              {{ order.cAddress }}
             </p>
           </div>
           <div class="action_icon">
@@ -66,6 +66,16 @@
 
 <script>
 export default {
+  props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    },
+    listData: {
+      type: Array,
+      default: () => []
+    }
+  },
   data () {
     return {
       allOrders: [

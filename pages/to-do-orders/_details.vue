@@ -1,6 +1,14 @@
 <template>
   <div class="container">
-    <div class="inner">
+    <div v-if="boxName === 'New-orders'" class="inner">
+      <div class="lhs">
+        <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" />
+      </div>
+      <div class="rhs mobile_no_show">
+        <OrdersNewOrderList :box-name="boxName" :list-data="orderList" />
+      </div>
+    </div>
+    <div v-else class="inner">
       <div class="lhs">
         <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" />
       </div>
@@ -66,13 +74,13 @@ export default {
       this.listLoading = true
       let url = ''
       if (name === 'to-do') {
-        url = '/orders/get/all/todo/10/0'
+        url = '/orders/get/all/todo/5/0'
       } else if (name === 'completed') {
-        url = '/orders/completed/all/10/0'
+        url = '/orders/completed/all/5/0'
       } else if (name === 'dismissed') {
-        url = '/orders/dismissed/all/10/0'
+        url = '/orders/dismissed/all/5/0'
       } else if (name === 'new-orders') {
-        url = '/orders/all/new/order/10/0'
+        url = '/orders/all/new/order/5/0'
       }
       this.$axios.$get(url, {
         headers: {

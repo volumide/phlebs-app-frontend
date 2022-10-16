@@ -107,10 +107,10 @@ function capitalizeFirstLetter (string) {
 }
 
 function truncateString (str) {
-  if (str.length <= 80) {
+  if (str.length <= 70) {
     return str
   }
-  return str.slice(0, 80) + '...'
+  return str.slice(0, 70) + '...'
 }
 
 function mobileTruncateString (str) {
