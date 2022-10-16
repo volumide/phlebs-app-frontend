@@ -28,9 +28,17 @@
                   <span>Collection Address</span>
                 </div>
               </th>
-              <th class="action-ctn" />
+              <th class="search_input">
+                <div class="new_input">
+                  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                  <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+                </div>
+              </th>
             </tr>
-            <tr v-for="(data, index) in tableData" :key="index" class="table-details">
+            <tr v-for="(data, index) in filteredTable" :key="index" class="table-details">
               <td class="date">
                 {{ detailedDate(data[0].collectionDate) }}
               </td>
@@ -70,9 +78,22 @@
               </td>
             </tr>
           </table>
+          <div v-if="!filteredTable.length" class="come-down search_empty">
+            <EmptyData
+              :modal-head="'No Result!'"
+              :modal-text="'You have no Order related to your search!'"
+            />
+          </div>
         </div>
         <div class="no_show">
-          <div v-for="(data, index) in tableData" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/completed?id=${data[0].id}`)">
+          <div class="new_input">
+            <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+          </div>
+          <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/completed?id=${data[0].id}`)">
             <div>
               <p class="mobile_time">
                 {{ data[0].collectionTime }}
@@ -95,12 +116,18 @@
                 <span>{{ data[0].cAddress }}</span>
               </p>
             </div>
-            <div class="action">
+            <div class="action_mobile">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="24" height="24" rx="4" fill="#0FB2F3" />
                 <path d="M14.9778 10.6844L11.4078 7.11436C11.2621 6.96949 11.0649 6.88818 10.8595 6.88818C10.654 6.88818 10.4568 6.96949 10.3111 7.11436C10.2382 7.18666 10.1804 7.27268 10.1409 7.36746C10.1014 7.46224 10.0811 7.5639 10.0811 7.66658C10.0811 7.76925 10.1014 7.87091 10.1409 7.96569C10.1804 8.06047 10.2382 8.1465 10.3111 8.2188L13.8889 11.781C13.9618 11.8533 14.0197 11.9394 14.0591 12.0341C14.0986 12.1289 14.119 12.2306 14.119 12.3332C14.119 12.4359 14.0986 12.5376 14.0591 12.6324C14.0197 12.7271 13.9618 12.8132 13.8889 12.8855L10.3111 16.4477C10.1647 16.5931 10.082 16.7908 10.0812 16.9972C10.0805 17.2036 10.1618 17.4018 10.3072 17.5482C10.4527 17.6947 10.6503 17.7774 10.8567 17.7781C11.0631 17.7789 11.2613 17.6976 11.4078 17.5521L14.9778 13.9821C15.4147 13.5446 15.6602 12.9516 15.6602 12.3332C15.6602 11.7149 15.4147 11.1219 14.9778 10.6844Z" fill="white" />
               </svg>
             </div>
+          </div>
+          <div v-if="!filteredTable.length" class="come-down search_empty">
+            <EmptyData
+              :modal-head="'No Result!'"
+              :modal-text="'You have no Order related to your search!'"
+            />
           </div>
         </div>
       </div>
@@ -135,62 +162,16 @@ export default {
     return {
       currency: functions.formatCurrency,
       detailedDate,
-      transLoading: false,
-      appointments: [
-        {
-          date: 'Monday, 28th August 2022',
-          time: '8:30am',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        },
-        {
-          date: 'Monday, 28th August 2022',
-          time: '12:00pm',
-          address: '3, Shangisha Magodo, Lagos'
-        },
-        {
-          date: 'Monday, 28th August 2022',
-          time: '3:30pm',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        },
-        {
-          date: 'Monday, 28th August 2022',
-          time: '8:30am',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        },
-        {
-          date: 'Tuesday, 29th August 2022',
-          time: '8:30am',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        },
-        {
-          date: 'Friday, 3rd Septetmber 2022',
-          time: '8:30am',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        },
-        {
-          date: 'Saturday, 4th August 2022',
-          time: '8:30am',
-          address: '42, Local Airport Road, Ikeja, Lagos'
-        }
-      ]
+      tableQuery: '',
+      transLoading: false
     }
   },
-  created () {
-    // this.getTransactions()
+  computed: {
+    filteredTable () {
+      return this.tableData.filter(data => this.detailedDate(data[0].collectionDate).toLowerCase().includes(this.tableQuery.toLowerCase()) || data[0].collectionTime.toLowerCase().includes(this.tableQuery.toLowerCase()) || data[0].cAddress.toLowerCase().includes(this.tableQuery.toLowerCase()))
+    }
   },
   methods: {
-    // getTransactions () {
-    //   this.transLoading = true
-    //   this.$axios.$get('/get_transaction_by_id/', {
-    //     headers: {
-    //       Authorization: `Bearer ${Cookies.get('token')}`
-    //     }
-    //   }).then((response) => {
-    //     // console.log(response)
-    //     this.transLoading = false
-    //     this.transactions = response.data
-    //   })
-    // },
   }
 }
 </script>
@@ -233,6 +214,11 @@ export default {
   width: 100%;
   /* border: 1px solid #1A240; */
 }
+
+/* .table, tr {
+  width: 100%;
+} */
+
 table, th, td,
 td span {
   width: 100%;
@@ -267,17 +253,22 @@ th {
   text-align: left;
 }
 
-.date {
-  width: 30%;
+ .date {
+  width: 28%;
   padding-left: 25px;
 }
 
 .time {
-  width: 20%;
+  width: 17%;
 }
 
 .address {
-  width: 40%;
+  width: 30%;
+}
+
+.search_input {
+  padding-right: 10px;
+  width: 25%;
 }
 
 .address_ctn {
@@ -287,13 +278,20 @@ th {
 }
 
 .action-ctn {
-  width: 7rem;
+  padding-right: 10px;
+  width: 25%;
 }
 
 .action {
-  /* width: 5rem; */
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.action_mobile {
+  /* width: 5rem; */
   cursor: pointer;
 }
 
@@ -313,6 +311,12 @@ th {
 
 .amount {
   width: 13rem;
+}
+
+.search_empty {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 500px) {
@@ -346,6 +350,10 @@ th {
   .mobile_address span {
     font-size: 13px;
     color: rgba(0, 0, 0, 0.50);
+  }
+
+  .new_input {
+    margin-bottom: 30px;
   }
 }
 </style>
