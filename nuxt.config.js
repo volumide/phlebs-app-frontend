@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'chekker-phlebs',
+    title: 'Chekker Phlebs',
     htmlAttrs: {
       lang: 'en'
     },
@@ -33,13 +33,14 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/eslint-module'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
+    '@nuxtjs/pwa',
     '@nuxtjs/axios'
   ],
 
@@ -47,6 +48,18 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'https://chekkersphleb.herokuapp.com/api/v1'
+  },
+
+  pwa: {
+    meta: {
+      title: 'Chekker',
+      author: 'Me'
+    },
+    manifest: {
+      name: 'Chekker for Phlebs',
+      short_name: 'Chekker',
+      lang: 'en'
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
