@@ -38,6 +38,19 @@ textarea {
   resize: none;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg-color) inset !important;
+}
+
+input::-webkit-inner-spin-button, 
+input::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 .no_show {
   display: none;
 }

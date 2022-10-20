@@ -15,6 +15,9 @@ export const mutations = {
   setDropoffLocation (state, val) {
     state.dropOffLocation = val
   },
+  setFallBackUrl (state, val) {
+    state.fallBackUrl = val
+  },
   setIsOnline (state, value) {
     state.isOnline = value
   }

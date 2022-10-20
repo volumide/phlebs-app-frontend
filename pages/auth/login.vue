@@ -313,7 +313,8 @@ export default {
         ) {
           this.$router.push('/auth/register/details')
         } else {
-          this.$router.push('/')
+          const url = this.$route.query.fallBackUrl || '/'
+          this.$router.push(`${url}`)
         }
         this.$store.commit('setUserDetails', data)
       })
