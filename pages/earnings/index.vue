@@ -109,6 +109,16 @@
         </div>
       </div>
     </div>
+    <ModalsAddBankAccount v-if="addBankAccount" />
+    <ModalsSuccessModal
+      v-if="successModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'Your Primary Account has been added succesfully'"
+      :modal-text="'To modify subsequetly, kindly contact support'"
+      :bg-btn="'Close'"
+      @close-modal="$router.app.refresh()"
+      @bg-action="$router.app.refresh()"
+    />
   </div>
 </template>
 
@@ -117,8 +127,10 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      warning: false,
+      warning: true,
       hideBalance: true,
+      addBankAccount: false,
+      successModal: false,
       balance: 'N601,400'
     }
   },

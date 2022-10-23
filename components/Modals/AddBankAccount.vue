@@ -1,0 +1,301 @@
+<template>
+  <div class="modal-backdrop-2" @click="$emit('close-modal')">
+    <div :class="`modal-2 ${anim}`" @click.stop>
+      <div class="modal_top">
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          @click="$emit('close-modal')"
+        >
+          <g clip-path="url(#clip0_647_7946)">
+            <path d="M8.23742 7.00047L13.7439 1.49462C14.0857 1.15281 14.0857 0.598629 13.7439 0.256846C13.4021 -0.0849643 12.8479 -0.0849643 12.5061 0.256846L7.00022 5.76327L1.49438 0.256846C1.15257 -0.0849643 0.598385 -0.0849643 0.256602 0.256846C-0.0851811 0.598656 -0.0852084 1.15284 0.256602 1.49462L5.76302 7.00047L0.256602 12.5063C-0.0852084 12.8482 -0.0852084 13.4023 0.256602 13.7441C0.598412 14.0859 1.15259 14.0859 1.49438 13.7441L7.00022 8.23767L12.5061 13.7441C12.8479 14.0859 13.4021 14.0859 13.7438 13.7441C14.0857 13.4023 14.0857 12.8481 13.7438 12.5063L8.23742 7.00047Z" fill="#FF0000" />
+          </g>
+          <defs>
+            <clipPath id="clip0_647_7946">
+              <rect width="14" height="14" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <h1 class="title">
+        Add Your Primary Bank Account
+      </h1>
+      <p class="sub-title">
+        Your Primary Bank Account is where Chekker pay you anytime you want to make a withdrawal from your wallet. Ensure you hav access to this account.
+      </p>
+      <div v-if="error" class="error">
+        <AlertsError :error-text="errorText" />
+      </div>
+      <div class="form">
+        <div class="input-box">
+          <p class="label">
+            Choose Bank of Deposit
+          </p>
+          <!-- <div class="form-select">
+            <select v-model="location" required>
+              <option value="">
+                Select...
+              </option>
+              <option v-for="(data, index) in dropoffLocation" :key="index" :value="data">
+                {{ data }}
+              </option>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.24652 11.14L2.45052 5.658C1.88452 5.013 2.34452 4 3.20352 4H12.7955C12.9878 3.99984 13.176 4.05509 13.3376 4.15914C13.4993 4.26319 13.6275 4.41164 13.707 4.58669C13.7864 4.76175 13.8137 4.956 13.7856 5.14618C13.7575 5.33636 13.6752 5.51441 13.5485 5.659L8.75252 11.139C8.65866 11.2464 8.54291 11.3325 8.41303 11.3915C8.28316 11.4505 8.14216 11.481 7.99952 11.481C7.85688 11.481 7.71589 11.4505 7.58601 11.3915C7.45614 11.3325 7.34038 11.2464 7.24652 11.139V11.14Z" fill="black" />
+            </svg>
+          </div> -->
+          <div class="custom_select" @click="error = false">
+            <v-select v-model="bank" :options="allBanks" :placeholder="'Select Bank'" />
+          </div>
+          <div class="input_cont">
+            <p class="label">
+              Account Number
+            </p>
+            <div class="new_input">
+              <input v-model="account_no" type="text" @focus="error2 = false">
+            </div>
+          </div>
+          <p class="account_name">ADEWALE CHIJIOKE MUSA</p>
+        </div>
+      </div>
+      <div class="bottom_btn">
+        <!-- <button class="trans_btn" @click="$emit('trans-action')">
+          Back
+        </button> -->
+        <button v-if="loading" class="bg_btn" disabled>
+          <Loader class="come-down" />
+        </button>
+        <button v-else class="bg_btn" @click="completeOrder()">
+          Add Bank
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Cookies from 'js-cookie'
+export default {
+  props: {
+    boxName: {
+      type: String,
+      default: () => ''
+    }
+  },
+  data () {
+    return {
+      anim: '',
+      other: '',
+      dropoffLocation: '',
+      loading: false,
+      error: false,
+      errorText: '',
+      location: ''
+    }
+  },
+  mounted () {
+    const windowWidth = window.innerWidth
+    if (windowWidth < 500) {
+      // console.log('come-up')
+      this.anim = 'come-up'
+    } else {
+      this.anim = 'come-down'
+    }
+  },
+  created () {
+    this.getDropofflist()
+  },
+  methods: {
+    getDropofflist (val) {
+      this.$axios.$get('/auth/get_drop_off_location', {
+      }).then((response) => {
+        this.dropoffLocation = response.data.location
+      })
+    },
+    completeOrder () {
+      this.error = false
+      this.loading = true
+      if (this.location === '') {
+        this.error = true
+        this.errorText = 'Please Select a Location'
+        this.loading = false
+      } else {
+        // console.log(this.location)
+        // const name = this.boxName
+        const id = this.$route.query.id
+        this.$axios.$post('/orders/complete/order', {
+          orderId: id,
+          location: this.location
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get('token')}`
+          }
+        }
+        ).then((response) => {
+          // console.log(response)
+          if (!response.error) {
+            this.$emit('bg-action')
+          } else {
+            this.error = true
+            this.errorText = response.errorMsg
+          }
+          this.loading = false
+        })
+      }
+    }
+  }
+}
+</script>
+
+<style scoped>
+.modal-backdrop-2 {
+  z-index: 7;
+  position: fixed;
+  overflow: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(1, 10, 20, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modal-2 {
+  /* margin-top: 5%; */
+  background-color: white;
+  width: 30%;
+  height: fit-content;
+  align-items: center;
+  border-radius: 10px;
+  overflow-y: auto;
+  padding: 3vh 2.5vw;
+  padding-bottom: 5vh;
+  transition: all 0.3s ease-out;
+}
+
+.modal_top {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-icon {
+  text-align: center;
+}
+
+.modal-icon img {
+  width: 60px;
+  margin-top: 40px;
+}
+
+.title {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  width: 70%;
+  margin: auto;
+  margin-top: 3vh;
+}
+
+.sub-title {
+  text-align: center;
+  width: 100%;
+  margin: auto;
+  color: #000;
+  margin-top: 2vh;
+  background-color: #E3EAFF;
+  padding: 10px;
+}
+
+.error {
+  margin-top: 10px;
+}
+
+.form {
+  margin-top: 4vh;
+  transition: all 0.3s ease-out;
+}
+
+.input-box {
+  margin-bottom: 3vh;
+  transition: all 0.3s ease-out;
+}
+
+.bottom_btn {
+  display: flex;
+  justify-content: center;
+  gap: 1vw;
+  width: 100%;
+  margin: auto;
+  margin-top: 4vh;
+}
+
+.trans_btn {
+  width: 50%;
+  font-weight: 700;
+}
+
+.bg_btn {
+  width: 100%;
+  font-weight: 700;
+}
+
+.custom_select {
+  margin-top: 15px;
+}
+
+.input_cont {
+  margin-top: 20px;
+}
+
+.account_name {
+  margin-top: 10px;
+}
+
+@media only screen and (max-width: 900px) {
+  .modal-2 {
+    width: 70%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .modal-backdrop-2 {
+    align-items: flex-end;
+  }
+  .modal-2 {
+    width: 100%;
+    padding: 30px;
+    border-radius: 40px 40px 0px 0px;
+    margin-top: 1rem;
+    padding-bottom: 10vh;
+  }
+
+  .modal-icon {
+    margin-top: 0;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .sub-title {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .bottom_btn {
+    width: 100%;
+    gap: 2vw;
+  }
+
+}
+
+</style>
