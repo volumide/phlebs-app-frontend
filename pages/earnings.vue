@@ -58,15 +58,18 @@
         </div>
         <div class="acct_details">
           <p class="text">
-            Primary Bank Aaccount
+            Primary Bank Account
           </p>
           <div class="top">
             <div class="text_side">
-              <p class="orders">
+              <p v-if="warning" class="orders">
                 XXXXXXXXX
               </p>
+              <p v-else class="orders">
+                2201928272
+              </p>
             </div>
-            <div class="icon">
+            <div v-if="!warning" class="icon">
               <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="40" height="40" rx="4" fill="#6F8CE4" />
                 <g clip-path="url(#clip0_1841_9571)">
@@ -81,12 +84,28 @@
               </svg>
             </div>
           </div>
-          <button class="bg_btn add_btn" @click="$router.push('/to-do-orders?type=New Orders')">
+          <button v-if="warning" class="bg_btn add_btn" @click="$router.push('/to-do-orders?type=New Orders')">
             <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.65 14.955V8.835H0.62V6.195H6.65V0.224999H9.38V6.195H15.38V8.835H9.38V14.955H6.65Z" fill="white" />
             </svg>
             <span>Add Bank Account</span>
           </button>
+          <div v-else class="details">
+            <p class="text">
+              NKOJU ADEPEJU SELINA
+            </p>
+            <p class="text">
+              WEMA BANK
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom_section">
+        <p class="table_title">
+          Transaction History
+        </p>
+        <div class="">
+          <TablesEarningsTable :table-data="todoData" :table-loader="todoLoading" />
         </div>
       </div>
     </div>
@@ -118,7 +137,7 @@ export default {
 
 <style scoped>
 .container {
-  padding: 2vh 3vw;
+  padding: 2vh 3vw 5vh;
 }
 
 .inner {
@@ -193,12 +212,31 @@ export default {
   cursor: pointer;
 }
 
+.details {
+  margin-top: 10px;
+}
+
+.details .text {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 button:disabled,
 button[disabled] {
   background-color: #cacaca;
   color: #929292;
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+.bottom_section {
+  margin-top: 5vh;
+}
+
+.table_title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2.5vh;
 }
 
 @media only screen and (max-width: 500px) {
