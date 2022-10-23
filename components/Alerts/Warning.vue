@@ -10,7 +10,7 @@
         </clipPath>
       </defs>
     </svg>
-    <p><span>Warning</span> {{ warningText }}</p>
+    <p><span>{{ warningHead ? warningHead : 'Warning' }}</span> {{ warningText }}</p>
   </div>
 </template>
 
@@ -18,6 +18,10 @@
 export default {
   props: {
     warningText: {
+      type: String,
+      default: () => ''
+    },
+    warningHead: {
       type: String,
       default: () => ''
     }

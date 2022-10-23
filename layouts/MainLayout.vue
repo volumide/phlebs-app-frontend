@@ -83,7 +83,7 @@ export default {
       }).then((response) => {
         // console.log(response)
         const data = response.data
-        if (response.error && (response.errorMsg === 'Authentication Failed' || response.errorMsg === 'Unauthorized User')) {
+        if (response.error && (response.errorMsg === 'Authentication Failed' || response.errorMsg === 'Unauthorized User' || response.errorMsg === 'invalid signature')) {
           this.$router.push('/auth/login?error=session has expired')
         } else if (
           data.ProfessionalQualification === null ||
