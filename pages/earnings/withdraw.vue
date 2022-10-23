@@ -103,12 +103,38 @@
           </div>
         </div>
         <div class="bottom_btn slide-in-from-left">
-          <button class="bg_btn" @click="updateNumber()">
+          <button class="bg_btn" @click="confirmWithdraw = true">
             Proceed
           </button>
         </div>
       </div>
     </div>
+    <ModalsConfirmWithdrawModal
+      v-if="confirmWithdraw"
+      :modal-head="'Confirm Withdrawal'"
+      :modal-text="'You have initiated a withrawal with the following detail'"
+      :trans-btn="'Cancel'"
+      :bg-btn="'Confirm'"
+      @close-modal="confirmWithdraw = false"
+      @bg-action="openDismissOrder()"
+      @trans-action="confirmWithdraw = false"
+    />
+    <ModalsTransactionPin
+      v-if="openPin"
+      :phone-number="phone"
+      @close-modal="openPin = false"
+      @trans-action="openPin = false"
+      @bg-action="sendOtp()"
+    />
+    <ModalsSuccessModal
+      v-if="successModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'Withdrawal Successful'"
+      :modal-text="'Your Transaction has been completed successfully'"
+      :bg-btn="'Close'"
+      @close-modal="successModal = false"
+      @bg-action="successModal = false"
+    />
   </div>
 </template>
 
@@ -118,6 +144,9 @@ export default {
   data () {
     return {
       hideBalance: true,
+      openPin: true,
+      confirmWithdraw: false,
+      successModal: false,
       balance: 'N601,400'
     }
   },

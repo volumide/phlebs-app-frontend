@@ -46,21 +46,31 @@
 
 <script>
 import Cookies from 'js-cookie'
+import functions from '@/utils/functions'
 export default {
   layout: 'MainLayout',
   data () {
     return {
-      activeTab: 'Personal',
+      activeTab: '',
       errorText: '',
       error: false,
       successStatus: false,
       successMsg: '',
       userLoading: true,
       imageLoading: false,
-      userData: {}
+      userData: {},
+      capitalizeFirstLetter: functions.capitalizeFirstLetter
     }
   },
   created () {
+    const tabfromUrl = this.$route.query.type
+    // console.log(tabfromUrl)
+    if (tabfromUrl) {
+      this.getUserDetails()
+      this.activeTab = this.capitalizeFirstLetter(tabfromUrl)
+    } else {
+      this.activeTab = 'Personal'
+    }
     this.getUserDetails()
   },
   methods: {

@@ -119,6 +119,15 @@
       @close-modal="$router.app.refresh()"
       @bg-action="$router.app.refresh()"
     />
+    <ModalsSuccessModal
+      v-if="setPin"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'You’ve not setup you Withdrawal Pin'"
+      :modal-text="'This pin would be required for you to complete your withdrawal'"
+      :bg-btn="'Set Pin'"
+      @close-modal="setPin = false"
+      @bg-action="$router.push('/my-account?type=security')"
+    />
   </div>
 </template>
 
@@ -127,8 +136,9 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      warning: true,
+      warning: false,
       hideBalance: true,
+      setPin: false,
       addBankAccount: false,
       successModal: false,
       balance: 'N601,400'
