@@ -55,6 +55,10 @@
 import Cookies from 'js-cookie'
 export default {
   props: {
+    amount: {
+      type: String,
+      default: () => ''
+    },
     accountDetails: {
       type: String,
       default: () => {}
@@ -89,8 +93,10 @@ export default {
         }, 3000)
       } else {
         this.$axios.$post('earning/transfer', {
-          otp: this.code,
-          mobile_number: this.phoneNumber
+          amount: this.amount,
+          account_number: this.accountDetails.account_number,
+          bank_code: this.accountDetails.account_number,
+          pin: this.code
         },
         {
           headers: {

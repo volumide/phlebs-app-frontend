@@ -70,7 +70,13 @@
               </p>
             </div>
             <div v-if="!warning" class="icon">
-              <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg
+                width="30"
+                height="30"
+                viewBox="0 0 40 40"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
                 <rect width="40" height="40" rx="4" fill="#6F8CE4" />
                 <g clip-path="url(#clip0_1841_9571)">
                   <path d="M12.7813 24.7469C12.2812 25.2469 12.0002 25.925 12 26.6322V28.0009H13.3687C14.0759 28.0007 14.754 27.7197 15.254 27.2196L24.1493 18.3242L21.6767 15.8516L12.7813 24.7469Z" fill="white" />
@@ -84,7 +90,11 @@
               </svg>
             </div>
           </div>
-          <button v-if="warning" class="bg_btn add_btn" @click="$router.push('/to-do-orders?type=New Orders')">
+          <button
+            v-if="warning"
+            class="bg_btn add_btn"
+            @click="addBankAccount = true"
+          >
             <svg
               class="plus"
               width="16"
@@ -116,7 +126,11 @@
         </div>
       </div>
     </div>
-    <ModalsAddBankAccount v-if="addBankAccount" />
+    <ModalsAddBankAccount
+      v-if="addBankAccount"
+      @close-modal="addBankAccount = false"
+      @bg-action="addBank()"
+    />
     <ModalsSuccessModal
       v-if="successModal"
       :modal-image="require('assets/images/96673-success.gif')"
@@ -173,8 +187,12 @@ export default {
     showHide () {
       this.hideBalance = !this.hideBalance
     },
+    addBank () {
+      this.addBankAccount = false
+      this.successModal = true
+    },
     getWalletBalace () {
-      this.loading =
+      this.loading = true
       this.$axios.$get('/auth/wallet/balance', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -186,19 +204,19 @@ export default {
       })
     },
     getPrimaryAccount () {
-      this.loading =
+      this.loading = true
       this.$axios.$get('/earning/get/primary/account', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.accountDetails = response.data
       })
     },
     checkIfBankAdded () {
-      this.loading =
+      this.loading = true
       this.$axios.$get('/earning/is/primary/bank/added', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`

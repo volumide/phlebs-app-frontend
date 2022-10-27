@@ -48,27 +48,36 @@
             </svg>
           </div> -->
           <div class="custom_select" @click="error = false">
-            <v-select v-model="bank" :options="allBanks" :placeholder="'Select Bank'" />
+            <v-select v-model="bank" label="name" :options="allBanks" :placeholder="'Select Bank'" />
           </div>
           <div class="input_cont">
             <p class="label">
               Account Number
             </p>
             <div class="new_input">
-              <input v-model="account_no" type="text" @focus="error2 = false">
+              <input
+                v-model="account_no"
+
+                :disabled="disabled"
+                type="number"
+                @focus="error2 = false"
+              >
+              <Loader2 v-if="acct_nameLoader" />
             </div>
           </div>
-          <p class="account_name">ADEWALE CHIJIOKE MUSA</p>
+          <p class="account_name">
+            {{ account_name }}
+          </p>
         </div>
       </div>
       <div class="bottom_btn">
         <!-- <button class="trans_btn" @click="$emit('trans-action')">
           Back
         </button> -->
-        <button v-if="loading" class="bg_btn" disabled>
+        <button v-if="addLoading" class="bg_btn" disabled>
           <Loader class="come-down" />
         </button>
-        <button v-else class="bg_btn" @click="completeOrder()">
+        <button v-else class="bg_btn" @click="addBank()">
           Add Bank
         </button>
       </div>
@@ -89,11 +98,31 @@ export default {
     return {
       anim: '',
       other: '',
-      dropoffLocation: '',
-      loading: false,
+      allBanks: [],
+      addLoading: false,
       error: false,
+      acct_nameLoader: false,
       errorText: '',
-      location: ''
+      account_name: '',
+      account_no: '',
+      bank: ''
+    }
+  },
+  computed: {
+    disabled () {
+      return this.acct_nameLoader === true
+    }
+  },
+  watch: {
+    // selectedBank () {
+    //   this.errorBank = false
+    // },
+    account_no (val) {
+      if (val.length === 10) {
+        this.getAccountName()
+      }
+      this.error = false
+      this.account_name = ''
     }
   },
   mounted () {
@@ -106,29 +135,55 @@ export default {
     }
   },
   created () {
-    this.getDropofflist()
+    this.getBanks()
   },
   methods: {
-    getDropofflist (val) {
-      this.$axios.$get('/auth/get_drop_off_location', {
+    getBanks (val) {
+      this.$axios.$get('/earning/list/all/bank', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
       }).then((response) => {
-        this.dropoffLocation = response.data.location
+        console.log(response)
+        this.allBanks = response.bank.data
       })
     },
-    completeOrder () {
+    getAccountName () {
+      this.acct_nameLoader = true
+      this.$axios.$post('earning/resolve/account/number', {
+        account_number: this.account_no,
+        bank_code: this.bank.code
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }
+      ).then((response) => {
+        console.log(response)
+        if (!response.error) {
+          this.account_name = response.data.account_name
+          // this.$emit('bg-action')
+        } else {
+          this.error = true
+          this.errorText = response.errorMsg
+        }
+        this.acct_nameLoader = false
+      })
+    },
+    addBank () {
       this.error = false
-      this.loading = true
-      if (this.location === '') {
+      this.addLoading = true
+      console.log(this.bank)
+      if (this.bank === '') {
         this.error = true
-        this.errorText = 'Please Select a Location'
-        this.loading = false
+        this.errorText = 'Please Select a Bank'
+        this.addLoading = false
       } else {
-        // console.log(this.location)
-        // const name = this.boxName
-        const id = this.$route.query.id
-        this.$axios.$post('/orders/complete/order', {
-          orderId: id,
-          location: this.location
+        this.$axios.$post('/earning/add/primary/account', {
+          bankofdeposit: this.bank.name,
+          account_number: this.account_no,
+          bank_code: this.bank.code
         },
         {
           headers: {
@@ -143,7 +198,7 @@ export default {
             this.error = true
             this.errorText = response.errorMsg
           }
-          this.loading = false
+          this.addLoading = false
         })
       }
     }

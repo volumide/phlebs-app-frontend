@@ -159,6 +159,7 @@
     />
     <ModalsTransactionPin
       v-if="openPin"
+      :amount="amount"
       :account-details="accountDetails"
       @close-modal="openPin = false"
       @trans-action="openPin = false"
