@@ -133,12 +133,12 @@
               <p class="mobile_time">
                 {{ data.type }}
               </p>
-              <p class="mobile_date">
+              <p class="mobile_status">
                 {{ data.status }}
               </p>
             </div>
             <div class="r_side">
-              <p class="mobile_date">
+              <p class="mobile_amount">
                 {{ data.amount }}
               </p>
               <p class="mobile_date">
@@ -412,10 +412,22 @@ th {
     font-size: 13px;
     margin-bottom: 5px;
   }
+  .mobile_status {
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
   .mobile_date {
     font-weight: 400;
     font-size: 13px;
     margin-bottom: 10px;
+    text-align: right;
+  }
+  .mobile_amount {
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: right;
   }
   .mobile_address {
     display: flex;

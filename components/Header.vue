@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="mobile_show page_name_ctn">
+    <div v-if="$route.name !== 'earnings-withdraw'" class="mobile_show page_name_ctn">
       <p class="page_title">
         {{ pageName }}
       </p>

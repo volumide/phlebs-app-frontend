@@ -24,7 +24,7 @@
             @closeMobileMenu="showMobileMenu = false"
           />
         </div>
-        <div class="main-content">
+        <div :class="`${ $route.name === 'earnings-withdraw' ? 'main-content-for-earnings' : 'main-content'}`">
           <Nuxt />
           <ModalsLogout
             v-if="openLogout"
@@ -155,12 +155,25 @@ html {
   width: 82vw;
 }
 
+.main-content-for-earnings {
+  margin-top: 15vh;
+  margin-left: 19vw;
+  width: 82vw;
+}
+
 .add-new-contact {
   z-index: 3;
 }
 
 @media only screen and (max-width: 900px) {
   .main-content {
+    padding: 0;
+    margin-left: 0;
+    width: 100vw;
+  }
+
+  .main-content-for-earnings {
+    margin-top: 11vh;
     padding: 0;
     margin-left: 0;
     width: 100vw;

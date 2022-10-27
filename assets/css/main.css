@@ -55,6 +55,10 @@ input::-webkit-outer-spin-button {
   display: none;
 }
 
+.modal_top svg {
+  cursor: pointer;
+}
+
 .trans_btn {
   border: 1px solid #00295D;
   color: #00295D;

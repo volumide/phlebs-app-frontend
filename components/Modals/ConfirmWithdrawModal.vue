@@ -34,19 +34,19 @@
           Amount
         </p>
         <p class="response">
-          N40,000
+          {{ currency(amount) }}
         </p>
         <p class="head">
           Recipient
         </p>
         <p class="response">
-          Wema Bank
+          {{ accountDetails.bankofdeposit }}
         </p>
         <p class="response">
-          012456789
+          {{ accountDetails.account_number }}
         </p>
         <p class="response">
-          Nnamdi Musa Ayomide
+          {{ accountDetails.account_name }}
         </p>
       </div>
       <div class="bottom_btn">
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+// import Cookies from 'js-cookie'
+import functions from '@/utils/functions'
 export default {
   props: {
     modalWidth: {
@@ -91,6 +93,14 @@ export default {
       type: String,
       default: () => ''
     },
+    amount: {
+      type: String,
+      default: () => ''
+    },
+    accountDetails: {
+      type: String,
+      default: () => {}
+    },
     bgLoading: {
       type: Boolean,
       default: () => false
@@ -98,6 +108,7 @@ export default {
   },
   data () {
     return {
+      currency: functions.formatCurrency,
       anim: ''
     }
   },

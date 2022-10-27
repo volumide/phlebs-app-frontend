@@ -66,7 +66,7 @@
                 XXXXXXXXX
               </p>
               <p v-else class="orders">
-                2201928272
+                {{ accountDetails.account_number }}
               </p>
             </div>
             <div v-if="!warning" class="icon">
@@ -99,10 +99,10 @@
           </button>
           <div v-else class="details">
             <p class="text">
-              NKOJU ADEPEJU SELINA
+              {{ accountDetails.account_name }}
             </p>
             <p class="text">
-              WEMA BANK
+              {{ accountDetails.bankofdeposit }}
             </p>
           </div>
         </div>
@@ -152,6 +152,7 @@ export default {
       isBankAccountAdded: null,
       addBankAccount: false,
       successModal: false,
+      accountDetails: {},
       balance: 'N601,400'
     }
   },
@@ -193,7 +194,7 @@ export default {
       }).then((response) => {
         this.loading = false
         console.log(response)
-        // this.balance = response.wallet_amount
+        this.accountDetails = response.data
       })
     },
     checkIfBankAdded () {

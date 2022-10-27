@@ -55,9 +55,9 @@
 import Cookies from 'js-cookie'
 export default {
   props: {
-    phoneNumber: {
+    accountDetails: {
       type: String,
-      default: () => ''
+      default: () => {}
     }
   },
   data () {
@@ -80,15 +80,15 @@ export default {
   methods: {
     submit () {
       this.loading = true
-      if (this.code.length < 6) {
+      if (this.code.length < 4) {
         this.error = true
         this.loading = false
-        this.errorText = 'Please fill up the OTP field'
+        this.errorText = 'Please fill up the PIN field'
         setTimeout(() => {
           this.error = false
         }, 3000)
       } else {
-        this.$axios.$post('auth/verify/security/otp', {
+        this.$axios.$post('earning/transfer', {
           otp: this.code,
           mobile_number: this.phoneNumber
         },
