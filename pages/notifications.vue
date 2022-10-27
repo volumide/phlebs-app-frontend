@@ -20,26 +20,9 @@
     <ModalsFromTheSide
       v-if="notificationDetails"
       :notification-id="notificationId"
+      @closeSuccess="getNotification(); getReadNotification(); getUnreadNotification()"
       @close-modal="notificationDetails = false"
       @delete="deleteNotification = true"
-    />
-    <ModalsConfirmationModal
-      v-if="deleteNotification"
-      :modal-head="'Are you sure you want to delete this Notification?'"
-      :modal-text="'You will no longer beb ale to view this notification once its deleted'"
-      :trans-btn="'No, Go Back'"
-      :bg-btn="'Yes, Delete'"
-      @close-modal="deleteNotification = false"
-      @bg-action="deleteNotificationAction()"
-      @trans-action="deleteNotification = false"
-    />
-    <ModalsSuccessModal
-      v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
-      :modal-head="'Deleted!'"
-      :bg-btn="'Close'"
-      @close-modal="successModal = false"
-      @bg-action="successModal = false"
     />
   </div>
 </template>
@@ -59,10 +42,8 @@ export default {
       notificationId: '',
       allNofitLoading: false,
       readNofitLoading: false,
-      unreadNofitLoading: false,
       notificationDetails: false,
-      successModal: false,
-      deleteNotification: false
+      unreadNofitLoading: false
     }
   },
   created () {
@@ -120,10 +101,6 @@ export default {
         // console.log(response)
         this.unreadNotifications = response.data.notification
       })
-    },
-    deleteNotificationAction () {
-      this.deleteNotification = false
-      this.successModal = true
     }
   }
 

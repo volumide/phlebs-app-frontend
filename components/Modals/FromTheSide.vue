@@ -29,7 +29,7 @@
           {{ notification.message }}
         </p>
       </div>
-      <div class="modal_bottom" @click="closeModal(); $emit('delete')">
+      <div class="modal_bottom" @click="deleteNotification = true">
         <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_248_24385)">
             <path d="M20.7911 3.33333H17.8225C17.6003 2.39284 17.0122 1.54779 16.1575 0.940598C15.3027 0.333408 14.2336 0.0012121 13.1302 0L11.215 0C10.1116 0.0012121 9.04245 0.333408 8.18771 0.940598C7.33297 1.54779 6.74492 2.39284 6.52266 3.33333H3.55405C3.30008 3.33333 3.0565 3.42113 2.87691 3.57741C2.69733 3.73369 2.59644 3.94565 2.59644 4.16667C2.59644 4.38768 2.69733 4.59964 2.87691 4.75592C3.0565 4.9122 3.30008 5 3.55405 5H4.51167V15.8333C4.51319 16.938 5.01813 17.997 5.91574 18.7782C6.81335 19.5593 8.03033 19.9987 9.29974 20H15.0454C16.3148 19.9987 17.5318 19.5593 18.4294 18.7782C19.327 17.997 19.832 16.938 19.8335 15.8333V5H20.7911C21.0451 5 21.2887 4.9122 21.4683 4.75592C21.6478 4.59964 21.7487 4.38768 21.7487 4.16667C21.7487 3.94565 21.6478 3.73369 21.4683 3.57741C21.2887 3.42113 21.0451 3.33333 20.7911 3.33333ZM11.215 1.66667H13.1302C13.7242 1.6673 14.3034 1.82781 14.7884 2.1262C15.2734 2.42459 15.6405 2.84624 15.8393 3.33333H8.50588C8.70466 2.84624 9.07173 2.42459 9.55675 2.1262C10.0418 1.82781 10.621 1.6673 11.215 1.66667ZM17.9183 15.8333C17.9183 16.4964 17.6156 17.1323 17.0768 17.6011C16.5381 18.0699 15.8074 18.3333 15.0454 18.3333H9.29974C8.53781 18.3333 7.8071 18.0699 7.26833 17.6011C6.72957 17.1323 6.4269 16.4964 6.4269 15.8333V5H17.9183V15.8333Z" fill="#00295D" />
@@ -45,6 +45,25 @@
         <p>Delete from Notifications</p>
       </div>
     </div>
+    <ModalsConfirmationModal
+      v-if="deleteNotification"
+      :modal-head="'Are you sure you want to delete this Notification?'"
+      :modal-text="'You will no longer beb ale to view this notification once its deleted'"
+      :trans-btn="'No, Go Back'"
+      :bg-btn="'Yes, Delete'"
+      :bg-loading="deleteloading"
+      @close-modal="deleteNotification = false"
+      @bg-action="deleteNotificationAction()"
+      @trans-action="deleteNotification = false"
+    />
+    <ModalsSuccessModal
+      v-if="successModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'Deleted!'"
+      :bg-btn="'Close'"
+      @close-modal="closeSuccess()"
+      @bg-action="closeSuccess()"
+    />
   </div>
 </template>
 
@@ -61,7 +80,10 @@ export default {
     return {
       anim: '',
       loading: true,
-      notification: {}
+      deleteloading: false,
+      notification: {},
+      successModal: false,
+      deleteNotification: false
     }
   },
   // mounted () {
@@ -102,6 +124,24 @@ export default {
         this.$refs['modal-child'].classList.remove('slide-in')
         this.$emit('close-modal')
       }, 600)
+    },
+    deleteNotificationAction () {
+      this.deleteloading = true
+      this.$axios.$get(`/auth/notification/del/${this.notificationId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.deleteloading = false
+        console.log(response)
+        this.deleteNotification = false
+        this.successModal = true
+        // this.notification = response.data
+      })
+    },
+    closeSuccess () {
+      this.successModal = false
+      this.$emit('closeSuccess')
     }
   }
 }
