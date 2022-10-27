@@ -215,6 +215,7 @@ export default {
 .main_container {
   padding: 0 3vw;
   padding-top: 3vh;
+  padding-bottom: 2vh;
   z-index: 5;
   position: fixed;
   /* height: 11vh; */

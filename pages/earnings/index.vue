@@ -146,9 +146,10 @@ export default {
   data () {
     return {
       currency: functions.formatCurrency,
-      warning: true,
+      // warning: true,
       hideBalance: true,
       setPin: false,
+      isBankAccountAdded: null,
       addBankAccount: false,
       successModal: false,
       balance: 'N601,400'
@@ -157,11 +158,15 @@ export default {
   computed: {
     disabled () {
       return this.warning === true
+    },
+    warning () {
+      return (!this.isBankAccountAdded)
     }
   },
   created () {
     this.checkIfBankAdded()
     this.getWalletBalace()
+    this.getPrimaryAccount()
   },
   methods: {
     showHide () {
@@ -179,6 +184,18 @@ export default {
         this.balance = response.wallet_amount
       })
     },
+    getPrimaryAccount () {
+      this.loading =
+      this.$axios.$get('/earning/get/primary/account', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        // this.balance = response.wallet_amount
+      })
+    },
     checkIfBankAdded () {
       this.loading =
       this.$axios.$get('/earning/is/primary/bank/added', {
@@ -187,8 +204,8 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
-        // this.balance = response.wallet_amount
+        // console.log(response)
+        this.isBankAccountAdded = response.isBankAccountAdded
       })
     }
   }
@@ -301,6 +318,11 @@ button[disabled] {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 2.5vh;
+}
+
+.add_btn svg {
+  width: 15px;
+  height: 15px;
 }
 
 @media only screen and (max-width: 500px) {
