@@ -12,7 +12,7 @@
           <div class="top">
             <div class="text_side">
               <p v-if="hideBalance" class="orders">
-                XXXXXXXXX
+                *******
               </p>
               <p v-else class="orders">
                 {{ currency(balance ? balance : 0) }}
@@ -63,7 +63,7 @@
           <div class="top">
             <div class="text_side">
               <p v-if="warning" class="orders">
-                XXXXXXXXX
+                *******
               </p>
               <p v-else class="orders">
                 {{ accountDetails.account_number }}
@@ -163,7 +163,7 @@ export default {
       // warning: true,
       hideBalance: true,
       setPin: false,
-      isBankAccountAdded: null,
+      isBankAccountAdded: true,
       addBankAccount: false,
       successModal: false,
       accountDetails: {},

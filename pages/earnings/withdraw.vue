@@ -52,7 +52,7 @@
               </svg>
             </div>
             <p v-if="hideBalance" class="balance">
-              XXXXXX
+              *****
             </p>
             <p v-else class="balance">
               {{ currency(balance ? balance : 0) }}
