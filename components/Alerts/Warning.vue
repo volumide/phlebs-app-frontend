@@ -10,7 +10,14 @@
         </clipPath>
       </defs>
     </svg>
-    <p><span>{{ warningHead ? warningHead : 'Warning' }}</span> {{ warningText }}</p>
+    <div class="content">
+      <p class="head">
+        {{ warningHead ? warningHead : 'Warning' }}
+      </p>
+      <p class="text">
+        {{ warningText }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -38,12 +45,23 @@ export default {
   background-color: #FFE9D9;
   border-left: 4px solid #8B3127;
   height: 50px;
-  padding: 0 20px;
+  padding: 5px 20px;
   border-radius: 6px;
   margin-bottom: 3vh;
 }
 
-.success p {
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.content .head {
+  font-weight: 700;
+  color: #8B3127;
+  margin-right: 1vw;
+}
+
+.content .text {
   font-weight: 500;
   color: #8B3127;
 }
@@ -52,14 +70,14 @@ export default {
   margin-right: 10px;
 }
 
-.success p span {
-  font-weight: 700;
-  color: #8B3127;
-  margin-right: 1vw;
-}
 @media only screen and (max-width: 500px) {
   .success {
     padding: 0 10px;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: flex-start;
   }
   .success p {
     font-size: 12px;

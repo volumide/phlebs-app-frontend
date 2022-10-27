@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="inner">
-      <div v-if="warning" class="mobile_no_show">
+      <div v-if="warning" class="">
         <AlertsWarning :warning-head="'Instruction'" :warning-text="'Kindly Add a Primary Bank account bearing your name to allow easy withdrawal from your wallet'" />
       </div>
       <div class="top_section">
@@ -85,7 +85,14 @@
             </div>
           </div>
           <button v-if="warning" class="bg_btn add_btn" @click="$router.push('/to-do-orders?type=New Orders')">
-            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              class="plus"
+              width="16"
+              height="15"
+              viewBox="0 0 16 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path d="M6.65 14.955V8.835H0.62V6.195H6.65V0.224999H9.38V6.195H15.38V8.835H9.38V14.955H6.65Z" fill="white" />
             </svg>
             <span>Add Bank Account</span>
@@ -136,7 +143,7 @@ export default {
   layout: 'MainLayout',
   data () {
     return {
-      warning: false,
+      warning: true,
       hideBalance: true,
       setPin: false,
       addBankAccount: false,
@@ -288,13 +295,29 @@ button[disabled] {
     padding-bottom: 2vh;
   }
 
-  .orders {
+  /* .orders {
     font-size: 16px;
-  }
+  } */
 
   .top .icon svg {
     width: 36px;
     height: 36px;
+  }
+
+  .top_section {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .wallet_balance {
+    width: 100%;
+    padding: 5vw;
+  }
+
+  .acct_details {
+    width: 100%;
+    padding: 5vw;
+    margin-top: 15px;
   }
 
   .trans_btn {
@@ -308,6 +331,11 @@ button[disabled] {
   .bg_btn svg {
     width: 24px;
     height: 24px;
+  }
+
+  .add_btn svg {
+    width: 15px;
+    height: 15px;
   }
 }
 </style>
