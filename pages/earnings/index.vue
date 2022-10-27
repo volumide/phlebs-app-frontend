@@ -15,7 +15,7 @@
                 XXXXXXXXX
               </p>
               <p v-else class="orders">
-                {{ balance ? balance : 0 }}
+                {{ currency(balance ? balance : 0) }}
               </p>
             </div>
             <div class="icon">
@@ -139,10 +139,13 @@
 </template>
 
 <script>
+import Cookies from 'js-cookie'
+import functions from '@/utils/functions'
 export default {
   layout: 'MainLayout',
   data () {
     return {
+      currency: functions.formatCurrency,
       warning: true,
       hideBalance: true,
       setPin: false,
@@ -156,9 +159,37 @@ export default {
       return this.warning === true
     }
   },
+  created () {
+    this.checkIfBankAdded()
+    this.getWalletBalace()
+  },
   methods: {
     showHide () {
       this.hideBalance = !this.hideBalance
+    },
+    getWalletBalace () {
+      this.loading =
+      this.$axios.$get('/auth/wallet/balance', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        // console.log(response)
+        this.balance = response.wallet_amount
+      })
+    },
+    checkIfBankAdded () {
+      this.loading =
+      this.$axios.$get('/earning/is/primary/bank/added', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        // this.balance = response.wallet_amount
+      })
     }
   }
 }
