@@ -104,6 +104,21 @@
             </div>
           </div>
         </div>
+        <div class="pin_section">
+          <div class="l_side">
+            <p class="title">
+              Update Withdrawal PIN
+            </p>
+            <p class="sub_title">
+              Change or Reset your Withdrawal Pin
+            </p>
+          </div>
+          <div class="r_side">
+            <p class="set_pin" @click="withdrawalPin = true">
+              Set Pin
+            </p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="bottom_btn slide-in-from-left">
@@ -120,6 +135,20 @@
       @close-modal="openOtp = false"
       @trans-action="openOtp = false"
       @bg-action="sendOtp()"
+    />
+    <ModalsWithdrawalPin
+      v-if="withdrawalPin"
+      @close-modal="withdrawalPin = false"
+      @trans-action="withdrawalPin = false"
+      @bg-action="withdrawalPin = false; pinSuccessModal = true"
+    />
+    <ModalsSuccessModal
+      v-if="pinSuccessModal"
+      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-head="'Your Pin has been changed Successfully'"
+      :bg-btn="'Close'"
+      @close-modal="pinSuccessModal = false"
+      @bg-action="pinSuccessModal = false"
     />
     <ModalsSuccessModal
       v-if="successModal"
@@ -168,6 +197,8 @@ export default {
       phone: '',
       errorText2: '',
       error2: false,
+      withdrawalPin: false,
+      pinSuccessModal: false,
       allowEdit: false,
       loading: false,
       openOtp: false,
@@ -357,6 +388,26 @@ export default {
 
 .bg_btn {
   width: 11rem;
+}
+
+.pin_section {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  color: #00295D;
+  margin-bottom: 10px;
+}
+
+.set_pin {
+  color: #325BD9;
+  font-weight: 500;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 500px) {
