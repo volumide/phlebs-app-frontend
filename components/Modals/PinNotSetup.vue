@@ -20,31 +20,27 @@
           </defs>
         </svg>
       </div>
-      <div v-if="error">
-        <AlertsError :error-text="errorText" />
-      </div>
-      <h1 class="title">
-        Setup Withdrawal Pin
+      <h1 v-if="modalHead" class="title">
+        {{ modalHead }}
       </h1>
-      <p class="sub-title">
-        Enter a 4-digit Pin
-      </p>
-      <div class="form">
-        <PincodeInput
-          v-model="code"
-          :length="4"
-          @input="error = false"
-        />
+      <div v-if="modalImage" class="modal-icon">
+        <img :src="modalImage" alt="">
       </div>
+      <p v-if="modalText" class="sub-title">
+        {{ modalText }}
+      </p>
+      <p v-if="addDataOne" class="sub-data">
+        {{ addDataOne }}
+      </p>
+      <p v-if="addDataTwo" class="sub-data">
+        {{ addDataTwo }}
+      </p>
       <div class="bottom_btn">
-        <!-- <button class="trans_btn" @click="$emit('trans-action')">
-          Back
-        </button> -->
-        <button v-if="loading" class="bg_btn" disabled>
-          <Loader class="come-down" />
+        <button v-if="transBtn" class="trans_btn" @click="$emit('trans-action')">
+          {{ transBtn }}
         </button>
-        <button v-else class="bg_btn" @click="submit">
-          Set Pin
+        <button v-if="bgBtn" class="bg_btn" @click="$emit('bg-action')">
+          {{ bgBtn }}
         </button>
       </div>
     </div>
@@ -52,20 +48,44 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie'
 export default {
   props: {
-    phoneNumber: {
+    modalWidth: {
+      type: Number,
+      default: () => 32
+    },
+    modalImage: {
+      type: String,
+      default: () => ''
+    },
+    modalHead: {
+      type: String,
+      default: () => ''
+    },
+    modalText: {
+      type: String,
+      default: () => ''
+    },
+    addDataOne: {
+      type: String,
+      default: () => ''
+    },
+    addDataTwo: {
+      type: String,
+      default: () => ''
+    },
+    transBtn: {
+      type: String,
+      default: () => ''
+    },
+    bgBtn: {
       type: String,
       default: () => ''
     }
   },
   data () {
     return {
-      loading: false,
-      error: false,
-      anim: '',
-      code: ''
+      anim: ''
     }
   },
   mounted () {
@@ -74,42 +94,10 @@ export default {
       // console.log('come-up')
       this.anim = 'come-up'
     } else {
-      this.anim = 'come-down'
+      this.anim = 'reveals'
     }
   },
   methods: {
-    submit () {
-      this.loading = true
-      if (this.code.length < 4) {
-        this.error = true
-        this.loading = false
-        this.errorText = 'Please fill up the OTP field'
-        setTimeout(() => {
-          this.error = false
-        }, 3000)
-      } else {
-        this.$axios.$post('/earning/set/withrawal/pin', {
-          pin: this.code
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get('token')}`
-          }
-        }
-        ).then((response) => {
-          console.log(response)
-          this.loading = false
-          if (!response.error) {
-            this.$emit('bg-action')
-          } else {
-            this.error = true
-            this.errorText = response.errorMsg
-          }
-        }).catch(() => {
-          this.loading = false
-        })
-      }
-    }
   }
 }
 </script>
@@ -134,14 +122,13 @@ export default {
 .modal-2 {
   /* margin-top: 5%; */
   background-color: white;
-  width: 30%;
+  width: 32%;
   height: fit-content;
   align-items: center;
   border-radius: 10px;
   overflow-y: auto;
-  padding: 3vh 2.5vw;
+  padding: 3vh 2vw;
   padding-bottom: 5vh;
-  transition: all 0.3s ease-out;
 }
 
 .modal_top {
@@ -149,12 +136,16 @@ export default {
   justify-content: flex-end;
 }
 
+.modal_top svg {
+  cursor: pointer;
+}
+
 .modal-icon {
   text-align: center;
 }
 
 .modal-icon img {
-  width: 60px;
+  width: 120px;
   margin-top: 40px;
 }
 
@@ -177,16 +168,12 @@ export default {
   line-height: 24px;
 }
 
-.form {
-  margin-top: 1vh;
-  display: flex;
-  justify-content: center;
-  transition: all 0.3s ease-out;
-}
-
-.input-box {
-  margin-bottom: 3vh;
-  transition: all 0.3s ease-out;
+.sub-data {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 12px 0;
 }
 
 .bottom_btn {
@@ -204,7 +191,7 @@ export default {
 }
 
 .bg_btn {
-  width: 100%;
+  width: 50%;
   font-weight: 700;
 }
 
@@ -231,7 +218,7 @@ export default {
   }
 
   .title {
-    font-size: 18px;
+    font-size: 20px;
   }
 
   .sub-title {
@@ -242,6 +229,7 @@ export default {
   .bottom_btn {
     width: 100%;
     gap: 2vw;
+    margin-top: 6vh;
   }
 
 }

@@ -146,7 +146,6 @@
       :modal-head="'You’ve not setup you Withdrawal Pin'"
       :modal-text="'This pin would be required for you to complete your withdrawal'"
       :bg-btn="'Set Pin'"
-      @close-modal="setPin = false"
       @bg-action="$router.push('/my-account?type=security')"
     />
   </div>
@@ -179,6 +178,7 @@ export default {
     }
   },
   created () {
+    this.checkWithdrawalPin()
     this.checkIfBankAdded()
     this.getWalletBalace()
     this.getPrimaryAccount()
@@ -190,6 +190,23 @@ export default {
     addBank () {
       this.addBankAccount = false
       this.successModal = true
+    },
+    checkWithdrawalPin () {
+      this.loading = true
+      this.$axios.$get('/earning/check/if/pin/setup', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.loading = false
+        console.log(response)
+        if (!response.pin) {
+          this.setPin = true
+        } else {
+          this.setPin = false
+        }
+        // this.balance = response.wallet_amount
+      })
     },
     getWalletBalace () {
       this.loading = true

@@ -406,7 +406,7 @@ export default {
 
 .set_pin {
   color: #325BD9;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
 }
 
