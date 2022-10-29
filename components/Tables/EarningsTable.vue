@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div class="table_top">
+      <p class="table_title come-down">
+        Transaction History
+      </p>
+      <div class="new_input mobile_no_show">
+        <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+      </div>
+    </div>
     <TablesLoader v-if="tableLoader" />
     <div v-else>
       <div v-if="tableData.length">
@@ -20,15 +32,6 @@
                 Status
               </th>
               <th class="space" />
-              <!-- <th class="search_input">
-                <div class="new_input">
-                  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                  <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
-                </div>
-              </th> -->
             </tr>
             <tr v-for="(data, index) in filteredTable" :key="index" class="table-details">
               <td class="space">
@@ -175,10 +178,6 @@ export default {
     //   type: Array,
     //   default: () => []
     // },
-    tableLoader: {
-      type: Boolean,
-      default: () => false
-    }
   },
   data () {
     return {
@@ -187,13 +186,14 @@ export default {
       numericalDate,
       tableQuery: '',
       deposit: true,
+      tableLoader: true,
       transLoading: false,
       tableData: []
     }
   },
   computed: {
     filteredTable () {
-      return this.tableData.filter(data => this.detailedDate(data.type).toLowerCase().includes(this.tableQuery.toLowerCase()) || data.amount.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.dateTime.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.status.toLowerCase().includes(this.tableQuery.toLowerCase()))
+      return this.tableData.filter(data => data.type.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.amount.toLowerCase().includes(this.tableQuery.toLowerCase()) || this.detailedDate(data.createdAt).toLowerCase().includes(this.tableQuery.toLowerCase()) || data.status.toLowerCase().includes(this.tableQuery.toLowerCase()))
     }
   },
   created () {
@@ -201,7 +201,7 @@ export default {
   },
   methods: {
     getTransactionHistory () {
-      this.completedLoading = true
+      this.tableLoader = true
       this.$axios.$get('/earning/transaction/history/10/0', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -209,10 +209,10 @@ export default {
       }).then((response) => {
         console.log(response)
         this.tableData = response.data.transaction
-        this.completedLoading = false
+        this.tableLoader = false
       }).catch((onrejected) => {
         console.log(onrejected)
-        this.completedLoading = false
+        this.tableLoader = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
         }
@@ -384,6 +384,19 @@ th {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+.table_title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 2.5vh;
+}
+
+.table_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 500px) {

@@ -126,9 +126,6 @@
         </div>
       </div>
       <div class="bottom_section">
-        <p class="table_title come-down">
-          Transaction History
-        </p>
         <div class="">
           <TablesEarningsTable :table-data="todoData" :table-loader="todoLoading" />
         </div>
@@ -219,7 +216,7 @@ export default {
       activeTab: 'Earnings',
       referral_code: '',
       code_copied: false,
-      shareWithFriends: true,
+      shareWithFriends: false,
       hideBalance: true,
       setPin: false,
       isBankAccountAdded: true,
