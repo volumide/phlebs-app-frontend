@@ -76,7 +76,7 @@
         <div class="rhs">
           <div class="next_order_top">
             <p class="next_order_head">
-              Your Next Order
+              Next Todo
             </p>
             <div class="see_all" @click="$router.push('/today-order')">
               <p>See all</p>

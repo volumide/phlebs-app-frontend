@@ -1,11 +1,19 @@
 <template>
   <div class="container">
-    <div class="inner">
+    <div class="tab-ctn">
+      <TabHeaders
+        :tabs="['Earnings', 'Referrals']"
+        padding-left="4px"
+        :active-tab="activeTab"
+        @set-active-tab="setActiveTab"
+      />
+    </div>
+    <div v-if="activeTab === 'Earnings'" class="inner">
       <div v-if="warning" class="">
         <AlertsWarning :warning-head="'Instruction'" :warning-text="'Kindly Add a Primary Bank account bearing your name to allow easy withdrawal from your wallet'" />
       </div>
       <div class="top_section">
-        <div class="wallet_balance">
+        <div class="wallet_balance come-down">
           <p class="text">
             My Wallet Balance
           </p>
@@ -56,7 +64,7 @@
             </svg>
           </button>
         </div>
-        <div class="acct_details">
+        <div class="acct_details come-down">
           <p class="text">
             Primary Bank Account
           </p>
@@ -118,7 +126,7 @@
         </div>
       </div>
       <div class="bottom_section">
-        <p class="table_title">
+        <p class="table_title come-down">
           Transaction History
         </p>
         <div class="">
@@ -160,6 +168,7 @@ export default {
     return {
       currency: functions.formatCurrency,
       // warning: true,
+      activeTab: 'Earnings',
       hideBalance: true,
       setPin: false,
       isBankAccountAdded: true,
@@ -184,6 +193,18 @@ export default {
     this.getPrimaryAccount()
   },
   methods: {
+    setActiveTab (tab) {
+      this.activeTab = tab
+      this.$store.commit('setPageName', tab)
+      if (this.activeTab === 'Earnings') {
+        this.checkWithdrawalPin()
+        this.checkIfBankAdded()
+        this.getWalletBalace()
+        this.getPrimaryAccount()
+      } else if (this.activeTab === 'Referrals') {
+        // this.getDismissedOrders()
+      }
+    },
     showHide () {
       this.hideBalance = !this.hideBalance
     },
@@ -251,6 +272,10 @@ export default {
 <style scoped>
 .container {
   padding: 2vh 3vw 5vh;
+}
+
+.tab-ctn {
+  margin-bottom: 30px;
 }
 
 .inner {

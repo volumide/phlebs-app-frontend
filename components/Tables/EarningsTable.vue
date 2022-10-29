@@ -142,7 +142,7 @@
                 {{ data.amount }}
               </p>
               <p class="mobile_date">
-                {{ numericalDate(data.dateTime) }}
+                {{ semidetailedDate(data.dateTime) }}
               </p>
             </div>
           </div>
@@ -165,7 +165,8 @@
 </template>
 
 <script>
-import { detailedDate, numericalDate } from '@/utils/date-formats.js'
+import Cookies from 'js-cookie'
+import { detailedDate, semidetailedDate } from '@/utils/date-formats.js'
 import functions from '@/utils/functions'
 // import Cookies from 'js-cookie'
 export default {
@@ -183,7 +184,7 @@ export default {
     return {
       currency: functions.formatCurrency,
       detailedDate,
-      numericalDate,
+      semidetailedDate,
       tableQuery: '',
       deposit: true,
       transLoading: false,
@@ -226,7 +227,28 @@ export default {
       return this.tableData.filter(data => this.detailedDate(data.type).toLowerCase().includes(this.tableQuery.toLowerCase()) || data.amount.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.dateTime.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.status.toLowerCase().includes(this.tableQuery.toLowerCase()))
     }
   },
+  created () {
+    this.getTransactionHistory()
+  },
   methods: {
+    getTransactionHistory () {
+      this.completedLoading = true
+      this.$axios.$get('/earning/transaction/history/10/0', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        //   this.tableData = response.data.transaction
+        this.completedLoading = false
+      }).catch((onrejected) => {
+        console.log(onrejected)
+        this.completedLoading = false
+        if (onrejected.error) {
+          // this.$toast.error(onrejected.errorMsg)
+        }
+      })
+    }
   }
 }
 </script>
