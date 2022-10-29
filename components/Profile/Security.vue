@@ -266,7 +266,7 @@ export default {
       }
       ).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           this.openOtp = true
         } else {
