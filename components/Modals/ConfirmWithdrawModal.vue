@@ -98,7 +98,7 @@ export default {
       default: () => ''
     },
     accountDetails: {
-      type: String,
+      type: Object,
       default: () => {}
     },
     bgLoading: {

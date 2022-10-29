@@ -163,7 +163,7 @@
       :account-details="accountDetails"
       @close-modal="openPin = false"
       @trans-action="openPin = false"
-      @bg-action="sendOtp()"
+      @bg-action="successModal = true"
     />
     <ModalsSuccessModal
       v-if="successModal"
@@ -171,8 +171,8 @@
       :modal-head="'Withdrawal Successful'"
       :modal-text="'Your Transaction has been completed successfully'"
       :bg-btn="'Close'"
-      @close-modal="successModal = false"
-      @bg-action="successModal = false"
+      @close-modal="$router.push('/earnings')"
+      @bg-action="$router.push('/earnings')"
     />
   </div>
 </template>

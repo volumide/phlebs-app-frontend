@@ -168,7 +168,7 @@
           </svg>
         </div>
         <div class="referral_bottom_btn">
-          <button class="referral_btn bg_btn" @click="shareCode()">
+          <button class="referral_btn bg_btn" @click="shareWithFriends = true">
             Share Your Code
           </button>
         </div>
@@ -199,6 +199,11 @@
       :bg-btn="'Set Pin'"
       @bg-action="$router.push('/my-account?type=security')"
     />
+    <ModalsShareWithFriends
+      v-if="shareWithFriends"
+      :referral-code="referral_code"
+      @close-modal="shareWithFriends = false"
+    />
   </div>
 </template>
 
@@ -214,6 +219,7 @@ export default {
       activeTab: 'Earnings',
       referral_code: '',
       code_copied: false,
+      shareWithFriends: true,
       hideBalance: true,
       setPin: false,
       isBankAccountAdded: true,
@@ -273,7 +279,7 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         if (!response.pin) {
           this.setPin = true
         } else {
@@ -289,7 +295,7 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.referral_code = response.refferral_code
       })
     },
@@ -570,6 +576,12 @@ button[disabled] {
   .add_btn svg {
     width: 15px;
     height: 15px;
+  }
+
+  /* REFERRAL */
+
+  .referral_section {
+    width: 95%;
   }
 }
 </style>

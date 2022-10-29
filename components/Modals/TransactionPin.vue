@@ -60,7 +60,7 @@ export default {
       default: () => ''
     },
     accountDetails: {
-      type: String,
+      type: Object,
       default: () => {}
     }
   },
@@ -95,7 +95,7 @@ export default {
         this.$axios.$post('earning/transfer', {
           amount: this.amount,
           account_number: this.accountDetails.account_number,
-          bank_code: this.accountDetails.account_number,
+          bank_code: this.accountDetails.bank_code,
           pin: this.code
         },
         {

@@ -61,10 +61,10 @@
                 {{ data.type }}
               </td>
               <td class="amount">
-                {{ data.amount }}
+                {{ currency(data.amount) }}
               </td>
               <td class="dateTime">
-                {{ data.dateTime }}
+                {{ detailedDate(data.createdAt) }}
               </td>
               <td class="status">
                 <div :class="`status_text ${data.status === 'Success' ? 'sucess' : 'failed'}-status`">
@@ -139,10 +139,10 @@
             </div>
             <div class="r_side">
               <p class="mobile_amount">
-                {{ data.amount }}
+                {{ currency(data.amount) }}
               </p>
               <p class="mobile_date">
-                {{ semidetailedDate(data.dateTime) }}
+                {{ numericalDate(data.createdAt) }}
               </p>
             </div>
           </div>
@@ -166,7 +166,7 @@
 
 <script>
 import Cookies from 'js-cookie'
-import { detailedDate, semidetailedDate } from '@/utils/date-formats.js'
+import { detailedDate, numericalDate } from '@/utils/date-formats.js'
 import functions from '@/utils/functions'
 // import Cookies from 'js-cookie'
 export default {
@@ -184,42 +184,11 @@ export default {
     return {
       currency: functions.formatCurrency,
       detailedDate,
-      semidetailedDate,
+      numericalDate,
       tableQuery: '',
       deposit: true,
       transLoading: false,
-      tableData: [
-        {
-          type: 'WITHDRAW FROM WALLET',
-          amount: '- 20,000',
-          dateTime: 'Thursday, October 13, 2022',
-          status: 'Success'
-        },
-        {
-          type: 'PAYMENT RECEIVED',
-          amount: '+ 2000',
-          dateTime: 'Thursday, October 13, 2022',
-          status: 'Success'
-        },
-        {
-          type: 'PAYMENT RECEIVED',
-          amount: '+ 2000',
-          dateTime: 'Thursday, October 13, 2022',
-          status: 'Success'
-        },
-        {
-          type: 'PAYMENT RECEIVED',
-          amount: '+ 2000',
-          dateTime: 'Thursday, October 13, 2022',
-          status: 'Success'
-        },
-        {
-          type: 'WITHDRAW FROM WALLET',
-          amount: '- 20,000',
-          dateTime: 'Thursday, October 13, 2022',
-          status: 'Failed'
-        }
-      ]
+      tableData: []
     }
   },
   computed: {
@@ -239,7 +208,7 @@ export default {
         }
       }).then((response) => {
         console.log(response)
-        //   this.tableData = response.data.transaction
+        this.tableData = response.data.transaction
         this.completedLoading = false
       }).catch((onrejected) => {
         console.log(onrejected)
