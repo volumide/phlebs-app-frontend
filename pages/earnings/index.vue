@@ -169,7 +169,7 @@
             Share Your Code
           </button>
         </div>
-        <p class="referral_bottom_text">
+        <p class="referral_bottom_text" @click="$router.push('/earnings/referral-history')">
           VIEW MY REFERRAL PERFORMANCE
         </p>
       </div>

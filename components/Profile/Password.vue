@@ -206,10 +206,18 @@
       <button v-if="updateLoading" class="bg_btn">
         <Loader class="come-down" />
       </button>
-      <button v-else :disabled="disabled" class="bg_btn" @click="updateChanges()">
+      <button v-else :disabled="disabled" class="bg_btn" @click="getOtp()">
         Update Changes
       </button>
     </div>
+    <ModalsPasswordEnterOTP
+      v-if="passwordOTP"
+      :current-password="current_password"
+      :new-password="new_password"
+      @close-modal="passwordOTP = false"
+      @trans-action="passwordOTP = false"
+      @bg-action="passwordOTP = false; successModal = true"
+    />
     <ModalsSuccessModal
       v-if="successModal"
       :modal-image="require('assets/images/96673-success.gif')"
@@ -257,6 +265,7 @@ export default {
       phone: '08012345678',
       errorText2: '',
       successModal: false,
+      passwordOTP: false,
       updateLoading: false,
       error2: false,
       userImage: null,
@@ -342,6 +351,33 @@ export default {
       // eslint-disable-next-line vue/no-mutating-props
       this.imageLoading = true
       this.$emit('saveImage', this.selectedImage)
+    },
+    getOtp () {
+      if (this.new_password === this.con_new_password) {
+        // this.updateLoading = true
+        this.$axios.$get('/auth/password/otp'
+        ).then((response) => {
+          // console.log(response)
+          this.updateLoading = false
+          if (!response.error) {
+            console.log(response)
+            this.passwordOTP = true
+          } else {
+            this.error2 = true
+            this.errorText2 = response.errorMsg
+          }
+        // this.editAccess = response.editAccess
+        }).catch((onrejected) => {
+          console.log(onrejected)
+          this.updateLoading = false
+        })
+      } else {
+        this.error2 = true
+        this.errorText2 = 'Comfirm New Password is wrong'
+        setTimeout(() => {
+          this.error2 = false
+        }, 3000)
+      }
     },
     updateChanges () {
       console.log(this.updateLoading)
