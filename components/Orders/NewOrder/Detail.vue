@@ -284,6 +284,10 @@ export default {
       type: String,
       default: () => ''
     },
+    detailsLoading: {
+      type: Boolean,
+      default: () => true
+    },
     detailsData: {
       type: Object,
       default: () => {}
