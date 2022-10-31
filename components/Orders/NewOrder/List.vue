@@ -9,7 +9,8 @@
           <p>{{ listData.length }}</p>
         </div>
       </div>
-      <div v-for="(order, index) in listData" :key="index" class="list_details">
+      <LoadersList v-if="detailsLoading" />
+      <div v-for="(order, index) in listData" v-else :key="index" class="list_details">
         <div class="time_date">
           <p class="time">
             {{ order.collectionTime }}
@@ -71,6 +72,10 @@ export default {
       type: String,
       default: () => ''
     },
+    detailsLoading: {
+      type: Boolean,
+      default: () => true
+    },
     listData: {
       type: Array,
       default: () => []
@@ -78,33 +83,7 @@ export default {
   },
   data () {
     return {
-      allOrders: [
-        {
-          time: '8:00am',
-          date: 'Monday 15th Sept 2022',
-          address: '9, Admiralty way, Lekki, Lagos'
-        },
-        {
-          time: '8:00am',
-          date: 'Monday 15th Sept 2022',
-          address: '9, Admiralty way, Lekki, Lagos'
-        },
-        {
-          time: '8:00am',
-          date: 'Monday 15th Sept 2022',
-          address: '9, Admiralty way, Lekki, Lagos'
-        },
-        {
-          time: '8:00am',
-          date: 'Monday 15th Sept 2022',
-          address: '9, Admiralty way, Lekki, Lagos'
-        },
-        {
-          time: '8:00am',
-          date: 'Monday 15th Sept 2022',
-          address: '9, Admiralty way, Lekki, Lagos'
-        }
-      ]
+      allOrders: []
     }
   }
 }
