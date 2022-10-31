@@ -2,18 +2,18 @@
   <div class="container">
     <div v-if="boxName === 'New-orders'" class="inner">
       <div class="lhs">
-        <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" />
+        <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersNewOrderList :box-name="boxName" :list-data="orderList" />
+        <OrdersNewOrderList :box-name="boxName" :list-data="orderList" :details-loading="detailsLoading" />
       </div>
     </div>
     <div v-else class="inner">
       <div class="lhs">
-        <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" />
+        <OrdersOrderDetail :details-loading="detailsLoading" :box-name="boxName" :details-data="detailsData" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersOrderList :box-name="boxName" :list-data="orderList" />
+        <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="detailsLoading" />
       </div>
     </div>
   </div>

@@ -36,6 +36,7 @@
         </div>
       </div>
     </div>
+    <LoadersDetails v-if="detailsLoading" :box-name="boxName" />
     <div class="box">
       <div v-if="successful" class="no_show">
         <AlertsSuccess :success-text="'Accepted order has been added to your To-do'" />

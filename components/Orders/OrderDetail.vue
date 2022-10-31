@@ -36,7 +36,8 @@
         </div>
       </div>
     </div>
-    <div class="box">
+    <LoadersDetails v-if="detailsLoading" :box-name="boxName" />
+    <div v-else class="box">
       <div v-if="successful" class="no_show">
         <AlertsSuccess :success-text="'Accepted order has been added to your To-do'" />
       </div>
@@ -282,6 +283,10 @@ export default {
     boxName: {
       type: String,
       default: () => ''
+    },
+    detailsLoading: {
+      type: Boolean,
+      default: () => true
     },
     detailsData: {
       type: Object,
