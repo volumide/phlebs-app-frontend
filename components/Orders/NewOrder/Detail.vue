@@ -171,33 +171,36 @@
       </div>
       <div class="patient_box slide-in-from-left">
         <p class="test_title">
-          Tests Information
+          Tests Information ({{ testInfomation.length }})
         </p>
-        <div class="test_inner">
-          <div>
+        <div v-for="(data) in testInfomation" :key="data" class="test_inner">
+          <div class="order_box">
             <p class="test_text">
-              Order No
+              Order No:
             </p>
             <p class="test_subtext">
-              {{ detailsData.orderNo }}
+              {{ detailsData.id }}
             </p>
           </div>
-          <div>
+          <div class="order_box">
             <p class="test_text">
-              Test to be Taken
+              Test to be Taken:
+            </p>
+            <div>
+              <p v-for="(test, index) in data.testIncluded" :key="index" class="test_subtext">
+                - {{ test }}
+              </p>
+            </div>
+          </div>
+          <div class="order_box">
+            <p class="test_text">
+              Sample Required:
             </p>
             <p class="test_subtext">
-              {{ detailsData.testAddress }}
+              {{ data.smapleRequired }}
             </p>
           </div>
-          <div>
-            <p class="test_text">
-              Sample Required
-            </p>
-            <p class="test_subtext">
-              {{ detailsData.sample }}
-            </p>
-          </div>
+          <hr class="line">
         </div>
       </div>
       <div v-show="boxName === 'To-do' || boxName === 'New-orders'" class="btns come-down">
@@ -287,6 +290,10 @@ export default {
     detailsLoading: {
       type: Boolean,
       default: () => true
+    },
+    testInfomation: {
+      type: Array,
+      default: () => []
     },
     detailsData: {
       type: Object,
@@ -492,6 +499,12 @@ export default {
   margin-bottom: 1.5vh;
 }
 
+.line {
+  margin-bottom: 30px;
+  border: none;
+  border-top: 1px solid #d1d1d1;
+}
+
 .test_text {
   color: rgba(0, 0, 0, 0.5);
   font-weight: 700;
@@ -499,8 +512,19 @@ export default {
 }
 
 .test_inner {
+  /* display: flex;
+  justify-content: space-between; */
+}
+
+.order_box {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
+}
+
+.test_subtext {
+  margin-left: 10px;
+  font-weight: 600;
+
 }
 
 .btns {
