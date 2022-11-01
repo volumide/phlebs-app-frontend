@@ -2,7 +2,7 @@
   <div class="container">
     <div v-if="boxName === 'New-orders'" class="inner">
       <div class="lhs">
-        <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" />
+        <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" :test-infomation="testInfomation" />
       </div>
       <div class="rhs mobile_no_show">
         <OrdersNewOrderList :box-name="boxName" :list-data="orderList" :details-loading="listLoading" />
@@ -10,7 +10,7 @@
     </div>
     <div v-else class="inner">
       <div class="lhs">
-        <OrdersOrderDetail :details-loading="detailsLoading" :box-name="boxName" :details-data="detailsData" />
+        <OrdersOrderDetail :details-loading="detailsLoading" :box-name="boxName" :details-data="detailsData" :test-infomation="testInfomation" />
       </div>
       <div class="rhs mobile_no_show">
         <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="listLoading" />
@@ -29,6 +29,7 @@ export default {
       boxName: '',
       detailsData: {},
       orderList: [],
+      testInfomation: [],
       detailsLoading: false,
       listLoading: false,
       capitalizeFirstLetter: functions.capitalizeFirstLetter
@@ -61,12 +62,25 @@ export default {
         }
       }).then((response) => {
         console.log(response)
+        this.getTestInfo(id, name)
         if (response.todo) {
           this.detailsData = response.todo[0]
         } else {
           this.detailsData = response.dismissed[0]
         }
         // console.log(this.detailsData)
+        this.detailsLoading = false
+      })
+    },
+    getTestInfo (id, name) {
+      // this.detailsLoading = true
+      this.$axios.$get(`/orders/test/info/${id}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        this.testInfomation = response.data
         this.detailsLoading = false
       })
     },

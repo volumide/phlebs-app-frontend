@@ -2,7 +2,7 @@
   <div class="container">
     <div class="inner">
       <div class="lhs">
-        <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" />
+        <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" :test-infomation="testInfomation" />
       </div>
       <div class="rhs mobile_no_show">
         <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="detailsLoading" />
@@ -21,6 +21,7 @@ export default {
       boxName: '',
       detailsData: {},
       orderList: [],
+      testInfomation: [],
       detailsLoading: false,
       listLoading: false,
       capitalizeFirstLetter: functions.capitalizeFirstLetter
@@ -49,13 +50,26 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
+        this.getTestInfo(id, name)
         if (response.todo) {
           this.detailsData = response.todo[0]
         } else {
           this.detailsData = response.dismissed[0]
         }
         // console.log(this.detailsData)
+        this.detailsLoading = false
+      })
+    },
+    getTestInfo (id, name) {
+      // this.detailsLoading = true
+      this.$axios.$get(`/orders/test/info/${id}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        console.log(response)
+        this.testInfomation = response.data
         this.detailsLoading = false
       })
     },
