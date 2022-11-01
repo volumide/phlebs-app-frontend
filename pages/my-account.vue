@@ -8,9 +8,10 @@
         @set-active-tab="setActiveTab"
       />
     </div>
-    <div v-if="activeTab === 'Personal' && !userLoading" class="tab_data">
+    <div v-if="activeTab === 'Personal'" class="tab_data">
       <ProfilePersonal
         :user-data="userData"
+        :data-loader="userLoading"
         :success-text="successMsg"
         :error-text="errorText"
         :image-loading="imageLoading"

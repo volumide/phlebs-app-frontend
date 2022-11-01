@@ -1,6 +1,9 @@
 <template>
   <div class="personal_ctn">
-    <div class="inner come-down">
+    <div v-if="dataLoader || loading" class="inner">
+      <LoadersAccount />
+    </div>
+    <div v-else class="inner come-down">
       <div class="lhs">
         <div>
           <div class="user-image-container">
@@ -250,6 +253,10 @@ export default {
       type: Boolean,
       default: () => false
     },
+    dataLoader: {
+      type: Boolean,
+      default: () => false
+    },
     errorText: {
       type: String,
       default: () => ''
@@ -271,6 +278,7 @@ export default {
       gender: '',
       dropoff: '',
       error2: false,
+      loading: false,
       errorText2: '',
       requestLoading: false,
       updateLoading: false,
@@ -362,10 +370,10 @@ export default {
           }
         }
       ).then((response) => {
-        this.loading = false
-        // console.log(response)
+        console.log(response)
         this.pushData()
         this.editAccess = response.editAccess
+        this.loading = false
       }).catch((onrejected) => {
         // console.log(onrejected)
         this.loading = false
