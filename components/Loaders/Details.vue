@@ -1,13 +1,12 @@
 <template>
   <div class="box">
-    <!-- <div class="skeleton card search no_show" /> -->
     <p class="box_name">
       {{ boxName }}
     </p>
     <div class="top">
       <div class="skeleton card fs" />
       <div class="skeleton card fs" />
-      <div class="skeleton card fs" />
+      <div class="skeleton card fs mobile_no_show" />
     </div>
     <div class="below">
       <div class="skeleton card notif" />
@@ -44,7 +43,7 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 70px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .search {
   width: 100%;
@@ -54,25 +53,25 @@ export default {
 .fs {
   width: 31%;
   height: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 .ms {
   width: 17%;
   height: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 .ls {
   width: 40%;
   height: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .notif {
-  margin: 50px 0;
+  margin: 20px 0;
 }
 
 .notif_2 {
-  margin: 50px 0;
+  margin: 20px 0;
   height: 100px;
 }
 
@@ -98,7 +97,7 @@ export default {
   }
 
   .fs {
-    width: 70%;
+    width: 48%;
   }
 
   .ms {

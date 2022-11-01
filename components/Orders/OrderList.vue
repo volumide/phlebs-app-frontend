@@ -9,7 +9,8 @@
           <p>{{ listData.length }}</p>
         </div>
       </div>
-      <div v-for="(order, index) in listData" :key="index" class="list_details">
+      <LoadersList v-if="detailsLoading" />
+      <div v-for="(order, index) in listData" v-else :key="index" class="list_details">
         <div class="time_date">
           <p class="time">
             {{ order[0].collectionTime }}
@@ -70,6 +71,10 @@ export default {
     boxName: {
       type: String,
       default: () => ''
+    },
+    detailsLoading: {
+      type: Boolean,
+      default: () => true
     },
     listData: {
       type: Array,

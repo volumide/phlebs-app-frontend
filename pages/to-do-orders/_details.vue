@@ -5,7 +5,7 @@
         <OrdersNewOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersNewOrderList :box-name="boxName" :list-data="orderList" :details-loading="detailsLoading" />
+        <OrdersNewOrderList :box-name="boxName" :list-data="orderList" :details-loading="listLoading" />
       </div>
     </div>
     <div v-else class="inner">
@@ -13,7 +13,7 @@
         <OrdersOrderDetail :details-loading="detailsLoading" :box-name="boxName" :details-data="detailsData" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="detailsLoading" />
+        <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="listLoading" />
       </div>
     </div>
   </div>

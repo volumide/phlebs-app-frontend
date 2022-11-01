@@ -286,7 +286,7 @@ export default {
     },
     detailsLoading: {
       type: Boolean,
-      default: () => true
+      default: () => false
     },
     detailsData: {
       type: Object,

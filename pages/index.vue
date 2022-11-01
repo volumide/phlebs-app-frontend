@@ -86,77 +86,91 @@
             </div>
           </div>
           <div class="next_order_box">
-            <div class="top">
-              <div>
-                <p class="next_order_time">
-                  {{ nextOrders ? nextOrders.collection_time : '00:00' }}
-                </p>
-                <p class="next_order_date">
-                  {{ nextOrders ? nextOrders.collection_date : 'No next order' }}
-                </p>
-              </div>
-              <svg
-                style="cursor: pointer"
-                width="36"
-                height="36"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                @click="$router.push(`/today-order/to-do?id=${nextOrders.orderId}`)"
-              >
-                <rect width="32" height="32" rx="10" fill="white" fill-opacity="0.2" />
-                <path d="M17.5704 20.3561L20.7482 17.1709C21.0241 16.8933 21.179 16.5178 21.179 16.1264C21.179 15.735 21.0241 15.3596 20.7482 15.082L17.5704 11.8968C17.4316 11.7588 17.2438 11.6814 17.0482 11.6814C16.8525 11.6814 16.6647 11.7588 16.5259 11.8968C16.4565 11.9657 16.4014 12.0476 16.3638 12.1379C16.3262 12.2281 16.3068 12.3249 16.3068 12.4227C16.3068 12.5205 16.3262 12.6173 16.3638 12.7076C16.4014 12.7979 16.4565 12.8798 16.5259 12.9487L18.963 15.3857H10.8148C10.6184 15.3857 10.4299 15.4637 10.291 15.6026C10.1521 15.7416 10.0741 15.93 10.0741 16.1264C10.0741 16.3229 10.1521 16.5113 10.291 16.6502C10.4299 16.7891 10.6184 16.8672 10.8148 16.8672H18.963L16.5259 19.3042C16.3864 19.4427 16.3077 19.6309 16.307 19.8275C16.3063 20.0241 16.3837 20.2129 16.5222 20.3524C16.6607 20.4918 16.849 20.5706 17.0455 20.5713C17.2421 20.572 17.4309 20.4946 17.5704 20.3561Z" fill="white" />
-              </svg>
-            </div>
-            <div class="address">
-              <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_625_7746)">
-                  <path d="M6.81817 0.421387C5.31177 0.423206 3.86754 1.08227 2.80235 2.25398C1.73716 3.42569 1.13801 5.01434 1.13635 6.67139C1.13635 9.97264 5.90908 14.5045 6.45113 15.0108L6.81817 15.352L7.18522 15.0108C7.72726 14.5045 12.5 9.97264 12.5 6.67139C12.4983 5.01434 11.8992 3.42569 10.834 2.25398C9.76881 1.08227 8.32458 0.423206 6.81817 0.421387V0.421387ZM6.81817 9.79639C6.25629 9.79639 5.70703 9.61311 5.23985 9.26973C4.77266 8.92635 4.40854 8.43829 4.19351 7.86727C3.97849 7.29625 3.92223 6.66792 4.03185 6.06173C4.14147 5.45554 4.41204 4.89872 4.80935 4.46168C5.20665 4.02464 5.71285 3.72701 6.26394 3.60643C6.81502 3.48585 7.38623 3.54774 7.90534 3.78426C8.42445 4.02079 8.86814 4.42133 9.1803 4.93523C9.49246 5.44913 9.65908 6.05332 9.65908 6.67139C9.65818 7.49988 9.35858 8.29416 8.826 8.88C8.29342 9.46584 7.57135 9.79539 6.81817 9.79639Z" fill="white" />
-                  <path d="M6.81819 8.54639C7.75959 8.54639 8.52274 7.70692 8.52274 6.67139C8.52274 5.63585 7.75959 4.79639 6.81819 4.79639C5.8768 4.79639 5.11365 5.63585 5.11365 6.67139C5.11365 7.70692 5.8768 8.54639 6.81819 8.54639Z" fill="white" />
-                </g>
-                <defs>
-                  <clipPath id="clip0_625_7746">
-                    <rect width="13.6364" height="15" fill="white" transform="translate(0 0.421387)" />
-                  </clipPath>
-                </defs>
-              </svg>
-              <p>{{ nextOrders ? nextOrders.collection_address : 'No next order' }}</p>
-            </div>
-            <div class="user_details">
-              <div class="name_image">
-                <div class="image">
-                  <img :src="nextOrders ? nextOrders.user_avatar : require('assets/images/patient-image.png')" alt="">
+            <div v-if="nextOrders.length === 0">
+              <div class="empty-state">
+                <div class="image-file">
+                  <img class="reveals" src="~assets/icons/empty-file.svg" alt="">
                 </div>
-                <div>
-                  <p class="name">
-                    {{ nextOrders ? nextOrders.user_name : 'No Order' }}
+                <div class="text-box come-up">
+                  <p class="not-text">
+                    You have no Next Order
                   </p>
-                  <div class="no_show">
-                    <div class="gender_age">
-                      <p class="age">
-                        {{ nextOrders ? nextOrders.user_age : '00' }}
-                      </p>
-                      <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
-                      </svg>
-                      <p class="gender">
-                        {{ nextOrders ? nextOrders.gender : 'Not specified' }}
-                      </p>
+                </div>
+              </div>
+            </div>
+            <div v-else>
+              <div class="top">
+                <div>
+                  <p class="next_order_time">
+                    {{ nextOrders ? nextOrders.collection_time : '00:00' }}
+                  </p>
+                  <p class="next_order_date">
+                    {{ nextOrders ? nextOrders.collection_date : 'No next order' }}
+                  </p>
+                </div>
+                <svg
+                  style="cursor: pointer"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  @click="$router.push(`/today-order/to-do?id=${nextOrders.orderId}`)"
+                >
+                  <rect width="32" height="32" rx="10" fill="white" fill-opacity="0.2" />
+                  <path d="M17.5704 20.3561L20.7482 17.1709C21.0241 16.8933 21.179 16.5178 21.179 16.1264C21.179 15.735 21.0241 15.3596 20.7482 15.082L17.5704 11.8968C17.4316 11.7588 17.2438 11.6814 17.0482 11.6814C16.8525 11.6814 16.6647 11.7588 16.5259 11.8968C16.4565 11.9657 16.4014 12.0476 16.3638 12.1379C16.3262 12.2281 16.3068 12.3249 16.3068 12.4227C16.3068 12.5205 16.3262 12.6173 16.3638 12.7076C16.4014 12.7979 16.4565 12.8798 16.5259 12.9487L18.963 15.3857H10.8148C10.6184 15.3857 10.4299 15.4637 10.291 15.6026C10.1521 15.7416 10.0741 15.93 10.0741 16.1264C10.0741 16.3229 10.1521 16.5113 10.291 16.6502C10.4299 16.7891 10.6184 16.8672 10.8148 16.8672H18.963L16.5259 19.3042C16.3864 19.4427 16.3077 19.6309 16.307 19.8275C16.3063 20.0241 16.3837 20.2129 16.5222 20.3524C16.6607 20.4918 16.849 20.5706 17.0455 20.5713C17.2421 20.572 17.4309 20.4946 17.5704 20.3561Z" fill="white" />
+                </svg>
+              </div>
+              <div class="address">
+                <svg width="14" height="16" viewBox="0 0 14 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_625_7746)">
+                    <path d="M6.81817 0.421387C5.31177 0.423206 3.86754 1.08227 2.80235 2.25398C1.73716 3.42569 1.13801 5.01434 1.13635 6.67139C1.13635 9.97264 5.90908 14.5045 6.45113 15.0108L6.81817 15.352L7.18522 15.0108C7.72726 14.5045 12.5 9.97264 12.5 6.67139C12.4983 5.01434 11.8992 3.42569 10.834 2.25398C9.76881 1.08227 8.32458 0.423206 6.81817 0.421387V0.421387ZM6.81817 9.79639C6.25629 9.79639 5.70703 9.61311 5.23985 9.26973C4.77266 8.92635 4.40854 8.43829 4.19351 7.86727C3.97849 7.29625 3.92223 6.66792 4.03185 6.06173C4.14147 5.45554 4.41204 4.89872 4.80935 4.46168C5.20665 4.02464 5.71285 3.72701 6.26394 3.60643C6.81502 3.48585 7.38623 3.54774 7.90534 3.78426C8.42445 4.02079 8.86814 4.42133 9.1803 4.93523C9.49246 5.44913 9.65908 6.05332 9.65908 6.67139C9.65818 7.49988 9.35858 8.29416 8.826 8.88C8.29342 9.46584 7.57135 9.79539 6.81817 9.79639Z" fill="white" />
+                    <path d="M6.81819 8.54639C7.75959 8.54639 8.52274 7.70692 8.52274 6.67139C8.52274 5.63585 7.75959 4.79639 6.81819 4.79639C5.8768 4.79639 5.11365 5.63585 5.11365 6.67139C5.11365 7.70692 5.8768 8.54639 6.81819 8.54639Z" fill="white" />
+                  </g>
+                  <defs>
+                    <clipPath id="clip0_625_7746">
+                      <rect width="13.6364" height="15" fill="white" transform="translate(0 0.421387)" />
+                    </clipPath>
+                  </defs>
+                </svg>
+                <p>{{ nextOrders ? nextOrders.collection_address : 'No next order' }}</p>
+              </div>
+              <div class="user_details">
+                <div class="name_image">
+                  <div class="image">
+                    <img :src="nextOrders ? nextOrders.user_avatar : require('assets/images/patient-image.png')" alt="">
+                  </div>
+                  <div>
+                    <p class="name">
+                      {{ nextOrders ? nextOrders.user_name : 'No Order' }}
+                    </p>
+                    <div class="no_show">
+                      <div class="gender_age">
+                        <p class="age">
+                          {{ nextOrders ? nextOrders.user_age : '00' }}
+                        </p>
+                        <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
+                        </svg>
+                        <p class="gender">
+                          {{ nextOrders ? nextOrders.gender : 'Not specified' }}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="mobile_no_show">
-                <div class="gender_age">
-                  <p class="age">
-                    {{ nextOrders ? nextOrders.user_age : '00' }}
-                  </p>
-                  <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
-                  </svg>
-                  <p class="gender">
-                    {{ nextOrders ? nextOrders.gender : 'Not specified' }}
-                  </p>
+                <div class="mobile_no_show">
+                  <div class="gender_age">
+                    <p class="age">
+                      {{ nextOrders ? nextOrders.user_age : '00' }}
+                    </p>
+                    <svg width="4" height="4" viewBox="0 0 4 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle opacity="0.4" cx="2" cy="2" r="2" fill="white" />
+                    </svg>
+                    <p class="gender">
+                      {{ nextOrders ? nextOrders.gender : 'Not specified' }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -501,6 +515,20 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-bottom: 2vh;
+}
+
+.image-file {
+  text-align: center;
+}
+
+.image-file img {
+  width: 30%;
+}
+
+.not-text {
+  text-align: center;
+  color: white;
+  font-weight: 700;
 }
 
 .next_order_head {

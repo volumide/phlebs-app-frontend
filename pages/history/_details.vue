@@ -2,10 +2,10 @@
   <div class="container">
     <div class="inner">
       <div class="lhs">
-        <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" />
+        <OrdersOrderDetail :box-name="boxName" :details-data="detailsData" :details-loading="detailsLoading" />
       </div>
       <div class="rhs mobile_no_show">
-        <OrdersOrderList :box-name="boxName" :list-data="orderList" />
+        <OrdersOrderList :box-name="boxName" :list-data="orderList" :details-loading="listLoading" />
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@
       </div>
     </div>
     <LoadersDetails v-if="detailsLoading" :box-name="boxName" />
-    <div class="box">
+    <div v-else class="box">
       <div v-if="successful" class="no_show">
         <AlertsSuccess :success-text="'Accepted order has been added to your To-do'" />
       </div>
@@ -202,12 +202,12 @@
       </div>
       <div v-show="boxName === 'To-do' || boxName === 'New-orders'" class="btns come-down">
         <div class="bottom_btn">
-          <button class="trans_btn" @click="dismissOpen = true">
+          <!-- <button class="trans_btn" @click="dismissOpen = true">
             Dismiss Order
-          </button>
-          <button v-if="boxName === 'To-do'" class="bg_btn" @click="confirmOpen = true">
+          </button> -->
+          <!-- <button v-if="boxName === 'To-do'" class="bg_btn" @click="confirmOpen = true">
             Complete Order
-          </button>
+          </button> -->
           <button v-if="boxName === 'New-orders'" class="bg_btn" @click="acceptOrder = true">
             Accept Order
           </button>
@@ -510,7 +510,7 @@ export default {
 
 .bottom_btn {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 6vh;
   width: 50%;
 }
