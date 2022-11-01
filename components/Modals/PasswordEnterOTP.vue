@@ -27,7 +27,7 @@
         Enter OTP
       </h1>
       <p class="sub-title">
-        Kindly enter the OTP sent to {{ phoneNumber }}
+        Kindly enter the OTP sent to you
       </p>
       <div class="form">
         <PincodeInput
@@ -96,31 +96,30 @@ export default {
           this.error = false
         }, 3000)
       } else {
-        this.updateLoading = true
-        this.$axios.$post('/auth/change/password',
-          {
-            current_password: this.password,
-            new_password: this.new_password
-          },
+        // this.updateLoading = true
+        const data = {
+          current_password: this.currentPassword,
+          new_password: this.newPassword
+        }
+        this.$axios.$post(`/auth/change/password/${this.code}`,
+          data,
           {
             headers: {
               Authorization: `Bearer ${Cookies.get('token')}`
             }
           }
         ).then((response) => {
-          // console.log(response)
-          this.updateLoading = false
+          console.log(response)
+          this.loading = false
           if (!response.error) {
-            // console.log(response)
-            this.successModal = true
+            this.$emit('bg-action')
           } else {
             this.error2 = true
             this.errorText2 = response.errorMsg
           }
-        // this.editAccess = response.editAccess
         }).catch((onrejected) => {
           console.log(onrejected)
-          this.updateLoading = false
+          this.loading = false
         })
       }
     }

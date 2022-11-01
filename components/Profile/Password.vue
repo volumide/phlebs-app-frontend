@@ -203,7 +203,7 @@
       </div>
     </div>
     <div class="bottom_btn slide-in-from-left">
-      <button v-if="updateLoading" class="bg_btn">
+      <button v-if="otpLoading" class="bg_btn">
         <Loader class="come-down" />
       </button>
       <button v-else :disabled="disabled" class="bg_btn" @click="getOtp()">
@@ -212,7 +212,7 @@
     </div>
     <ModalsPasswordEnterOTP
       v-if="passwordOTP"
-      :current-password="current_password"
+      :current-password="password"
       :new-password="new_password"
       @close-modal="passwordOTP = false"
       @trans-action="passwordOTP = false"
@@ -266,6 +266,7 @@ export default {
       errorText2: '',
       successModal: false,
       passwordOTP: false,
+      otpLoading: false,
       updateLoading: false,
       error2: false,
       userImage: null,
@@ -354,11 +355,16 @@ export default {
     },
     getOtp () {
       if (this.new_password === this.con_new_password) {
-        // this.updateLoading = true
-        this.$axios.$get('/auth/password/otp'
+        this.otpLoading = true
+        this.$axios.$get('/auth/generate/otp',
+          {
+            headers: {
+              Authorization: `Bearer ${Cookies.get('token')}`
+            }
+          }
         ).then((response) => {
-          // console.log(response)
-          this.updateLoading = false
+          console.log(response)
+          this.otpLoading = false
           if (!response.error) {
             console.log(response)
             this.passwordOTP = true
@@ -369,7 +375,7 @@ export default {
         // this.editAccess = response.editAccess
         }).catch((onrejected) => {
           console.log(onrejected)
-          this.updateLoading = false
+          this.otpLoading = false
         })
       } else {
         this.error2 = true
