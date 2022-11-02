@@ -12,7 +12,10 @@
       <div v-if="warning" class="">
         <AlertsWarning :warning-head="'Instruction'" :warning-text="'Kindly Add a Primary Bank account bearing your name to allow easy withdrawal from your wallet'" />
       </div>
-      <div class="top_section">
+      <div v-if="loading" class="top_se">
+        <LoadersEarnings />
+      </div>
+      <div v-else class="top_section">
         <div class="wallet_balance come-down">
           <p class="text">
             My Wallet Balance
@@ -216,6 +219,7 @@ export default {
       activeTab: 'Earnings',
       referral_code: '',
       code_copied: false,
+      loading: false,
       shareWithFriends: false,
       hideBalance: true,
       setPin: false,
@@ -275,7 +279,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        this.loading = false
+        // this.loading = false
         // console.log(response)
         if (!response.pin) {
           this.setPin = true
@@ -284,32 +288,32 @@ export default {
         }
       })
     },
-    getReferralCode () {
-      this.loading = true
-      this.$axios.$get('/auth/refferal/code', {
+    checkIfBankAdded () {
+      // this.loading = true
+      this.$axios.$get('/earning/is/primary/bank/added', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        this.loading = false
+        // this.loading = false
         // console.log(response)
-        this.referral_code = response.refferral_code
+        this.isBankAccountAdded = response.isBankAccountAdded
       })
     },
     getWalletBalace () {
-      this.loading = true
+      // this.loading = true
       this.$axios.$get('/auth/wallet/balance', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        this.loading = false
+        // this.loading = false
         // console.log(response)
         this.balance = response.wallet_amount
       })
     },
     getPrimaryAccount () {
-      this.loading = true
+      // this.loading = true
       this.$axios.$get('/earning/get/primary/account', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
@@ -320,16 +324,16 @@ export default {
         this.accountDetails = response.data
       })
     },
-    checkIfBankAdded () {
-      this.loading = true
-      this.$axios.$get('/earning/is/primary/bank/added', {
+    getReferralCode () {
+      // this.loading = true
+      this.$axios.$get('/auth/refferal/code', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        this.loading = false
+        // this.loading = false
         // console.log(response)
-        this.isBankAccountAdded = response.isBankAccountAdded
+        this.referral_code = response.refferral_code
       })
     }
   }
