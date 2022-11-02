@@ -71,11 +71,11 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.todoData = response.orders.order
         this.todoLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.todoLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
@@ -97,7 +97,7 @@ export default {
         }
         this.completedLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.completedLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
@@ -119,7 +119,7 @@ export default {
         }
         this.dismissedLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.dismissedLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)

@@ -103,6 +103,7 @@ export default {
     getDropofflist (val) {
       this.$axios.$get('/auth/get_drop_off_location', {
       }).then((response) => {
+        // console.log(response)
         this.dropoffLocation = response.data.location
       })
     },

@@ -57,7 +57,6 @@
             <div class="new_input">
               <input
                 v-model="account_no"
-
                 :disabled="disabled"
                 type="number"
                 @focus="error2 = false"
@@ -160,7 +159,7 @@ export default {
         }
       }
       ).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           this.account_name = response.data.account_name
           // this.$emit('bg-action')
@@ -174,7 +173,7 @@ export default {
     addBank () {
       this.error = false
       this.addLoading = true
-      console.log(this.bank)
+      // console.log(this.bank)
       if (this.bank === '') {
         this.error = true
         this.errorText = 'Please Select a Bank'
