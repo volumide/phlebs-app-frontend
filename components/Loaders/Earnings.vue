@@ -35,9 +35,10 @@ export default {
   .loader_container {
     padding: 10px;
     flex-direction: column;
+    width: 100%;
   }
 
-  .lhs, .rhs {
+  .fs, .ls {
     width: 100%;
     margin-bottom: 10px;
   }
