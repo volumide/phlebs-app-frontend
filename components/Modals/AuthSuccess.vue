@@ -8,10 +8,10 @@
         {{ subHeading }}
       </p>
       <div v-if="whatsappStatus" class="ctn_img">
-        <img src="~assets/images/94110-whatsapp-transparent.gif" alt="">
+        <img src="~assets/gifs/94110-whatsapp-transparent.gif" alt="">
       </div>
       <div v-else class="ctn_img">
-        <img src="~assets/images/96673-success.gif" alt="">
+        <img src="~assets/gifs/96673-success.gif" alt="">
       </div>
       <div class="btn">
         <button class="bg_btn" @click="$emit('btnAction')">

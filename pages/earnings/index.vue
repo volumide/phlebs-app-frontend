@@ -184,7 +184,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/Successful  - Completed.gif')"
       :modal-head="'Your Primary Account has been added succesfully'"
       :modal-text="'To modify subsequetly, kindly contact support'"
       :bg-btn="'Close'"
@@ -193,7 +193,7 @@
     />
     <ModalsSuccessModal
       v-if="setPin"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/Pin.gif')"
       :modal-head="'You’ve not setup you Withdrawal Pin'"
       :modal-text="'This pin would be required for you to complete your withdrawal'"
       :bg-btn="'Set Pin'"

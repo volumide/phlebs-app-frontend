@@ -167,7 +167,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/Transfer Successful.gif')"
       :modal-head="'Withdrawal Successful'"
       :modal-text="'Your Transaction has been completed successfully'"
       :bg-btn="'Close'"

@@ -220,7 +220,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Password Changed'"
       :modal-text="'Your Password has been saved successfully'"
       :bg-btn="'Close'"

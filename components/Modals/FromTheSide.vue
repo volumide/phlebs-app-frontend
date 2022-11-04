@@ -58,7 +58,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Deleted!'"
       :bg-btn="'Close'"
       @close-modal="closeSuccess()"

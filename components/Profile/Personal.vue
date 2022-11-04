@@ -216,7 +216,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Request Sent'"
       :modal-text="'Your Request has been sent and you will be contacted soon.'"
       :add-data-one="'Contact Support'"
@@ -227,7 +227,7 @@
     />
     <ModalsSuccessModal
       v-if="successModalSaved"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Update Saved'"
       :modal-text="'Update Changed successfully'"
       :bg-btn="'Close'"

@@ -144,7 +144,7 @@
     />
     <ModalsSuccessModal
       v-if="pinSuccessModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Your Pin has been changed Successfully'"
       :bg-btn="'Close'"
       @close-modal="pinSuccessModal = false"
@@ -152,7 +152,7 @@
     />
     <ModalsSuccessModal
       v-if="successModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-head="'Update Saved'"
       :modal-text="'Your Phone Number has been updated successfully'"
       :bg-btn="'Close'"

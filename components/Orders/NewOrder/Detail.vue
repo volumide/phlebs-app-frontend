@@ -261,7 +261,7 @@
     />
     <ModalsSuccessModal
       v-if="dismissedSuccessModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-text="'The order has been dismissed successfully'"
       :bg-btn="'Close'"
       @close-modal="$router.push('/today-order')"
@@ -269,7 +269,7 @@
     />
     <ModalsSuccessModal
       v-if="confirmSuccessModal"
-      :modal-image="require('assets/images/96673-success.gif')"
+      :modal-image="require('assets/gifs/96673-success.gif')"
       :modal-text="confirmSuccessText"
       :modal-head="'Thank You!'"
       :bg-btn="'Close'"
