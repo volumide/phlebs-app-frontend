@@ -22,7 +22,7 @@
         <div class="notification-list">
           <LoadersNotificationModal v-if="loading" class="big-loader" />
           <EmptyNotification v-else-if="notifications.length === 0" />
-          <div v-for="(list, index) in notifications" v-else :key="index" class="list">
+          <div v-for="(list, index) in notifications" v-else :key="index" class="list" @click="$emit('close-notification'); $router.push(`/notifications?id=${list.id}`)">
             <div class="lhs">
               <img src="~assets/images/notif.png" alt="">
             </div>
@@ -87,13 +87,13 @@ export default {
   methods: {
     getNotification () {
       this.loading = true
-      this.$axios.$get('/auth/notification/all/3/0', {
+      this.$axios.$get('/auth/notification/unread/3/0', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.notifications = response.data.notification
       })
     },
@@ -174,6 +174,7 @@ export default {
   display: flex;
   padding: 20px 20px;
   border-bottom: 1px solid #3c425727;
+  cursor: pointer;
 }
 
 .lhs img {

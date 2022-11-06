@@ -34,7 +34,7 @@
                     <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+                  <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
                 </div>
               </th>
             </tr>
@@ -91,7 +91,7 @@
               <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+            <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
           </div>
           <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/to-do?id=${data[0].id}`)">
             <div>
