@@ -227,7 +227,7 @@ export default {
       addBankAccount: false,
       successModal: false,
       accountDetails: {},
-      balance: 'N601,400'
+      balance: ''
     }
   },
   computed: {
