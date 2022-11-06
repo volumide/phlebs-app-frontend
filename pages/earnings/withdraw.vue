@@ -97,7 +97,10 @@
         <div v-if="error" class="error_box">
           <AlertsError :error-text="`Please Enter Amount`" />
         </div>
-        <div class="box_inner">
+        <div v-if="acctLoading" class="box_inner">
+          <LoadersWithdraw />
+        </div>
+        <div v-else class="box_inner come-down">
           <div class="lside">
             <div class="input_cont">
               <p class="label">
@@ -189,6 +192,7 @@ export default {
       openPin: false,
       confirmWithdraw: false,
       error: false,
+      acctLoading: false,
       accountDetails: {},
       amount: '',
       successModal: false,
@@ -227,13 +231,13 @@ export default {
       })
     },
     getPrimaryAccount () {
-      this.loading =
+      this.acctLoading = true
       this.$axios.$get('/earning/get/primary/account', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        this.loading = false
+        this.acctLoading = false
         console.log(response)
         this.accountDetails = response.data
       })
