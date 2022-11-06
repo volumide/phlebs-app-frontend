@@ -78,6 +78,10 @@
               </td>
             </tr>
           </table>
+          <TablesFooter
+            @next="next()"
+            @prev="prev()"
+          />
           <div v-if="!filteredTable.length" class="come-down search_empty">
             <EmptyData
               :modal-head="'No Result!'"
@@ -93,6 +97,10 @@
             </svg>
             <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
           </div>
+          <TablesFooter
+            @next="next()"
+            @prev="prev()"
+          />
           <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/completed?id=${data[0].id}`)">
             <div>
               <p class="mobile_time">
