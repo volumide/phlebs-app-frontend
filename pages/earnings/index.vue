@@ -87,6 +87,7 @@
                 viewBox="0 0 40 40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                @click="editAcct()"
               >
                 <rect width="40" height="40" rx="4" fill="#6F8CE4" />
                 <g clip-path="url(#clip0_1841_9571)">
@@ -130,7 +131,7 @@
       </div>
       <div class="bottom_section">
         <div class="">
-          <TablesEarningsTable :table-data="todoData" :table-loader="todoLoading" />
+          <TablesEarningsTable />
         </div>
       </div>
     </div>
@@ -204,6 +205,12 @@
       :referral-code="referral_code"
       @close-modal="shareWithFriends = false"
     />
+    <ModalsContactSupport
+      v-if="infoBox"
+      :bg-btn="'Close'"
+      @close-modal="infoBox = false"
+      @bg-action="infoBox = false"
+    />
   </div>
 </template>
 
@@ -219,6 +226,7 @@ export default {
       activeTab: 'Earnings',
       referral_code: '',
       code_copied: false,
+      infoBox: false,
       loading: false,
       shareWithFriends: false,
       hideBalance: true,
@@ -239,6 +247,7 @@ export default {
     }
   },
   created () {
+    this.$store.commit('setPageName', this.activeTab)
     this.checkWithdrawalPin()
     this.checkIfBankAdded()
     this.getWalletBalace()
@@ -257,6 +266,12 @@ export default {
       } else if (this.activeTab === 'Referrals') {
         // this.getDismissedOrders()
       }
+    },
+    editAcct () {
+      this.infoBox = !this.infoBox
+      setTimeout(() => {
+        this.infoBox = false
+      }, 7000)
     },
     copyCode () {
       navigator.clipboard.writeText(this.referral_code)
@@ -391,6 +406,44 @@ export default {
   color: #fff;
 }
 
+.row_details {
+  z-index: 2;
+  position: absolute;
+  top: 50px;
+  left: 20%;
+  background-color: #fff;
+  width: 20rem;
+  height: fit-content;
+  padding: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 41, 93, 0.09);
+  border-radius: 10px;
+}
+
+.title_top {
+  display: flex;
+  align-items: center;
+}
+
+.details_head {
+  margin-left: 10px;
+  font-weight: 700;
+}
+
+.to {
+  color: rgba(0, 0, 0, 0.5);
+  margin-top: 20px;
+  font-weight: 500;
+}
+
+.acct_det {
+  margin-top: 10px;
+}
+
+.acct_info {
+  margin-top: 5px;
+  font-weight: 500;
+}
+
 .bg_btn {
   margin-top: 2vh;
   background-color: #6F8CE4;
@@ -419,6 +472,10 @@ export default {
 
 .pass_svg {
   cursor: pointer;
+}
+
+.icon {
+  position: relative;
 }
 
 .icon svg {
@@ -528,6 +585,11 @@ button[disabled] {
   .acct_details {
     width: 60%;
     padding-bottom: 2vh;
+  }
+
+  .row_details {
+    left: unset;
+    right: 0;
   }
 
   .today_order {

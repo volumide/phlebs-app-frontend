@@ -9,7 +9,7 @@
           <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+        <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
       </div>
     </div>
     <TablesLoader v-if="tableLoader" />
@@ -160,9 +160,9 @@
               <path d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M21.9243 21.925L27.9994 28.0001" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            <input v-model="tableQuery" placeholder="Search Table" name="email" type="email" @focus="error = false">
+            <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
           </div>
-          <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/completed?id=${data[0].id}`)">
+          <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="openDetails(index, data)">
             <div class="icon_type">
               <svg
                 v-if="data.type.toLowerCase().includes('withdraw')"
@@ -203,6 +203,54 @@
                 {{ numericalDate(data.createdAt) }}
               </p>
             </div>
+            <!-- <div v-if="selectedItem === index" class="row_details come-down">
+              <div class="title_top">
+                <div class="icon_type">
+                  <svg
+                    v-if="detailsBox.type.toLowerCase().includes('withdraw')"
+                    width="38"
+                    height="39"
+                    viewBox="0 0 38 39"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="19" cy="19.2266" r="19" fill="#FFE9D9" />
+                    <path d="M24.6392 22.0969L24.632 15.9104C24.6304 15.3723 24.4159 14.8566 24.0354 14.4761C23.6548 14.0955 23.1392 13.8811 22.601 13.8795L16.4145 13.8722C16.1454 13.873 15.8876 13.9803 15.6973 14.1706C15.507 14.3608 15.3998 14.6187 15.399 14.8877C15.3984 15.0222 15.4245 15.1554 15.4757 15.2797C15.5269 15.4041 15.6022 15.517 15.6973 15.6121C15.7924 15.7072 15.9053 15.7825 16.0297 15.8337C16.154 15.8849 16.2872 15.911 16.4217 15.9104L21.1606 15.9104L13.2384 23.8326C13.0474 24.0236 12.9401 24.2827 12.9401 24.5528C12.9401 24.823 13.0474 25.082 13.2384 25.273C13.4294 25.464 13.6885 25.5714 13.9586 25.5714C14.2287 25.5714 14.4878 25.464 14.6788 25.273L22.601 17.3508L22.601 22.0897C22.6001 22.36 22.7065 22.6196 22.8969 22.8114C23.0874 23.0032 23.3462 23.1115 23.6165 23.1124C23.8868 23.1134 24.1464 23.0069 24.3382 22.8165C24.5299 22.6261 24.6382 22.3672 24.6392 22.0969Z" fill="#F15728" />
+                  </svg>
+                  <svg
+                    v-else
+                    width="38"
+                    height="39"
+                    viewBox="0 0 38 39"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="19" cy="19.2266" r="19" transform="rotate(-180 19 19.2266)" fill="#DAEEED" />
+                    <path d="M13.3608 16.3562L13.368 22.5427C13.3696 23.0809 13.5841 23.5965 13.9646 23.977C14.3452 24.3576 14.8608 24.5721 15.399 24.5737L21.5855 24.5809C21.8546 24.5801 22.1124 24.4728 22.3027 24.2826C22.493 24.0923 22.6002 23.8345 22.601 23.5654C22.6016 23.4309 22.5755 23.2977 22.5243 23.1734C22.4731 23.0491 22.3978 22.9361 22.3027 22.841C22.2076 22.7459 22.0947 22.6706 21.9703 22.6194C21.846 22.5682 21.7128 22.5422 21.5783 22.5427L16.8394 22.5427L24.7616 14.6205C24.9526 14.4295 25.0599 14.1704 25.0599 13.9003C25.0599 13.6302 24.9526 13.3711 24.7616 13.1801C24.5706 12.9891 24.3115 12.8818 24.0414 12.8818C23.7713 12.8818 23.5122 12.9891 23.3212 13.1801L15.399 21.1023L15.399 16.3634C15.3999 16.0931 15.2935 15.8335 15.1031 15.6417C14.9126 15.4499 14.6538 15.3416 14.3835 15.3407C14.1132 15.3397 13.8536 15.4462 13.6618 15.6366C13.4701 15.8271 13.3618 16.0859 13.3608 16.3562Z" fill="#00B78F" />
+                  </svg>
+                </div>
+                <p class="details_head">
+                  {{ detailsBox.type }}
+                </p>
+              </div>
+              <p v-if="detailsBox.type.toLowerCase().includes('withdraw')" class="to">
+                TO
+              </p>
+              <p v-else class="to">
+                FROM
+              </p>
+              <div class="acct_det">
+                <p class="acct_info">
+                  ABIODUN TOCHUKWU BUHARI
+                </p>
+                <p class="acct_info">
+                  STERLING BANK
+                </p>
+                <p class="acct_info">
+                  0123455678
+                </p>
+              </div>
+            </div> -->
           </div>
           <div v-if="!filteredTable.length" class="come-down search_empty">
             <EmptyData
@@ -219,6 +267,11 @@
         />
       </div>
     </div>
+    <ModalsTransactionDetails
+      v-if="newSelected"
+      :modal-data="detailsBox"
+      @close-modal="newSelected = false"
+    />
   </div>
 </template>
 
@@ -244,6 +297,7 @@ export default {
       tableLoader: true,
       transLoading: false,
       selectedItem: null,
+      newSelected: false,
       detailsBox: {},
       tableData: []
     }
@@ -264,7 +318,10 @@ export default {
         this.selectedItem = null
       }
       this.detailsBox = data
-      console.log(data)
+    },
+    openDetails (index, data) {
+      this.newSelected = true
+      this.detailsBox = data
     },
     getTransactionHistory () {
       this.tableLoader = true
@@ -273,11 +330,11 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.tableData = response.data.transaction
         this.tableLoader = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.tableLoader = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
@@ -373,12 +430,8 @@ th {
   width: 10%;
 }
 
-table {
-  /* position: relative; */
-}
-
 .row_details {
-  z-index: 50;
+  z-index: 5;
   position: absolute;
   top: 50px;
   right: 2%;

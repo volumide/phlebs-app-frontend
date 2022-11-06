@@ -47,6 +47,13 @@ export default {
     }
   },
   created () {
+    const id = this.$route.query.id
+    if (id) {
+      // this.getNotification()
+      this.openDetails(id)
+    } else {
+      this.activeTab = 'Personal'
+    }
     this.getNotification()
   },
   methods: {

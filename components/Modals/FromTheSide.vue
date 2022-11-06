@@ -141,7 +141,7 @@ export default {
     },
     closeSuccess () {
       this.successModal = false
-      this.$emit('closeSuccess')
+      this.$router.push('/notifications')
     }
   }
 }

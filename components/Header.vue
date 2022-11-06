@@ -149,7 +149,7 @@ export default {
       if (this.$route.name === `${splited[0]}-${splited[1]}`) {
         return `${this.capitalizeFirstLetter(splited[0])} ${this.capitalizeFirstLetter(splited[1])}`
       } else if (this.$route.name === `${splited[0]}-${splited[1]}-${splited[2]}`) {
-        return `${splited[1]}`
+        return `${this.capitalizeFirstLetter(splited[1])}`
       } else {
         return `${this.capitalizeFirstLetter(splited[0])}`
       }
