@@ -52,7 +52,7 @@ export default {
       // this.getNotification()
       this.openDetails(id)
     } else {
-      this.activeTab = 'Personal'
+      this.activeTab = 'All'
     }
     this.getNotification()
   },
@@ -75,7 +75,7 @@ export default {
     },
     getNotification () {
       this.allNofitLoading = true
-      this.$axios.$get('/auth/notification/all/10/0', {
+      this.$axios.$get('/auth/notification/all/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -87,7 +87,7 @@ export default {
     },
     getReadNotification () {
       this.readNofitLoading = true
-      this.$axios.$get('/auth/notification/read/10/0', {
+      this.$axios.$get('/auth/notification/read/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -99,7 +99,7 @@ export default {
     },
     getUnreadNotification () {
       this.unreadNofitLoading = true
-      this.$axios.$get('/auth/notification/unread/10/0', {
+      this.$axios.$get('/auth/notification/unread/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }

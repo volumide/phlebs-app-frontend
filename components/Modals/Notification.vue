@@ -87,7 +87,7 @@ export default {
   methods: {
     getNotification () {
       this.loading = true
-      this.$axios.$get('/auth/notification/unread/3/0', {
+      this.$axios.$get('/auth/notification/unread/3/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }

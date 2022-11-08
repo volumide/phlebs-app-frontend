@@ -45,7 +45,7 @@ export default {
     },
     getCompletedOrders () {
       this.completedLoading = true
-      this.$axios.$get('/orders/completed/all/10/0', {
+      this.$axios.$get('/orders/completed/all/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -67,7 +67,7 @@ export default {
     },
     getDismissedOrders () {
       this.dismissedLoading = true
-      this.$axios.$get('/orders/dismissed/all/10/0', {
+      this.$axios.$get('/orders/dismissed/all/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
