@@ -168,7 +168,7 @@ export default {
   methods: {
     getNotificationCount () {
       this.loading =
-      this.$axios.$get('/auth/notification/all/10/0', {
+      this.$axios.$get('/auth/notification/all/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }

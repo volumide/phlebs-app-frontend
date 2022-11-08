@@ -300,7 +300,7 @@ export default {
     },
     getTransactionHistory (page) {
       this.tableLoader = true
-      this.$axios.$get('/earning/transaction/history/10/0', {
+      this.$axios.$get('/earning/transaction/history/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }

@@ -80,13 +80,13 @@ export default {
       this.listLoading = true
       let url = ''
       if (name === 'to-do') {
-        url = '/orders/get/all/todo/10/0'
+        url = '/orders/get/all/todo/10/1'
       } else if (name === 'completed') {
-        url = '/orders/completed/all/10/0'
+        url = '/orders/completed/all/10/1'
       } else if (name === 'dismissed') {
-        url = '/orders/dismissed/all/10/0'
+        url = '/orders/dismissed/all/10/1'
       } else if (name === 'new-orders') {
-        url = '/orders/all/new/order/10/0'
+        url = '/orders/all/new/order/10/1'
       }
       this.$axios.$get(url, {
         headers: {

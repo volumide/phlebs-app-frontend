@@ -48,7 +48,7 @@ export default {
   },
   created () {
     const tabfromUrl = this.$route.query.type
-    console.log(tabfromUrl)
+    // console.log(tabfromUrl)
     if (tabfromUrl) {
       this.activeTab = tabfromUrl
       this.getNewOrders()
@@ -69,7 +69,7 @@ export default {
     },
     getAllToDo () {
       this.todoLoading = true
-      this.$axios.$get('/orders/get/all/todo/10/0', {
+      this.$axios.$get('/orders/get/all/todo/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -78,7 +78,7 @@ export default {
         this.todoData = response.orders.order
         this.todoLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.todoLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
@@ -87,7 +87,7 @@ export default {
     },
     getNewOrders () {
       this.newOrderLoading = true
-      this.$axios.$get('/orders/all/new/order/10/0', {
+      this.$axios.$get('/orders/all/new/order/10/1', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -96,7 +96,7 @@ export default {
         this.newOrderData = response.orders.order
         this.newOrderLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.newOrderLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
