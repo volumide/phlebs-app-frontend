@@ -79,8 +79,11 @@
             </tr>
           </table>
           <TablesFooter
-            @next="next()"
-            @prev="prev()"
+            :total-docs="totalData"
+            :prev-disabled="hasPrevPage"
+            :next-disabled="hasNextPage"
+            @next="$emit('next')"
+            @prev="$emit('prev')"
           />
           <div v-if="!filteredTable.length" class="come-down search_empty">
             <EmptyData
@@ -160,6 +163,18 @@ export default {
     tableData: {
       type: Array,
       default: () => []
+    },
+    hasPrevPage: {
+      type: Boolean,
+      default: () => null
+    },
+    hasNextPage: {
+      type: Boolean,
+      default: () => null
+    },
+    totalData: {
+      type: Number,
+      default: () => null
     },
     tableLoader: {
       type: Boolean,

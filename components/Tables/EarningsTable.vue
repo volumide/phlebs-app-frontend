@@ -67,7 +67,7 @@
                 {{ currency(data.amount) }}
               </td>
               <td class="dateTime">
-                {{ detailedDate(data.createdAt) }}
+                {{ detailedDate(data.updatedAt) }}
               </td>
               <td class="status">
                 <div :class="`status_text ${data.status === 'Success' ? 'sucess' : 'failed'}-status`">
@@ -131,23 +131,26 @@
                   TO
                 </p>
                 <p v-else class="to">
-                  FROM
+                  TO
                 </p>
                 <div class="acct_det">
                   <p class="acct_info">
-                    ABIODUN TOCHUKWU BUHARI
+                    {{ detailsBox.account_name }}
                   </p>
                   <p class="acct_info">
-                    STERLING BANK
+                    {{ detailsBox.bankofdeposit }}
                   </p>
                   <p class="acct_info">
-                    0123455678
+                    {{ detailsBox.account_number }}
                   </p>
                 </div>
               </div>
             </tr>
           </table>
           <TablesFooter
+            :total-docs="totalData"
+            :prev-disabled="hasPrevPage"
+            :next-disabled="hasNextPage"
             @next="next()"
             @prev="prev()"
           />
@@ -208,7 +211,7 @@
                 {{ currency(data.amount) }}
               </p>
               <p class="mobile_date">
-                {{ numericalDate(data.createdAt) }}
+                {{ numericalDate(data.updatedAt) }}
               </p>
             </div>
           </div>
@@ -253,23 +256,32 @@ export default {
       detailedDate,
       numericalDate,
       tableQuery: '',
-      limit: '',
       deposit: true,
       tableLoader: true,
       transLoading: false,
       selectedItem: null,
       newSelected: false,
+      totalPages: '',
+      totalData: '',
+      currentPage: '',
+      limit: 3,
+      hasNextPage: null,
+      hasPrevPage: null,
+      pageNumber: 1,
       detailsBox: {},
       tableData: []
     }
   },
   computed: {
     filteredTable () {
-      return this.tableData.filter(data => data.type.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.amount.toLowerCase().includes(this.tableQuery.toLowerCase()) || this.detailedDate(data.createdAt).toLowerCase().includes(this.tableQuery.toLowerCase()) || data.status.toLowerCase().includes(this.tableQuery.toLowerCase()))
+      return this.tableData.filter(data => data.type.toLowerCase().includes(this.tableQuery.toLowerCase()) || data.amount.toLowerCase().includes(this.tableQuery.toLowerCase()) || this.detailedDate(data.updatedAt).toLowerCase().includes(this.tableQuery.toLowerCase()) || data.status.toLowerCase().includes(this.tableQuery.toLowerCase()))
     }
   },
   created () {
-    this.getTransactionHistory()
+    this.getTransactionHistory(
+      this.pageNumber,
+      this.limit
+    )
   },
   methods: {
     handleShowOption (index, data) {
@@ -285,28 +297,45 @@ export default {
       this.detailsBox = data
     },
     prev () {
-      if (this.currentPage > 1) {
-        this.setPage(this.currentPage - 1)
+      if (this.hasPrevPage) {
+        this.setPage(this.limit - this.pageNumber)
       }
     },
     next () {
-      // if (this.currentPage < this.totalPages) {
-      //   this.setPage(this.currentPage + 1)
-      // }
-      this.setPage(this.currentPage + 1)
+      if (this.hasNextPage) {
+        this.setPage(this.limit + this.pageNumber)
+      }
+      // this.setPage(this.currentPage + 1)
     },
-    setPage (page) {
-      this.getTransactionHistory(page)
+    setPage (pageNumber) {
+      this.getTransactionHistory(
+        pageNumber,
+        this.limit
+      )
     },
-    getTransactionHistory (page) {
+    getTransactionHistory (
+      pageNumber,
+      limit
+    ) {
+      console.log(pageNumber)
+      console.log(limit)
       this.tableLoader = true
-      this.$axios.$get('/earning/transaction/history/10/1', {
+      this.$axios.$get(`/earning/transaction/history/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         this.tableData = response.data.transaction
+        this.totalPages = response.data.totalPages
+        this.totalData = response.data.totalDocs
+        this.currentPage = response.data.page
+        this.hasPrevPage = response.data.hasPrevPage
+        this.hasNextPage = response.data.hasNextPage
+        this.limit = Number(response.data.limit)
+        // this.filterFromDate = fromDate
+        // this.filterToDate = toDate
+        // this.search = search
         this.tableLoader = false
       }).catch((onrejected) => {
         // console.log(onrejected)

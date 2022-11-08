@@ -1,12 +1,15 @@
 <template>
   <div class="container">
-    <div class="tab-ctn">
+    <div class="tab_ctn">
       <TabHeaders
         :tabs="['All', 'Read', 'Unread']"
         padding-left="4px"
         :active-tab="activeTab"
         @set-active-tab="setActiveTab"
       />
+      <p class="delete" @click="deleteAll()">
+        Delete All
+      </p>
     </div>
     <div v-if="activeTab === 'All'" class="tab_data">
       <NotificationAll :notifications="allNotifications" :notification-loading="allNofitLoading" @open-notification="openDetails" />
@@ -40,6 +43,7 @@ export default {
       readNotifications: [],
       unreadNotifications: [],
       notificationId: '',
+      deleteNofitLoading: false,
       allNofitLoading: false,
       readNofitLoading: false,
       notificationDetails: false,
@@ -72,6 +76,22 @@ export default {
       } else if (this.activeTab === 'Unread') {
         this.getUnreadNotification()
       }
+    },
+    deleteAll () {
+      this.allNofitLoading = true
+      this.readNofitLoading = true
+      this.unreadNofitLoading = true
+      this.$axios.$get('/auth/notification/delete/all', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        this.getNotification()
+        this.getReadNotification()
+        this.getUnreadNotification()
+        // console.log(response)
+        // this.allNotifications = response.data.notification
+      })
     },
     getNotification () {
       this.allNofitLoading = true
@@ -118,5 +138,17 @@ export default {
 .container {
   padding: 2vh 3vw;
   padding-right: 5vw;
+}
+
+.tab_ctn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete {
+  color: red;
+  font-weight: 700;
+  cursor: pointer;
 }
 </style>
