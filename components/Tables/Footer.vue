@@ -5,16 +5,16 @@
         dc
       </div> -->
       <div class="m mobile_no_show">
-        Showing 1 to 10 of 57 Entries
+        Showing 1 to 10 of {{ totalDocs }} Entries
       </div>
       <div class="m no_show">
-        1 to 10 of 57
+        1 to 10 of {{ totalDocs }}
       </div>
       <div class="rhs">
-        <p class="prev" @click="$emit('prev')">
+        <p class="prev" :disabled="!prevDisabled" @click="$emit('prev')">
           Prev
         </p>
-        <p class="next" @click="$emit('next')">
+        <p class="next" :disabled="!nextDisabled" @click="$emit('next')">
           Next
         </p>
       </div>
@@ -24,7 +24,20 @@
 
 <script>
 export default {
-
+  props: {
+    totalDocs: {
+      type: Number,
+      default: () => null
+    },
+    prevDisabled: {
+      type: Boolean,
+      default: () => null
+    },
+    nextDisabled: {
+      type: Boolean,
+      default: () => null
+    }
+  }
 }
 </script>
 
@@ -52,29 +65,42 @@ export default {
 }
 
 .prev {
-  border: 1px solid rgba(0, 0, 0, 0.212);
+  border: 1.5px solid var(--primary-color);
   padding: 10px 20px;
   border-radius: 5px;
+  color: var(--primary-color);
+  font-weight: 600;
   cursor: pointer;
 }
 
-.prev:hover {
+/* .prev:hover {
   color: var(--primary-color);
   font-weight: 700;
   border: 2px solid var(--primary-color);
-}
+} */
 
 .next {
-  border: 1px solid rgba(0, 0, 0, 0.212);
+  border: 1.5px solid var(--primary-color);
   padding: 10px 20px;
   border-radius: 5px;
+  color: var(--primary-color);
+  font-weight: 600;
   cursor: pointer;
 }
 
-.next:hover {
+/* .next:hover {
   color: var(--primary-color);
   font-weight: 700;
   border: 2px solid var(--primary-color);
+} */
+
+p:disabled,
+p[disabled] {
+  border: 1.5px solid #929292;
+  background-color: #cacaca69;
+  color: #929292;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
  @media only screen and (max-width: 500px) {

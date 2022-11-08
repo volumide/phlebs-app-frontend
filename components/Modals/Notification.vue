@@ -93,8 +93,21 @@ export default {
         }
       }).then((response) => {
         this.loading = false
-        console.log(response)
+        // console.log(response)
         this.notifications = response.data.notification
+      })
+    },
+    markAll () {
+      this.loading = true
+      this.$axios.$get('/auth/notification/mark/all', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // this.loading = false
+        this.getNotification()
+        console.log(response)
+        // this.notifications = response.data.notification
       })
     },
     formatDate (dateString) {

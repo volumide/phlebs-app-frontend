@@ -49,9 +49,20 @@
       <h1 class="title">
         {{ modalData.type }}
       </h1>
-      <p v-if="modalText" class="sub-title">
+      <div class="acct_det">
+        <p class="sub-title">
+          {{ modalData.account_name }}
+        </p>
+        <p class="sub-title">
+          {{ modalData.bankofdeposit }}
+        </p>
+        <p class="sub-title">
+          {{ modalData.account_number }}
+        </p>
+      </div>
+      <!-- <p v-if="modalText" class="sub-title">
         {{ modalText }}
-      </p>
+      </p> -->
       <!-- <p v-if="addDataOne" class="sub-data">
         {{ addDataOne }}
       </p>
@@ -229,7 +240,7 @@ export default {
     padding: 30px;
     border-radius: 40px 40px 0px 0px;
     margin-top: 1rem;
-    padding-bottom: 10vh;
+    /* padding-bottom: 10vh; */
   }
 
   .modal-icon {
