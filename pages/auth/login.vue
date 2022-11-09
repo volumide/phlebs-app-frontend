@@ -105,7 +105,7 @@
               Login
             </button>
             <p class="create" @click="$router.push('/auth/register')">
-            <!-- <p class="create" @click="reg()"> -->
+              <!-- <p class="create" @click="reg()"> -->
               Create Account
             </p>
           </div>
@@ -115,7 +115,7 @@
         <div class="rhs_inner">
           <div class="top_btn">
             <button class="trans_btn" @click="$router.push('/auth/register')">
-            <!-- <button class="trans_btn" @click="reg()"> -->
+              <!-- <button class="trans_btn" @click="reg()"> -->
               Create Account
             </button>
           </div>
@@ -524,7 +524,7 @@ export default {
 }
 
 .sign-up {
-  color: #1D692C;
+  /* color: #1D692C; */
   cursor: pointer;
 }
 
@@ -540,7 +540,10 @@ export default {
   }
 
   .logo {
-    display: none;
+    /* display: none; */
+    width: 40vw;
+    padding-top: 50px;
+    padding-left: 20px;
   }
 
   .lhs {
