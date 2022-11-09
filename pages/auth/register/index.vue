@@ -557,7 +557,10 @@ export default {
   }
 
   .logo {
-    display: none;
+    /* display: none; */
+    width: 40vw;
+    padding-top: 50px;
+    padding-left: 20px;
   }
 
   .lhs {
