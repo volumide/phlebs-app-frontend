@@ -117,7 +117,6 @@ export default {
           this.limit = 8
         )
       }
-      // this.$store.commit('setPageName', tab)
     },
     prev () {
       if (this.hasPrevPage) {

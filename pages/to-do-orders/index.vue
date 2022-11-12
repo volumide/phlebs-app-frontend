@@ -121,7 +121,6 @@ export default {
       if (this.hasNextPage) {
         this.setPage(this.limit + this.pageNumber)
       }
-      // this.setPage(this.currentPage + 1)
     },
     setLimit (limit) {
       if (this.activeTab === 'All To-do') {
