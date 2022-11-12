@@ -79,8 +79,13 @@
             </tr>
           </table>
           <TablesFooter
-            @next="next()"
-            @prev="prev()"
+            :total-docs="totalData"
+            :prev-disabled="hasPrevPage"
+            :next-disabled="hasNextPage"
+            :limit-props="limit"
+            @set-limit="$emit('set-limit',$event)"
+            @next="$emit('next')"
+            @prev="$emit('prev')"
           />
           <div v-if="!filteredTable.length" class="come-down search_empty">
             <EmptyData
@@ -98,8 +103,13 @@
             <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
           </div>
           <TablesFooter
-            @next="next()"
-            @prev="prev()"
+            :total-docs="totalData"
+            :prev-disabled="hasPrevPage"
+            :next-disabled="hasNextPage"
+            :limit-props="limit"
+            @set-limit="$emit('set-limit',$event)"
+            @next="$emit('next')"
+            @prev="$emit('prev')"
           />
           <div v-for="(data, index) in filteredTable" :key="index" class="data_box slide-in-from-left" @click="$router.push(`/${$route.name}/dismissed?id=${data[0].id}`)">
             <div>
@@ -160,6 +170,22 @@ export default {
     tableData: {
       type: Array,
       default: () => []
+    },
+    hasPrevPage: {
+      type: Boolean,
+      default: () => null
+    },
+    hasNextPage: {
+      type: Boolean,
+      default: () => null
+    },
+    limit: {
+      type: Number,
+      default: () => 8
+    },
+    totalData: {
+      type: Number,
+      default: () => null
     },
     tableLoader: {
       type: Boolean,

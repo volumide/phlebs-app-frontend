@@ -15,6 +15,8 @@
         :total-data="totalData"
         :has-prev-page="hasPrevPage"
         :has-next-page="hasNextPage"
+        :limit="limit"
+        @set-limit="setLimit($event)"
         @next="next()"
         @prev="prev()"
       />
@@ -23,6 +25,13 @@
       <TablesDismissedTable
         :table-data="dismissedOrdersData"
         :table-loader="dismissedLoading"
+        :total-data="totalData"
+        :has-prev-page="hasPrevPage"
+        :has-next-page="hasNextPage"
+        :limit="limit"
+        @set-limit="setLimit($event)"
+        @next="next()"
+        @prev="prev()"
       />
     </div>
   </div>
@@ -38,14 +47,14 @@ export default {
       completedLoading: false,
       dismissedLoading: false,
       completedOrdersData: [],
+      dismissedOrdersData: [],
       totalPages: '',
       totalData: null,
       currentPage: '',
-      limit: 10,
+      limit: 8,
       hasNextPage: null,
       hasPrevPage: null,
-      pageNumber: 1,
-      dismissedOrdersData: []
+      pageNumber: 1
     }
   },
   created () {
@@ -59,14 +68,20 @@ export default {
       this.activeTab = tab
       this.$store.commit('setPageName', tab)
       if (this.activeTab === 'Completed Orders') {
-        this.getCompletedOrders()
+        this.getCompletedOrders(
+          this.pageNumber = 1,
+          this.limit = 8
+        )
       } else if (this.activeTab === 'Dismissed Orders') {
-        this.getDismissedOrders()
+        this.getDismissedOrders(
+          this.pageNumber = 1,
+          this.limit = 8
+        )
       }
     },
     prev () {
       if (this.hasPrevPage) {
-        this.setPage(this.limit - this.pageNumber)
+        this.setPage(this.pageNumber - this.limit)
       }
     },
     next () {
@@ -75,18 +90,38 @@ export default {
       }
       // this.setPage(this.currentPage + 1)
     },
+    setLimit (limit) {
+      if (this.activeTab === 'Completed Orders') {
+        this.getCompletedOrders(
+          this.pageNumber = 1,
+          limit
+        )
+      } else if (this.activeTab === 'Dismissed Orders') {
+        this.getDismissedOrders(
+          this.pageNumber = 1,
+          limit
+        )
+      }
+    },
     setPage (pageNumber) {
-      this.getCompletedOrders(
-        pageNumber,
-        this.limit
-      )
+      if (this.activeTab === 'Completed Orders') {
+        this.getCompletedOrders(
+          pageNumber,
+          this.limit
+        )
+      } else if (this.activeTab === 'Dismissed Orders') {
+        this.getDismissedOrders(
+          pageNumber,
+          this.limit
+        )
+      }
     },
     getCompletedOrders (
       pageNumber,
       limit
     ) {
-      console.log(pageNumber)
-      console.log(limit)
+      // console.log(pageNumber)
+      // console.log(limit)
       this.completedLoading = true
       this.$axios.$get(`/orders/completed/all/${limit}/${pageNumber}`, {
         headers: {
@@ -104,6 +139,7 @@ export default {
         this.currentPage = response.orders.page
         this.hasPrevPage = response.orders.hasPrevPage
         this.hasNextPage = response.orders.hasNextPage
+        this.pageNumber = response.orders.pagingCounter
         this.limit = Number(response.orders.limit)
         this.completedLoading = false
       }).catch((onrejected) => {
@@ -114,9 +150,14 @@ export default {
         }
       })
     },
-    getDismissedOrders () {
+    getDismissedOrders (
+      pageNumber,
+      limit
+    ) {
+      // console.log(pageNumber)
+      // console.log(limit)
       this.dismissedLoading = true
-      this.$axios.$get('/orders/dismissed/all/10/1', {
+      this.$axios.$get(`/orders/dismissed/all/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -127,6 +168,13 @@ export default {
         } else {
           this.dismissedOrdersData = response.data.dismissed
         }
+        this.totalPages = response.orders.totalPages
+        this.totalData = response.orders.totalDocs
+        this.currentPage = response.orders.page
+        this.hasPrevPage = response.orders.hasPrevPage
+        this.hasNextPage = response.orders.hasNextPage
+        this.pageNumber = response.orders.pagingCounter
+        this.limit = Number(response.orders.limit)
         this.dismissedLoading = false
       }).catch((onrejected) => {
         console.log(onrejected)

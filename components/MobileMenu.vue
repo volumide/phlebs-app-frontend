@@ -13,7 +13,7 @@
               Menu
             </p>
             <p class="greeting">
-              Good {{ timeOfDay }}, David
+              Good {{ timeOfDay }}, {{ userDetails.firstname }}
             </p>
           </div>
           <div class="user-image">
@@ -173,6 +173,7 @@ export default {
   data () {
     return {
       userImage: null,
+      userDetails: {},
       altImage: require('assets/images/no-image.png')
     }
   },
@@ -199,7 +200,8 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
+        this.userDetails = response.data.personal_information
         this.userImage = response.data.profiles.profile_pics
       })
     }

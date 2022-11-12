@@ -13,6 +13,9 @@
       <!-- <div :style="`background: ${background}`">
         {{ tab }}
       </div> -->
+      <p v-if="dataNum && tab === 'New Orders'" class="numbr">
+        {{ dataNum }}
+      </p>
     </div>
   </div>
 </template>
@@ -27,6 +30,10 @@ export default {
     activeTab: {
       type: String,
       default: () => ''
+    },
+    dataNum: {
+      type: Number,
+      default: () => null
     },
     tabSpacing: {
       type: String,
@@ -61,6 +68,7 @@ export default {
 }
 
 .tab {
+  position: relative;
   color: rgba(255, 255, 255, 0.500);
   padding: 13px 20px;
   border-radius: 3px;
@@ -83,6 +91,22 @@ export default {
   color: var(--primary-purple);
 }
 
+.numbr {
+  background-color: #DCF1FD;
+  color: rgb(34, 34, 34);
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
  @media only screen and (max-width: 500px) {
   .tabs-ctn {
     height: 50px;
@@ -92,6 +116,10 @@ export default {
   .tab {
     padding: 10px 15px;
     margin: 0 4px;
+  }
+
+  .numbr {
+    font-size: 10px;
   }
  }
 </style>

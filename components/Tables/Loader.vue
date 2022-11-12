@@ -43,11 +43,11 @@
           <div class="skeleton card" style="width: 25px; height: 25px" />
           <div class="skeleton card" style="width: 35px; height: 25px" />
         </div>
-        <div class="mhs">
+        <!-- <div class="mhs">
           <div class="skeleton card" style="width: 45px; height: 25px" />
           <div class="skeleton card" style="width: 45px; height: 25px" />
           <div class="skeleton card" style="width: 45px; height: 25px" />
-        </div>
+        </div> -->
         <div class="rhs">
           <div class="skeleton card" style="width: 50px; height: 25px" />
           <div class="skeleton card" style="width: 25px; height: 25px" />
@@ -58,6 +58,10 @@
     </div>
     <div class="no_show">
       <div class="skeleton card search" />
+      <div class="pag">
+        <div class="skeleton card sel" />
+        <div class="skeleton card sel" />
+      </div>
       <div
         v-for="i in 3"
         :key="i"
@@ -111,6 +115,19 @@ tr.table-row {
   padding: 3px 7px;
   height: 40px;
   margin-bottom: 15px;
+}
+
+.pag {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.sel {
+  padding: 3px 7px;
+  height: 40px;
+  flex-basis: 48%;
 }
 
 .date {

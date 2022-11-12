@@ -151,6 +151,8 @@
             :total-docs="totalData"
             :prev-disabled="hasPrevPage"
             :next-disabled="hasNextPage"
+            :limit-props="limit"
+            @set-limit="setLimit($event)"
             @next="next()"
             @prev="prev()"
           />
@@ -170,6 +172,11 @@
             <input v-model="tableQuery" placeholder="Search Table" name="search" type="text" @focus="error = false">
           </div>
           <TablesFooter
+            :total-docs="totalData"
+            :prev-disabled="hasPrevPage"
+            :next-disabled="hasNextPage"
+            :limit-props="limit"
+            @set-limit="setLimit($event)"
             @next="next()"
             @prev="prev()"
           />
@@ -264,7 +271,7 @@ export default {
       totalPages: '',
       totalData: '',
       currentPage: '',
-      limit: 3,
+      limit: 8,
       hasNextPage: null,
       hasPrevPage: null,
       pageNumber: 1,
@@ -298,7 +305,7 @@ export default {
     },
     prev () {
       if (this.hasPrevPage) {
-        this.setPage(this.limit - this.pageNumber)
+        this.setPage(this.pageNumber - this.limit)
       }
     },
     next () {
@@ -306,6 +313,12 @@ export default {
         this.setPage(this.limit + this.pageNumber)
       }
       // this.setPage(this.currentPage + 1)
+    },
+    setLimit (limit) {
+      this.getTransactionHistory(
+        this.pageNumber = 1,
+        limit
+      )
     },
     setPage (pageNumber) {
       this.getTransactionHistory(
@@ -317,21 +330,22 @@ export default {
       pageNumber,
       limit
     ) {
-      console.log(pageNumber)
-      console.log(limit)
+      // console.log(pageNumber)
+      // console.log(limit)
       this.tableLoader = true
       this.$axios.$get(`/earning/transaction/history/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.tableData = response.data.transaction
         this.totalPages = response.data.totalPages
         this.totalData = response.data.totalDocs
         this.currentPage = response.data.page
         this.hasPrevPage = response.data.hasPrevPage
         this.hasNextPage = response.data.hasNextPage
+        this.pageNumber = response.data.pagingCounter
         this.limit = Number(response.data.limit)
         // this.filterFromDate = fromDate
         // this.filterToDate = toDate

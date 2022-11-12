@@ -9,13 +9,43 @@
       />
     </div>
     <div v-if="activeTab === 'To-do'" class="inner">
-      <TablesAllToDoTable :table-data="todoData" :table-loader="todoLoading" />
+      <TablesAllToDoTable
+        :table-data="todoData"
+        :table-loader="todoLoading"
+        :total-data="totalData"
+        :has-prev-page="hasPrevPage"
+        :has-next-page="hasNextPage"
+        :limit="limit"
+        @set-limit="setLimit($event)"
+        @next="next()"
+        @prev="prev()"
+      />
     </div>
     <div v-if="activeTab === 'Completed'" class="inner">
-      <TablesCompletedTable :table-data="completedOrdersData" :table-loader="completedLoading" />
+      <TablesCompletedTable
+        :table-data="completedOrdersData"
+        :table-loader="completedLoading"
+        :total-data="totalData"
+        :has-prev-page="hasPrevPage"
+        :has-next-page="hasNextPage"
+        :limit="limit"
+        @set-limit="setLimit($event)"
+        @next="next()"
+        @prev="prev()"
+      />
     </div>
     <div v-if="activeTab === 'Dismissed'" class="inner">
-      <TablesDismissedTable :table-data="dismissedOrdersData" :table-loader="dismissedLoading" />
+      <TablesDismissedTable
+        :table-data="dismissedOrdersData"
+        :table-loader="dismissedLoading"
+        :total-data="totalData"
+        :has-prev-page="hasPrevPage"
+        :has-next-page="hasNextPage"
+        :limit="limit"
+        @set-limit="setLimit($event)"
+        @next="next()"
+        @prev="prev()"
+      />
     </div>
   </div>
 </template>
@@ -34,7 +64,14 @@ export default {
       capitalizeFirstLetter: functions.capitalizeFirstLetter,
       todoData: [],
       completedOrdersData: [],
-      dismissedOrdersData: []
+      dismissedOrdersData: [],
+      totalPages: '',
+      totalData: null,
+      currentPage: '',
+      limit: 8,
+      hasNextPage: null,
+      hasPrevPage: null,
+      pageNumber: 1
     }
   },
   created () {
@@ -43,36 +80,112 @@ export default {
     if (tabfromUrl) {
       this.activeTab = this.capitalizeFirstLetter(tabfromUrl)
       if (this.activeTab === 'Completed') {
-        this.getCompletedOrders()
+        this.getCompletedOrders(
+          this.pageNumber,
+          this.limit
+        )
       } else if (this.activeTab === 'Dismissed') {
-        this.getDismissedOrders()
+        this.getDismissedOrders(
+          this.pageNumber,
+          this.limit
+        )
       }
     } else {
       this.activeTab = 'To-do'
-      this.getAllToDo()
+      this.getAllToDo(
+        this.pageNumber,
+        this.limit
+      )
     }
   },
   methods: {
     setActiveTab (tab) {
       this.activeTab = tab
       if (this.activeTab === 'To-do') {
-        this.getAllToDo()
+        this.getAllToDo(
+          this.pageNumber = 1,
+          this.limit = 8
+        )
       } else if (this.activeTab === 'Completed') {
-        this.getCompletedOrders()
+        this.getCompletedOrders(
+          this.pageNumber = 1,
+          this.limit = 8
+        )
       } else if (this.activeTab === 'Dismissed') {
-        this.getDismissedOrders()
+        this.getDismissedOrders(
+          this.pageNumber = 1,
+          this.limit = 8
+        )
       }
       // this.$store.commit('setPageName', tab)
     },
-    getAllToDo () {
+    prev () {
+      if (this.hasPrevPage) {
+        this.setPage(this.pageNumber - this.limit)
+      }
+    },
+    next () {
+      if (this.hasNextPage) {
+        this.setPage(this.limit + this.pageNumber)
+      }
+      // this.setPage(this.currentPage + 1)
+    },
+    setLimit (limit) {
+      if (this.activeTab === 'To-do') {
+        this.getAllToDo(
+          this.pageNumber = 1,
+          limit
+        )
+      } else if (this.activeTab === 'Completed') {
+        this.getCompletedOrders(
+          this.pageNumber = 1,
+          limit
+        )
+      } else if (this.activeTab === 'Dismissed') {
+        this.getDismissedOrders(
+          this.pageNumber = 1,
+          limit
+        )
+      }
+    },
+    setPage (pageNumber) {
+      if (this.activeTab === 'To-do') {
+        this.getAllToDo(
+          pageNumber,
+          this.limit
+        )
+      } else if (this.activeTab === 'Completed') {
+        this.getCompletedOrders(
+          pageNumber,
+          this.limit
+        )
+      } else if (this.activeTab === 'Dismissed') {
+        this.getDismissedOrders(
+          pageNumber,
+          this.limit
+        )
+      }
+    },
+    getAllToDo (
+      pageNumber,
+      limit
+    ) {
+      // console.log(pageNumber)
+      // console.log(limit)
       this.todoLoading = true
-      this.$axios.$get('/orders/get/all/todo/10/1', {
+      this.$axios.$get(`/orders/get/all/todo/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
         // console.log(response)
         this.todoData = response.orders.order
+        this.totalData = response.orders.totalDocs
+        this.currentPage = response.orders.page
+        this.hasPrevPage = response.orders.hasPrevPage
+        this.hasNextPage = response.orders.hasNextPage
+        this.pageNumber = response.orders.pagingCounter
+        this.limit = Number(response.orders.limit)
         this.todoLoading = false
       }).catch((onrejected) => {
         // console.log(onrejected)
@@ -82,19 +195,30 @@ export default {
         }
       })
     },
-    getCompletedOrders () {
+    getCompletedOrders (
+      pageNumber,
+      limit
+    ) {
+      console.log(pageNumber)
+      console.log(limit)
       this.completedLoading = true
-      this.$axios.$get('/orders/completed/all/10/1', {
+      this.$axios.$get(`/orders/completed/all/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         if (response.orders) {
           this.completedOrdersData = response.orders.order
         } else {
           this.completedOrdersData = response.data.completed
         }
+        this.totalData = response.orders.totalDocs
+        this.currentPage = response.orders.page
+        this.hasPrevPage = response.orders.hasPrevPage
+        this.hasNextPage = response.orders.hasNextPage
+        this.pageNumber = response.orders.pagingCounter
+        this.limit = Number(response.orders.limit)
         this.completedLoading = false
       }).catch((onrejected) => {
         // console.log(onrejected)
@@ -104,9 +228,14 @@ export default {
         }
       })
     },
-    getDismissedOrders () {
+    getDismissedOrders (
+      pageNumber,
+      limit
+    ) {
+      // console.log(pageNumber)
+      // console.log(limit)
       this.dismissedLoading = true
-      this.$axios.$get('/orders/dismissed/all/10/1', {
+      this.$axios.$get(`/orders/dismissed/all/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
@@ -117,6 +246,12 @@ export default {
         } else {
           this.dismissedOrdersData = response.data.dismissed
         }
+        this.totalData = response.orders.totalDocs
+        this.currentPage = response.orders.page
+        this.hasPrevPage = response.orders.hasPrevPage
+        this.hasNextPage = response.orders.hasNextPage
+        this.pageNumber = response.orders.pagingCounter
+        this.limit = Number(response.orders.limit)
         this.dismissedLoading = false
       }).catch((onrejected) => {
         // console.log(onrejected)
