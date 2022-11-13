@@ -128,7 +128,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (response.orders) {
           this.completedOrdersData = response.orders.order
         } else {
@@ -143,7 +143,7 @@ export default {
         this.limit = Number(response.orders.limit)
         this.completedLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.completedLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)
@@ -177,7 +177,7 @@ export default {
         this.limit = Number(response.orders.limit)
         this.dismissedLoading = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.dismissedLoading = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)

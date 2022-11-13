@@ -71,7 +71,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.testInfomation = response.data
         this.detailsLoading = false
       })

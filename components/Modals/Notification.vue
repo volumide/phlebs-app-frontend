@@ -106,7 +106,7 @@ export default {
       }).then((response) => {
         // this.loading = false
         this.getNotification()
-        console.log(response)
+        // console.log(response)
         // this.notifications = response.data.notification
       })
     },

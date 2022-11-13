@@ -95,7 +95,7 @@
           Kindly specify the amount you want to withdraw
         </p>
         <div v-if="error" class="error_box">
-          <AlertsError :error-text="`Please Enter Amount`" />
+          <AlertsError :error-text="errorText" />
         </div>
         <div v-if="acctLoading" class="box_inner">
           <LoadersWithdraw />
@@ -192,11 +192,12 @@ export default {
       openPin: false,
       confirmWithdraw: false,
       error: false,
+      errorText: '',
       acctLoading: false,
       accountDetails: {},
       amount: '',
       successModal: false,
-      balance: 'N601,400'
+      balance: ''
     }
   },
   created () {
@@ -208,8 +209,9 @@ export default {
       this.hideBalance = !this.hideBalance
     },
     confirm () {
-      if (this.amount === '') {
+      if (this.amount === '' || this.amount > this.balance) {
         this.error = true
+        this.errorText = 'Please enter amount below your Wallet Balance'
       } else {
         this.confirmWithdraw = true
       }
@@ -238,7 +240,7 @@ export default {
         }
       }).then((response) => {
         this.acctLoading = false
-        console.log(response)
+        // console.log(response)
         this.accountDetails = response.data
       })
     }

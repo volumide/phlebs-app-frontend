@@ -8,7 +8,10 @@
         @set-active-tab="setActiveTab"
       />
     </div>
-    <div v-if="activeTab === 'Personal'" class="tab_data">
+    <div v-if="userLoading" class="inner tab_data">
+      <LoadersAccount />
+    </div>
+    <div v-else-if="activeTab === 'Personal'" class="tab_data">
       <ProfilePersonal
         :user-data="userData"
         :data-loader="userLoading"
@@ -70,6 +73,7 @@ export default {
       this.getUserDetails()
       this.activeTab = this.capitalizeFirstLetter(tabfromUrl)
     } else {
+      this.getUserDetails()
       this.activeTab = 'Personal'
     }
     this.getUserDetails()

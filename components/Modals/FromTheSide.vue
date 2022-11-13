@@ -133,7 +133,7 @@ export default {
         }
       }).then((response) => {
         this.deleteloading = false
-        console.log(response)
+        // console.log(response)
         this.deleteNotification = false
         this.successModal = true
         // this.notification = response.data

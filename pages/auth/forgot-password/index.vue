@@ -195,7 +195,7 @@ export default {
       // console.log(this.email)
       this.$axios.$get(`auth/send/otp/via/sms/${this.email}`
       ).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.smsOtpLoading = false
         if (!response.error) {
           this.$router.push(`/auth/forgot-password/otp?email=${this.email}&ref=${response.data.reference}`)

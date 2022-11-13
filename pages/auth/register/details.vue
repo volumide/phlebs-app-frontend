@@ -88,7 +88,7 @@ export default {
         this.loading = false
         // console.log(response)
         this.userDetails = response.data
-        console.log(this.userDetails)
+        // console.log(this.userDetails)
         this.$store.commit('setUserDetails', this.userDetails)
         this.personalInformation = true
       })

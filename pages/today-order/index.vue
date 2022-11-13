@@ -198,15 +198,13 @@ export default {
       pageNumber,
       limit
     ) {
-      console.log(pageNumber)
-      console.log(limit)
       this.completedLoading = true
       this.$axios.$get(`/orders/completed/all/${limit}/${pageNumber}`, {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         if (response.orders) {
           this.completedOrdersData = response.orders.order
         } else {

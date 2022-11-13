@@ -97,7 +97,7 @@ export default {
           }
         }
         ).then((response) => {
-          console.log(response)
+          // console.log(response)
           this.loading = false
           if (!response.error) {
             this.$emit('bg-action')

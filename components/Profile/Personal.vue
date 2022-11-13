@@ -1,9 +1,9 @@
 <template>
   <div class="personal_ctn">
-    <div v-if="dataLoader || loading" class="inner">
+    <!-- <div v-if="dataLoader" class="inner">
       <LoadersAccount />
-    </div>
-    <div v-else class="inner come-down">
+    </div> -->
+    <div class="inner come-down">
       <div class="lhs">
         <div>
           <div class="user-image-container">
@@ -255,7 +255,7 @@ export default {
     },
     dataLoader: {
       type: Boolean,
-      default: () => false
+      default: () => true
     },
     errorText: {
       type: String,
@@ -294,6 +294,15 @@ export default {
   computed: {
     inputDisabled () {
       return this.editAccess === false
+    }
+  },
+  watch: {
+    userData: {
+      immediate: true,
+      handler (val) {
+        // console.log(val)
+        this.pushData()
+      }
     }
   },
   created () {
@@ -370,8 +379,8 @@ export default {
           }
         }
       ).then((response) => {
-        console.log(response)
-        this.pushData()
+        // console.log(response)
+        // this.pushData()
         this.editAccess = response.editAccess
         this.loading = false
       }).catch((onrejected) => {

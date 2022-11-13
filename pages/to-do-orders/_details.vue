@@ -61,7 +61,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.getTestInfo(id, name)
         if (response.todo) {
           this.detailsData = response.todo[0]
@@ -79,7 +79,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.testInfomation = response.data
         this.detailsLoading = false
       })

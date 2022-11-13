@@ -143,7 +143,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.allBanks = response.bank.data
       })
     },

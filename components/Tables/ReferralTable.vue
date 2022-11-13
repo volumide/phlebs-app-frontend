@@ -184,11 +184,11 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.tableData = response.refferral
         this.tableLoader = false
       }).catch((onrejected) => {
-        console.log(onrejected)
+        // console.log(onrejected)
         this.tableLoader = false
         if (onrejected.error) {
           // this.$toast.error(onrejected.errorMsg)

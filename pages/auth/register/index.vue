@@ -309,7 +309,7 @@ export default {
         }
         ).then((response) => {
           this.loading = false
-          console.log(response)
+          // console.log(response)
           if (!response.error) {
             Cookies.set('token', response.data.token)
             this.$router.push(`/auth/register/verify-number?phone=${this.phone}`)

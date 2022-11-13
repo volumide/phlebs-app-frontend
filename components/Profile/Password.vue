@@ -74,7 +74,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="password" placeholder="Enter Current Password" :type="type" @focus="error2 = false">
+              <input v-model="password" autocomplete="new-password" placeholder="Enter Current Password" :type="type" @focus="error2 = false">
               <svg
                 v-if="type === 'password'"
                 class="pass_svg"
@@ -121,7 +121,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="new_password" placeholder="Enter New Password" :type="new_type" @focus="error2 = false">
+              <input v-model="new_password" autocomplete="off" placeholder="Enter New Password" :type="new_type" @focus="error2 = false">
               <svg
                 v-if="new_type === 'password'"
                 class="pass_svg"
@@ -168,7 +168,7 @@
                   </clipPath>
                 </defs>
               </svg>
-              <input v-model="con_new_password" placeholder="Confrirm New Password" :type="con_new_type" @focus="error2 = false">
+              <input v-model="con_new_password" autocomplete="off" placeholder="Confrirm New Password" :type="con_new_type" @focus="error2 = false">
               <svg
                 v-if="con_new_type === 'password'"
                 class="pass_svg"
@@ -363,10 +363,9 @@ export default {
             }
           }
         ).then((response) => {
-          console.log(response)
+          // console.log(response)
           this.otpLoading = false
           if (!response.error) {
-            console.log(response)
             this.passwordOTP = true
           } else {
             this.error2 = true
@@ -374,7 +373,7 @@ export default {
           }
         // this.editAccess = response.editAccess
         }).catch((onrejected) => {
-          console.log(onrejected)
+          // console.log(onrejected)
           this.otpLoading = false
         })
       } else {
@@ -386,7 +385,7 @@ export default {
       }
     },
     updateChanges () {
-      console.log(this.updateLoading)
+      // console.log(this.updateLoading)
       // this.updateLoading = true
       if (this.new_password === this.con_new_password) {
         this.updateLoading = true
@@ -412,7 +411,7 @@ export default {
           }
         // this.editAccess = response.editAccess
         }).catch((onrejected) => {
-          console.log(onrejected)
+          // console.log(onrejected)
           this.updateLoading = false
         })
       } else {

@@ -343,7 +343,7 @@ export default {
         }
       ).then((response) => {
         this.acceptLoading = false
-        console.log(response)
+        // console.log(response)
         if (!response.error) {
           this.acceptOrder = false
           this.confirmSuccessModal = true
