@@ -152,13 +152,13 @@ html {
 .main-content {
   margin-top: 15vh;
   margin-left: 19vw;
-  width: 82vw;
+  width: 81vw;
 }
 
 .main-content-for-earnings {
   margin-top: 15vh;
   margin-left: 19vw;
-  width: 82vw;
+  width: 81vw;
 }
 
 .add-new-contact {
