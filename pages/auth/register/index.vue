@@ -108,6 +108,15 @@
                 </svg>
               </div>
             </div>
+            <div class="check_forgot">
+              <label class="check-container">By signing up, you accept our Terms of Service and Privacy Policy.
+                <input class="check-input" type="checkbox" :checked="checked" @click="toogleCheck">
+                <span class="checkmark" />
+              </label>
+              <!-- <p class="forgot" @click="resetPassword = true">
+                  Forgot Password?
+                </p> -->
+            </div>
             <button v-if="loading" class="bg_btn" disabled>
               <Loader class="come-down" />
             </button>
