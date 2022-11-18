@@ -184,7 +184,7 @@
           </div>
           <div class="notif_center">
             <p class="notif_head">
-              You have {{ incompleteOrders ? incompleteOrders : 0 }} orders you have not completed yet
+              You have {{ incompleteOrders ? incompleteOrders : 0 }} {{ incompleteOrders === 0 || incompleteOrders === 1 ? 'order' : 'orders' }} you have not completed yet
             </p>
             <p class="notif_text">
               Proceed to Ongoing orders to complete or dismiss orders assigned to you.

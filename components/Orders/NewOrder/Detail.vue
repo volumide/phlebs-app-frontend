@@ -173,7 +173,7 @@
         <p class="test_title">
           Tests Information ({{ testInfomation.length }})
         </p>
-        <div v-for="(data) in testInfomation" :key="data" class="test_inner">
+        <div v-for="(data, i) in testInfomation" :key="i" class="test_inner">
           <div class="order_box">
             <p class="test_text">
               Order No:

@@ -312,7 +312,7 @@ export default {
 }
 
 .box_inner {
-  margin-top: 2vh;
+  /* margin-top: 2vh; */
   width: 100%;
   /* display: flex; */
 }
