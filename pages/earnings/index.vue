@@ -77,7 +77,7 @@
                 *******
               </p>
               <p v-else class="orders">
-                {{ accountDetails.account_number }}
+                {{ accountDetails ? accountDetails.account_number : 0 }}
               </p>
             </div>
             <div v-if="!warning" class="icon">
@@ -226,6 +226,7 @@ export default {
       activeTab: 'Earnings',
       referral_code: '',
       code_copied: false,
+      acctApproved: true,
       infoBox: false,
       loading: false,
       shareWithFriends: false,
@@ -243,18 +244,35 @@ export default {
       return this.warning === true
     },
     warning () {
-      return (!this.isBankAccountAdded)
+      return (!this.isBankAccountAdded || !this.acctApproved)
     }
   },
   created () {
     this.$store.commit('setPageName', this.activeTab)
-    this.checkWithdrawalPin()
-    this.checkIfBankAdded()
-    this.getWalletBalace()
-    this.getPrimaryAccount()
-    this.getReferralCode()
+    this.getUserDetails()
   },
   methods: {
+    getUserDetails () {
+      this.loading = true
+      this.$axios.$get('/auth/all/registration/information', {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      }).then((response) => {
+        // console.log(response)
+        this.acctApproved = response.data.reg_details.approved
+        if (!this.acctApproved) {
+          this.warning = true
+          this.loading = false
+        } else {
+          this.checkWithdrawalPin()
+          this.checkIfBankAdded()
+          this.getWalletBalace()
+          this.getPrimaryAccount()
+          this.getReferralCode()
+        }
+      })
+    },
     setActiveTab (tab) {
       this.activeTab = tab
       this.$store.commit('setPageName', tab)

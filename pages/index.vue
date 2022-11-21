@@ -331,7 +331,7 @@ export default {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        console.log(response)
+        // console.log(response)
         this.acctApproved = response.data.reg_details.approved
         if (!this.acctApproved) {
           this.warning = true
