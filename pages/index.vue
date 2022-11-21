@@ -86,7 +86,7 @@
             </div>
           </div>
           <div class="next_order_box">
-            <div v-if="nextOrders.length === 0">
+            <div v-if="nextOrders.length === 0 || !acctApproved">
               <div class="empty-state">
                 <div class="image-file">
                   <img class="reveals" src="~assets/icons/empty-file.svg" alt="">
@@ -306,42 +306,43 @@ export default {
   created () {
     // this.getAllRequests()
     this.getUserDetails()
-    this.getNewOrderTotal()
-    this.getTodayOrdersTotal()
-    this.getNextOrderDetails()
-    this.getIncompleteOrders()
-    this.getCompletedOrders()
-    this.getDismissedOrders()
   },
   methods: {
-    getAllRequests () {
-      const newOrderTotal = this.$axios.$get('/orders/new/total')
-      const todayOrdersTotal = this.$axios.$get('/orders/total/today/orders')
-      const nextOrderDetails = this.$axios.$get('/orders/get/next/order')
-      const incompleteOrders = this.$axios.$get('/orders/get/total/todo')
-      const completedOrders = this.$axios.$get('/orders/total/completed/order')
-      const dismissedOrders = this.$axios.$get('/orders/total/Dismissed/order')
-      Promise.all([newOrderTotal, todayOrdersTotal, nextOrderDetails, incompleteOrders, completedOrders, dismissedOrders], {
-        headers: {
-          Authorization: `Bearer ${Cookies.get('token')}`
-        }
-      }).then((response) => {
-        // console.log(response)
-        // this.newOrders = response.orders.total
-      })
-    },
+    // getAllRequests () {
+    //   const newOrderTotal = this.$axios.$get('/orders/new/total')
+    //   const todayOrdersTotal = this.$axios.$get('/orders/total/today/orders')
+    //   const nextOrderDetails = this.$axios.$get('/orders/get/next/order')
+    //   const incompleteOrders = this.$axios.$get('/orders/get/total/todo')
+    //   const completedOrders = this.$axios.$get('/orders/total/completed/order')
+    //   const dismissedOrders = this.$axios.$get('/orders/total/Dismissed/order')
+    //   Promise.all([newOrderTotal, todayOrdersTotal, nextOrderDetails, incompleteOrders, completedOrders, dismissedOrders], {
+    //     headers: {
+    //       Authorization: `Bearer ${Cookies.get('token')}`
+    //     }
+    //   }).then((response) => {
+    //     // console.log(response)
+    //     // this.newOrders = response.orders.total
+    //   })
+    // },
     getUserDetails () {
+      this.loading = true
       this.$axios.$get('/auth/all/registration/information', {
         headers: {
           Authorization: `Bearer ${Cookies.get('token')}`
         }
       }).then((response) => {
-        // console.log(response)
+        console.log(response)
         this.acctApproved = response.data.reg_details.approved
         if (!this.acctApproved) {
-          setTimeout(() => {
-            this.warning = true
-          }, 1000)
+          this.warning = true
+          this.loading = false
+        } else {
+          this.getNewOrderTotal()
+          this.getTodayOrdersTotal()
+          this.getNextOrderDetails()
+          this.getIncompleteOrders()
+          this.getCompletedOrders()
+          this.getDismissedOrders()
         }
       })
     },
